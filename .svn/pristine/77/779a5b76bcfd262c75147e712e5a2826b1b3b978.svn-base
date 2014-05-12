@@ -1,0 +1,19 @@
+package com.gsl.oros.core.banking.operation
+
+class Account {
+
+    String accountTitle
+    int modeOfOperation
+    int natureOfOperation
+    double initialDeposit
+    String accountPurpose
+    Date openingDate
+    String sourceOfFund
+    double monthlyIncome
+    boolean tAndC
+    AccountOpen accountOpen
+
+
+    static constraints = {
+    }
+}

@@ -1,0 +1,165 @@
+<div class="row">
+    <div class=" col-xs-12 ">
+
+        <div class=" col-md-4 col-sm-4">
+
+            <div class="form-group ${hasErrors(bean: bankSetupCommand, field: 'bankFullName', 'has-error')}">
+                <label for="bankFullName">
+                    <g:message code="coreBanking.setting.bankSetup.bankFullName" default="Bank Full Name "/> *
+                </label>
+
+                <input type="text"
+                       class="form-control" id="bankFullName" name="bankFullName" required=""
+                       value="${bankSetupData?.bankFullName}" placeholder="Enter Bank Name">
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+
+            <div class="form-group">
+                <label for="bankShortName">
+                    <g:message code="coreBanking.setting.bankSetup.bankShortName" default="Com.Short Name "/> *
+                </label>
+
+                <input type="text"
+                       class="form-control" id="bankShortName"
+                       value="${bankSetupData?.bankShortName}" name="bankShortName" required=""
+                       placeholder="Enter Bank Short Name">
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+
+            <div class="form-group">
+                <label for="chamberCommerceNo">
+                    <g:message code="coreBanking.setting.bankSetup.chamberOfCommerce" default="Chamber of Com "/> *
+                </label>
+                <input type="text"
+                       class="form-control" id="chamberCommerceNo" name="chamberCommerceNo" required=""
+                       value="${bankSetupData?.chamberCommerceNo}" placeholder="Enter Chamber of Com">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class=" col-xs-12 ">
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label for="phoneNo">
+                    <g:message code="default.address.phone.label" default="Phone No "/> *
+                </label>
+
+                <input type="text"
+                       class="form-control" id="phoneNo" name="general.phoneNo" required=""
+                       value="${generalAdd?.phoneNo}" placeholder="Enter Phone Number">
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label for="mobileNo">
+                    <g:message code="default.address.mobile.label" default="Mobile No "/>  *
+                </label>
+
+                <input type="text"
+                       class="form-control" id="mobileNo" name="general.mobileNo" required=""
+                       value="${generalAdd?.mobileNo}" placeholder="Enter Mobile Number">
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label for="faxNo">
+                    <g:message code="default.address.fax.label" default="Fax No "/>  *
+                </label>
+
+                <input type="text"
+                       class="form-control" id="faxNo" name="general.faxNo" required=""
+                       value="${generalAdd?.faxNo}" placeholder="Enter Fax Number">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-xs-12">
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label for="email1">
+                    <g:message code="default.address.email" default="First Email "/>
+                </label>
+
+                <input type="email1"
+                       class="form-control" id="email1" name="general.email1"
+                       value="${generalAdd?.email1}" placeholder="Enter First Email">
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label for="email2">
+                    <g:message code="default.address.email2" default="Second Email "/>
+                </label>
+
+                <input type="email"
+                       class="form-control" id="email2" name="general.email2"
+                       value="${generalAdd?.email2}" placeholder="Enter Second Email">
+            </div>
+
+        </div>
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+                <label for="websiteUrl">
+                    <g:message code="default.address.websiteUrl" default="Website URL "/>  *
+                </label>
+                <input type="url"
+                       class="form-control" id="websiteUrl" name="general.websiteUrl" required=""
+                       value="${generalAdd?.websiteUrl}" placeholder="Enter Website URL">
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="col-xs-12">
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+
+                <label for="logo">
+                    <g:message code="coreBanking.setting.bankSetup.logo" default="Bank Logo "/>
+                </label>
+
+                <input type='file' id="logo" name="bankLogo" class="btn btn-sm btn-succes form-control"
+                       placeholder="Upload Company Logo"/>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-md-4 col-sm-4">
+            <div class="form-group">
+
+                <g:if test="${bankSetupData?.logo == null}">
+                    <ii:imageTag id="preview" indirect-imagename="#" alt="Bank Logo" width="140px" height="140px"/>
+                </g:if>
+                <g:else>
+                    <ii:imageTag id="preview" indirect-imagename="${bankSetupData?.logo}" alt="Bank Logo" width="140px"
+                                 height="140px"/>
+                    <input type="text" value="${bankSetupData?.logo}" name="logo" hidden="">
+                </g:else>
+
+            </div>
+
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,513 @@
+package com.gsl.oros.core.banking.clients
+
+import com.gsl.cbs.contraints.enums.AddressType
+import com.gsl.oros.core.banking.accountHolder.AccountHolder
+import com.gsl.oros.core.banking.agent.AdditionalDetail
+import com.gsl.oros.core.banking.agent.ClientHelp
+import com.gsl.oros.core.banking.agent.PersonalInfo
+import com.gsl.oros.core.banking.agent.ThirdParty
+import com.gsl.oros.core.banking.product.clients.RetailAgentUtility
+import com.gsl.oros.core.banking.settings.Address
+import com.gsl.oros.core.banking.attachments.Attachments
+import com.gsl.oros.core.banking.settings.Country
+import com.gsl.oros.core.banking.settings.State
+import grails.converters.JSON
+import org.springframework.web.multipart.MultipartFile
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+
+class AgentController {
+    def attachmentService
+
+    def index(){
+        render(view: 'agentList')
+    }
+    def create() {
+        def tabSelector = 1
+        def updateSelector = 0
+        render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector,updateSelector:updateSelector])
+    }
+
+
+    def savePersonalInfo() {
+        if (request.method == "POST") {
+
+            def tabSelector = 1
+            if (params.id) {
+                PersonalInfo personalInfo = PersonalInfo.get(params.id)
+                personalInfo.properties = params
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                if (!savedPersonalInfo) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector])
+                    return
+                }
+                println "Agent" + savedPersonalInfo.id
+
+                flash.message = "Personal Information of Agent Successfully Updated"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 2, personalInfo: savedPersonalInfo])
+                return
+            } else {
+                PersonalInfo personalInfo = new PersonalInfo(params)
+
+                if (!personalInfo.validate()) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector])
+                    return
+                }
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                if (!savedPersonalInfo) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector])
+                    return
+                }
+                println "Agent Id=" + savedPersonalInfo.id
+
+                flash.message = "Personal Information of Agent Successfully Saved"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 2, personalInfo: savedPersonalInfo])
+                return
+            }
+
+
+        }
+    }
+
+    def saveContactDetail() {
+        if (request.method == "POST") {
+            def agentId = params.id
+            def tabSelector = 2
+            PersonalInfo personalInfo = PersonalInfo.get(agentId)
+            if (params.conid) {
+                def conid = personalInfo.contactAddress.id
+                Address contactAddress = Address.get(conid)
+
+
+                contactAddress.properties = params
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                flash.message = "Contact Detail of Agent Successfully Updated"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 3, personalInfo: savedPersonalInfo, contactAddress: contactAddress])
+                return
+            } else {
+
+
+                Address contactAddress = new Address(params)
+                contactAddress.addressType = AddressType.GENERAL
+
+                personalInfo.addToContactAddress(contactAddress)
+                if (!personalInfo.validate()) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: personalInfo, contactAddress: contactAddress])
+                    return
+                }
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                if (!savedPersonalInfo) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: savedPersonalInfo, contactAddress: contactAddress])
+                    return
+                }
+
+                flash.message = "Contact Detail of Agent Successfully Saved"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 3, personalInfo: savedPersonalInfo, contactAddress: contactAddress])
+                return
+
+            }
+
+        }
+    }
+
+    def saveResidentialAddress() {
+        if (request.method == "POST") {
+            def agentId = params.id
+            def tabSelector = 3
+            PersonalInfo personalInfo = PersonalInfo.get(agentId)
+            if (params.resid) {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+                def resid = personalInfo.residentialAddress.id
+                Address residentialAddress = Address.get(resid)
+
+                residentialAddress.properties = params
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                flash.message = "Residential Address of Agent Successfully Updated"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 4, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: residentialAddress])
+                return
+            } else {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+
+                Address residentialAddress = new Address(params)
+                residentialAddress.addressType = AddressType.GENERAL
+
+                personalInfo.addToResidentialAddress(residentialAddress)
+                if (!personalInfo.validate()) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: personalInfo, contactAddress: savedContactAddress, residentialAddress: residentialAddress])
+                    return
+                }
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                if (!savedPersonalInfo) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: residentialAddress])
+                    return
+                }
+
+                flash.message = "Residential Address  of Agent Successfully Saved"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 4, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: residentialAddress])
+                return
+
+            }
+
+        }
+    }
+
+    def saveAdditionalDetail() {
+        if (request.method == "POST") {
+
+            def tabSelector = 4
+
+            def agentId = params.id
+            PersonalInfo personalInfo = PersonalInfo.get(agentId)
+
+            if (params.addid) {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+                def resid = personalInfo.residentialAddress.id
+                Address savedResidentialAddress = Address.get(resid)
+                def addid = personalInfo.additionalDetail.id
+                AdditionalDetail additionalDetail = AdditionalDetail.get(addid)
+                additionalDetail.properties = params
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                flash.message = "Additional Detail of Agent Successfully Updated"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 5, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail])
+                return
+            } else {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+                def resid = personalInfo.residentialAddress.id
+                Address savedResidentialAddress = Address.get(resid)
+
+                AdditionalDetail additionalDetail = new AdditionalDetail(params)
+                personalInfo.addToAdditionalDetail(additionalDetail)
+                if (!personalInfo.validate()) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: personalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail])
+                    return
+                }
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                if (!savedPersonalInfo) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail])
+                    return
+                }
+
+                flash.message = "Additional Detail of Agent Successfully Saved"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 5, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail])
+                return
+
+            }
+        }
+    }
+
+
+    def saveClientHelp() {
+        if (request.method == "POST") {
+
+            def tabSelector = 5
+
+            def agentId = params.id
+            PersonalInfo personalInfo = PersonalInfo.get(agentId)
+
+            if (params.clientid) {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+                def resid = personalInfo.residentialAddress.id
+                Address savedResidentialAddress = Address.get(resid)
+                def addid = personalInfo.additionalDetail.id
+                AdditionalDetail additionalDetail = AdditionalDetail.get(addid)
+                def clientid = personalInfo.clientHelp.id
+                ClientHelp clientHelp = ClientHelp.get(clientid)
+                clientHelp.properties = params
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                flash.message = "Client Help of Agent Successfully Updated"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 6, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp])
+                return
+            } else {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+                def resid = personalInfo.residentialAddress.id
+                Address savedResidentialAddress = Address.get(resid)
+                def addid = personalInfo.additionalDetail.id
+                AdditionalDetail additionalDetail = AdditionalDetail.get(addid)
+
+
+                ClientHelp clientHelp = new ClientHelp(params)
+                personalInfo.addToClientHelp(clientHelp)
+                if (!personalInfo.validate()) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: personalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp])
+                    return
+                }
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                if (!savedPersonalInfo) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp])
+                    return
+                }
+
+                flash.message = "Client Help of Agent Successfully Saved"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 6, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp])
+                return
+
+            }
+
+
+        }
+    }
+
+    def saveThirdParty() {
+        if (request.method == "POST") {
+
+            def tabSelector = 6
+
+
+            def agentId = params.id
+            PersonalInfo personalInfo = PersonalInfo.get(agentId)
+            if (params.thirdid) {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+                def resid = personalInfo.residentialAddress.id
+                Address savedResidentialAddress = Address.get(resid)
+                def addid = personalInfo.additionalDetail.id
+                AdditionalDetail additionalDetail = AdditionalDetail.get(addid)
+                def clientid = personalInfo.clientHelp.id
+                ClientHelp clientHelp = ClientHelp.get(clientid)
+                def thirdid = personalInfo.thirdParty.id
+                ThirdParty thirdParty = ThirdParty.get(thirdid)
+
+                thirdParty.properties = params
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                flash.message = "Successfully Updated"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 7, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp, thirdParty: thirdParty])
+                return
+            } else {
+                def conid = personalInfo.contactAddress.id
+                Address savedContactAddress = Address.get(conid)
+                def resid = personalInfo.residentialAddress.id
+                Address savedResidentialAddress = Address.get(resid)
+                def addid = personalInfo.additionalDetail.id
+                AdditionalDetail additionalDetail = AdditionalDetail.get(addid)
+                def clientid = personalInfo.clientHelp.id
+                ClientHelp clientHelp = ClientHelp.get(clientid)
+
+
+                ThirdParty thirdParty = new ThirdParty(params)
+                personalInfo.addToThirdParty(thirdParty)
+                if (!personalInfo.validate()) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: personalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp, thirdParty: thirdParty])
+                    return
+                }
+                PersonalInfo savedPersonalInfo = personalInfo.save(flush: true)
+                if (!savedPersonalInfo) {
+                    render(view: '/agent/createAgent', model: [tabSelectIndicator: tabSelector, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp, thirdParty: thirdParty])
+                    return
+                }
+
+                flash.message = "Successfully Saved"
+                render(view: '/agent/createAgent', model: [tabSelectIndicator: 7, personalInfo: savedPersonalInfo, contactAddress: savedContactAddress, residentialAddress: savedResidentialAddress, additionalDetail: additionalDetail, clientHelp: clientHelp, thirdParty: thirdParty])
+                return
+
+            }
+
+
+        }
+    }
+
+
+    def saveAttachment() {
+        println params
+        String message
+        boolean isError = true
+        if (!request.method == 'POST') {
+            message = "This action not allowed"
+            render(template: 'attachmentListTable', model: [isError: isError, message: message])
+            return
+        }
+        if (!params.id) {
+            message = "Personal Info not found"
+            render(template: 'attachmentListTable', model: [isError: isError, message: message])
+            return
+        }
+        Long pInfoId = params.getLong('id')
+        PersonalInfo personalInfo = PersonalInfo.get(pInfoId)
+        if (!personalInfo) {
+            message = "Personal Info not found"
+            render(template: 'attachmentListTable', model: [isError: isError, message: message])
+            return
+        }
+        String type
+        Long size
+        String fileName
+        String originalFileName
+        String fileTobeStoredInDirPath
+        String attachmentUrl
+
+
+        fileName = request.getFileNames()[0]
+        MultipartFile uploadedFile = request.getFile(fileName)
+        if (uploadedFile.empty) {
+            message = "Attachment not found"
+            render(template: 'attachmentListTable', model: [isError: isError, message: message])
+            return
+        }
+        type = uploadedFile.contentType
+        size = uploadedFile.size
+        attachmentUrl = UUID.randomUUID().toString() + ".${uploadedFile.originalFilename.split("\\.")[-1]}"
+        originalFileName = uploadedFile.originalFilename
+        fileTobeStoredInDirPath = grailsApplication.config.imageindirect.basePath
+        attachmentService.storeImage(uploadedFile, attachmentUrl)
+        Attachments attachment = new Attachments(
+                name: fileName,
+                description: params.description,
+                originalName: originalFileName,
+                type: type,
+                size: size,
+                attachmentUrl: attachmentUrl,
+                caption: params.caption,
+                status: Boolean.TRUE
+        )
+        Attachments savedAttachment = attachment.save(flush: true)
+        if (!savedAttachment) {
+            message = "Attachment not found"
+            isError = true
+            render(template: 'attachmentListTable', model: [isError: isError, message: message])
+            return
+        }
+        personalInfo.getAttachments().add(savedAttachment)
+        PersonalInfo savedInfo = personalInfo.save()
+        if (!savedInfo) {
+            message = "Attachment not found"
+            isError = true
+            render(template: 'attachmentListTable', model: [isError: isError, message: message])
+            return
+        }
+        message = "Attachments saved successfully"
+        isError = false
+
+        render(template: 'attachmentListTable', model: [personalInfo: savedInfo])
+
+    }
+
+    def downloadAttachment(Long attachmentId){
+        Attachments attachment= Attachments.read(attachmentId)
+        if(!attachment){
+            flash.message="Attachment not found."
+            return
+        }
+        def files = new File(grailsApplication.config.imageindirect.basePath,attachment.attachmentUrl) //Full path of a file
+        if (files.exists()) {
+
+            response.setContentType("application/octet-stream")
+            response.setHeader("Content-disposition", "attachment;filename=${attachment.originalName.replaceAll(' ','_')}")
+            response.outputStream << files.bytes
+        }else {
+            flash.message="Attachment not found."
+            return
+        }
+    }
+
+    def deleteAttachment(Long id, Long attachmentId){
+        PersonalInfo personalInfo = PersonalInfo.get(id)
+        if(!personalInfo){
+            //return with error message
+            return
+        }
+        Attachments attachment = Attachments.get(attachmentId)
+        attachment.status = false
+        PersonalInfo savedPersonalInfo = personalInfo.save()
+        if(!savedPersonalInfo){
+            // return error message
+            return
+        }
+        savedPersonalInfo.attachments?.removeAll {it.status == false}
+        render(template: 'attachmentListTable', model: [personalInfo: savedPersonalInfo])
+    }
+
+    def stateList() {
+        def street = State.findAllByCountry(Country.read(params.country as Long))
+        for (def i = 0; i < street.size(); i++) {
+            render "<option value='${street.id[i]}'>${street.name[i]}</option>"
+        }
+    }
+
+    def deleteAgent(Long id){
+
+        PersonalInfo personalInfo = PersonalInfo.get(id)
+        if (!personalInfo) {
+            flash.message = "Agent not found"
+            render(view: 'agentList')
+        }
+        personalInfo.delete()
+        flash.message = "Agent deleted successfully"
+        render(view: 'agentList')
+
+    }
+    def list() {
+        int sEcho = params.sEcho ? params.getInt('sEcho') : 1
+        int iDisplayStart = params.iDisplayStart ? params.getInt('iDisplayStart') : 0
+        int iDisplayLength = params.iDisplayLength ? params.getInt('iDisplayLength') : 10
+        String sSortDir = params.sSortDir_0 ? params.sSortDir_0 : 'asc'
+        int iSortingCol = params.iSortingCols ? params.getInt('iSortingCols') : 1
+        //Search string, use or logic to all fields that required to include
+        String sSearch = params.sSearch?params.sSearch:null
+        if(sSearch){
+            sSearch = "%"+sSearch+"%"
+        }
+        String sortColumn = RetailAgentUtility.getSortColumn(iSortingCol)
+        List dataReturns = new ArrayList()
+        def v = PersonalInfo.createCriteria()
+        def results = v.list (max: iDisplayLength, offset:iDisplayStart) {
+            and {
+                eq("status",true)
+            }
+            if(sSearch){
+                or {
+                    ilike('firstName',sSearch)
+                    ilike('lastName',sSearch)
+                }
+            }
+            order(sortColumn, sSortDir)
+        }
+        int totalCount = results.totalCount
+        int serial = iDisplayStart;
+        if(totalCount>0){
+            if(sSortDir.equalsIgnoreCase('desc')){
+                serial =(totalCount+1)-iDisplayStart
+            }
+            results.each {PersonalInfo personalInfo->
+                if(sSortDir.equalsIgnoreCase('asc')){
+                    serial++
+                }else{
+                    serial--
+                }
+                dataReturns.add([DT_RowId: personalInfo.id, 0: serial, 1: personalInfo.firstName, 2: personalInfo.lastName,3:personalInfo.gender,4:''])
+            }
+        }
+
+        Map gridData =[iTotalRecords:totalCount,iTotalDisplayRecords:totalCount,aaData:dataReturns]
+        String result = gridData as JSON
+        println(result)
+        render result
+    }
+
+    def update(Long id) {
+
+        PersonalInfo personalInfo = PersonalInfo.read(id)
+        if (!personalInfo) {
+            flash.message = "Agent not found"
+            render(view: 'agentList')
+        }
+        def updateSelector = 1
+        def tabSelector = 1
+        render(view: 'createAgent',
+                model: [personalInfo: personalInfo,
+                        contactAddress: personalInfo.contactAddress[0],
+                        residentialAddress: personalInfo.residentialAddress[0],
+                        additionalDetail: personalInfo.additionalDetail[0],
+                        clientHelp: personalInfo.clientHelp[0],
+                        thirdParty:personalInfo.thirdParty[0],
+                        attachmentList: personalInfo.attachments,
+                        countryList: Country.list(),tabSelectIndicator: tabSelector, updateSelector:updateSelector])
+
+
+}
+
+}

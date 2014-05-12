@@ -1,0 +1,97 @@
+<g:form name="pictureForm" method="post" role="form" class="form-horizontal">
+
+    <div class="row">
+        <div class="col-sm-6">
+            <g:hiddenField name="accountHolderId" value="${accountHolder?.id}"/>
+            <g:hiddenField name="pictures" id="pictures" value="${accountHolder?.pictures?.id}"/>
+            <div class="form-group">
+                <label for="originalName" class="col-sm-2">
+                    Image*</label>
+                <div class="col-sm-10">
+                    <input type="file" id="originalName" name="originalName" class="col-sm-12">
+                </div>
+            </div>
+        </div><!-- /.col -->
+        %{--<div class="col-sm-6">
+            <img id="previewHolder" width="200px" height="200px" src="${accountHolder?.pictures?.pictureUrl}"/>
+        </div>--}%
+        <g:if test="${accountHolder?.pictures?.id}">
+            <ii:imageTag width="200px" height="200px"  id="previewHolder" indirect-imagename="${accountHolder?.pictures?.pictureUrl}"
+                         title="${accountHolder?.pictures?.name}"/>
+        </g:if>
+        <g:else>
+            <img width="200px" height="200px"  id="previewHolder" src="#" alt=""/>
+        </g:else>
+        <script type="text/javascript">
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#previewHolder').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+            $("#originalName").change(function() {
+                readURL(this);
+            });
+        </script>
+    </div>
+
+
+    <div class="clearfix form-actions align-right">
+        <g:if test="${accountHolder?.pictures}">
+            <button type="submit" name="pictureSubmitButton" id="pictureSubmitButton" class="btn btn-info"><i class="icon-ok bigger-110">
+            </i>Update</button>
+        </g:if>
+        <g:else>
+            <button type="submit" name="pictureSubmitButton" id="pictureSubmitButton" class="btn btn-info"><i class="icon-ok bigger-110">
+            </i>Upload</button>
+        </g:else>
+    </div>
+</g:form>
+
+<script type="text/javascript">
+    $('#pictureForm').validate({
+        errorElement: 'div',
+        errorClass: 'help-block',
+        focusInvalid: false,
+        rules: {
+            picture: {
+                required: true
+            }
+        } ,
+        messages: {
+            picture: {
+                required: " "
+            }
+        },
+        invalidHandler: function (event, validator) { //display error alert on form submit
+            $('.alert-danger', $('#pictureForm')).show();
+        },
+        highlight: function (e) {
+            $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+        },
+        success: function (e) {
+            $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+            $(e).remove();
+        }
+    });
+    $("#pictureForm").submit(function (e) {
+        var formData = new FormData(this);
+        $.ajax({
+            url: '${createLink(controller: 'accountHolderInfo', action: 'savePicture')}',
+            type: 'post',
+            data: formData,
+            dataType: 'html',
+            mimeType: 'multipart/form-data',
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function (data) {
+                $('#pictureContent').html(data);
+            }
+        });
+        e.preventDefault();
+    });
+</script>

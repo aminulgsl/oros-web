@@ -1,0 +1,67 @@
+<div class="table-responsive">
+    <table id="managementTableData" class="display dataTable table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th><g:message code="coreBanking.saving.product.min" default="Min"/><span class="red">*</span></th>
+            <th><g:message code="coreBanking.saving.product.max" default="Max"/><span class="red">*</span></th>
+            <th><g:message code="coreBanking.saving.product.circleType" default="Circle Type"/><span class="red">*</span></th>
+            <th><g:message code="coreBanking.saving.product.rateType" default="Rate Type"/><span class="red">*</span></th>
+            <th><g:message code="coreBanking.saving.product.value" default="Value"/><span class="red">*</span></th>
+            <th><g:message code="coreBanking.saving.product.action" default="Action"/></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="entryFormManage odd" id="manageTr">
+            <td class="sorting_1 form-group">
+                <label for="manageMin">
+                    <input type="text" id="manageMin" name="manageMinI" value="" placeholder="0.00" class="input-small amount" >
+                </label>
+                %{--<div id="manageMinMsg" class="errorMsg"><span>Please Enter Min</span></div>--}%
+            </td>
+            <td class="form-group">
+                <label for="manageMax">
+                    <input type="text" id="manageMax" name="manageMaxI" placeholder="0.00" class="input-small amount">
+                </label>
+                %{--<div id="manageMaxMsg" class="errorMsg"><span>Please Enter Max</span></div>--}%
+            </td>
+            <td class="form-group">
+                <label for="manageCircleType">
+                    <select id="manageCircleType" class="form-control " name="manageCircleTypeI">
+                        <option value="">- Select -</option>
+                        <option value="1">Daily</option>
+                        <option value="2">Weekly</option>
+                        <option value="3">Half Monthly</option>
+                        <option value="4">Monthly</option>
+                    </select>
+                </label>
+                %{--<div id="manageCircleTypeMsg" class="errorMsg"><span>Please Select Circle Type</span></div>--}%
+            </td>
+            <td class="form-group">
+                <label for="manageRateType">
+                    <select id="manageRateType" class="form-control" name="manageRateTypeI">
+                        <option value="">- Select -</option>
+                        <option value="1">Flat</option>
+                        <option value="2">Rate</option>
+                    </select>
+                </label>
+                %{--<div id="manageRateTypeMsg" class="errorMsg"><span>Please Select Rate Type</span></div>--}%
+
+            </td>
+            <td class="form-group">
+                <label for="manageValue">
+                    <input type="text" id="manageValue" name="manageValueI" placeholder="0.00" class="input-small amount">
+                </label>
+                %{--<div id="manageValMsg" class="errorMsg"><span>Please Enter Value</span></div>--}%
+            </td>
+
+            <td class="center">
+                <button id="manageAdd" class="btn btn-default navbar-btn" type="button">
+                    <g:message code="coreBanking.saving.product.button.add" default="Add"/>
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+

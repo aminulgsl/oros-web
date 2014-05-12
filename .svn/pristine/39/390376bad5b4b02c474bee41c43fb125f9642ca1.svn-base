@@ -1,0 +1,13 @@
+<div class="">
+    <span id="accountCategoryId">Account Category:${accountCategory?accountCategory:'No Data'}</span><br/>
+    <span id="aa">Account Type:${accountType?accountType:'No Data'}</span><br/>
+    <span id="df">Client Id:${clientId?clientId:'No Data'}</span> <br/>
+    <table>
+       <g:each in="${joinClient}" var='client'>
+                <tr>
+                    <td>Clients:${client}</td>
+                </tr>
+       </g:each>
+
+    </table>
+</div>

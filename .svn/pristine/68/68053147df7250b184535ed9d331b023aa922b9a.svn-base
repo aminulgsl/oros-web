@@ -1,0 +1,210 @@
+<g:form class="form-horizontal" method="post" name="retailNomineeInfoForm" id="retailNomineeInfoForm" role="form" url="[action: 'saveRetailNomineeInfo', controller: 'retailClient']" onsubmit="return false;">
+
+    <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+
+                    <input type="hidden" name="retailAccount" value="${retailAccount?.id}">
+                    <input type="hidden" name="id" value="${retailNominee?.id}" />
+
+                    <div class="form-group">
+                      <label for="firstName" class="col-sm-5 col-xs-6 control-label">First Name</label>
+                      <div class="col-sm-7 col-xs-8">
+                           <input type="text" class="" placeholder="First Name" id="firstName" name="firstName" value="${retailNominee?.firstName}">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="lastName" class="col-sm-5 col-xs-6 control-label">Last Name</label>
+                      <div class="col-sm-7 col-xs-8">
+                          <input type="text" class="" placeholder="Last Name" id="lastName" name="lastName" value="${retailNominee?.lastName}">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="email" class="col-sm-5 col-xs-6 control-label">Email</label>
+                      <div class="col-sm-7 col-xs-8">
+                           <input type="email" class="" placeholder="Email" id="email" name="email" value="${retailNominee?.email}">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="addressLine2" class="col-sm-5 col-xs-6 control-label">Address Line2</label>
+                      <div class="col-sm-7 col-xs-8">
+                          <input type="text" class="" placeholder="Second Address" id="addressLine2" name="addressLine2" value="${retailNominee?.addressLine2}">
+                      </div>
+                    </div>
+
+                    <div class="form-group ${hasErrors(bean: retailNomineeCommand, field: 'accountNo', 'has-error')}">
+                      <label for="accountNo" class="col-sm-5 col-xs-6 control-label">Account No<span class="red">*</span></label>
+                      <div class="col-sm-7 col-xs-8">
+                          <input type="text" class="required" placeholder="Account No" id="accountNo" name="accountNo" value="${retailNominee?.accountNo}">
+                      </div>
+                    </div>
+
+                  <div class="form-group ${hasErrors(bean: retailNomineeCommand, field: 'dob', 'has-error')}">
+                      <label class="col-sm-5 col-xs-6 control-label" for="dob">
+                          Date of Birth
+                      </label>
+
+                      <div class="col-sm-5 col-xs-8">
+                          <div class="clearfix">
+                              <div class="input-append date input-group" id="dob">
+                                  <input type="date" id="dobEdit" name="dob"
+                                         class="form-control datepicker" data-date-format="dd/mm/yyyy" value="${retailNominee?.dob?.format('dd/MM/yyyy')}"/>
+                                  <span class="input-group-addon add-on"><i class="icon-calendar"></i></span>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+
+
+
+                  <div class="form-group">
+                      <label for="branchName" class="col-sm-5 col-xs-6 control-label">Branch name</label>
+                      <div class="col-sm-7 col-xs-8">
+                        <input type="text" class="" placeholder="Branch Name Where Account is Held" id="branchName" name="branchName" value="${retailNominee?.branchName}">
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="status" class="col-sm-5 col-xs-6 control-label">Status</label>
+                      <div class="col-sm-7 col-xs-8">
+                          <select id="status" class="" name="status">
+                              <option value="">-Select-</option>
+                              <option value="1" ${retailNominee?.status == 1 ? 'selected' : ''}>Active</option>
+                              <option value="0" ${retailNominee?.status == 0 ? 'selected' : ''}>Inactive</option>
+                          </select>
+                      </div>
+                  </div>
+
+              </div>
+
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                  <div class="form-group">
+                      <label for="middleName" class="col-sm-5 col-xs-6 control-label">Middle Name</label>
+                      <div class="col-sm-7 col-xs-8">
+                        <input type="text" class="" placeholder="Middle Name" id="middleName" name="middleName" value="${retailNominee?.middleName}">
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="nomineeContactNo" class="col-sm-5 col-xs-6 control-label">Contact No</label>
+                        <div class="col-sm-7 col-xs-8">
+                            <input type="text" class="" placeholder="Contact No" id="nomineeContactNo" name="contactNo" value="${retailNominee?.contactNo}">
+                        </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="addressLine1" class="col-sm-5 col-xs-6 control-label">Address Line1</label>
+                        <div class="col-sm-7 col-xs-8">
+                            <input type="text" class="" placeholder="First Address" id="addressLine1" name="addressLine1" value="${retailNominee?.addressLine1}">
+                        </div>
+                  </div>
+
+                  <div class="form-group ${hasErrors(bean: retailNomineeCommand, field: 'gender', 'has-error')}">
+                      <label for="gender" class="col-sm-5 col-xs-6 control-label">Gender<span class="red">*</span></label>
+                      <div class="col-sm-7 col-xs-8">
+                          <select id="gender" class="required" name="gender">
+                              <option value=''>- Select -</option>
+                              <option value="Male" ${retailNominee?.gender == "Male" ? 'selected' : ''}>Male</option>
+                              <option value="Female" ${retailNominee?.gender == "Female" ? 'selected' : ''}>Female</option>
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="type" class="col-sm-5 col-xs-6 control-label">Nature of Account</label>
+                      <div class="col-sm-7 col-xs-8">
+                          <select id="type" class="" name="type">
+                              <option value=''>- Select -</option>
+                              <option value="current" ${retailNominee?.type == "current" ? 'selected' : ''}>Current</option>
+                              <option value="deposit" ${retailNominee?.type == "deposit" ? 'selected' : ''}>Deposit</option>
+                          </select>
+                      </div>
+                  </div>
+
+                  <div class="form-group">
+                      <label for="relation" class="col-sm-5 col-xs-6 control-label">Relationship with A/C holder</label>
+                      <div class="col-sm-7 col-xs-8">
+                        <input type="text" class="" placeholder="Relationship with A/C holder" id="relation" name="relation" value="${retailNominee?.relation}">
+                      </div>
+                  </div>
+
+
+              </div>
+          </div>
+
+    </div>
+
+    <div class="clearfix form-actions">
+      <div class="align-center">
+          <button type="reset" class="btn">
+              <i class="icon-undo bigger-110"></i>
+              Reset
+          </button>
+          <button type="submit" name="nomineeInfoButton" id="nomineeInfoButton" class="btn btn-info">
+              <i class="icon-ok bigger-110"></i>Create
+          </button>
+      </div>
+    </div>
+
+</g:form>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $(".chosen-select").chosen();
+        $('#retailNomineeInfoForm').validate({
+
+            errorElement: 'small',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                accountNo: {
+                    required: true
+                },
+                dob: {
+                    required: true
+                },
+                gender: {
+                    required: true
+                }
+            } ,
+            messages: {
+                accountNo: {
+                    required: " "
+                },
+                dob: {
+                    required: " "
+                },
+                gender: {
+                    required: " "
+                }
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).remove();
+            },
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                $('.alert-danger', $('#retailNomineeInfoForm')).show();
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    url:"${createLink(controller: 'retailClient', action: 'saveRetailNomineeInfo')}",
+                    type:'post',
+                    data: $("#retailNomineeInfoForm").serialize(),
+                    success:function(data){
+                        $('#page-content').html(data);
+                    },
+                    failure:function(data){
+                    }
+                })
+            }
+        });
+
+    });
+</script>

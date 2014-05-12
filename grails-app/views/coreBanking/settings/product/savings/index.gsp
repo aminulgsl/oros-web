@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
+<head>
+    %{--<meta name="layout" content="oros">--}%
+    <title>OrosCapital - Client</title>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+//       alert("jquery is working");
+        });
+
+    </script>
+
+</head>
+
+<body>
+
+<!-- PAGE CONTENT BEGINS -->
+
+<div class="row">
+<div class="col-xs-12">
+
+<h3 class="header smaller lighter blue"><g:message code="coreBanking.saving.product.index.h3" default="Savings Product List"/>
+    <small>
+        <i class="icon-double-angle-right"></i>
+    </small>
+</h3>
+
+%{--<div class="table-header">
+      --}%%{--Savings Product List--}%%{--
+</div>--}%
+
+<a class="btn btn-default" href="${createLink(controller: 'product', action: 'createProduct')}" id="createSavingsProduct">
+    <span class="glyphicon glyphicon-plus"></span><g:message code="coreBanking.saving.product.index.button" default="Add Product"/>
+</a>
+<div class="clearfix">&nbsp</div>
+<g:if test='${flash.message}'>
+    <div class='alert alert-success '>
+        <i class="icon-bell green"><b>${flash.message}</b></i>
+        <button data-dismiss="alert" class="close" type="button">
+            <i class="icon-remove"></i>
+        </button>
+    </div>
+</g:if>
+<div class="table-responsive">
+<div role="grid" class="dataTables_wrapper" id="sample-table-2_wrapper">
+
+<div class="table-responsive">
+    <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+        <thead>
+        <tr>
+            <th class="center"><g:message code="coreBanking.saving.product.index.table.th.serial" default="Serial"/></th>
+            <th class="center"><g:message code="coreBanking.saving.product.index.table.th.productNm" default="Product Name"/></th>
+            <th class="center"><g:message code="coreBanking.saving.product.index.table.th.productCd" default="Product Code"/></th>
+            <th class="center"><g:message code="coreBanking.saving.product.action" default="Action"/></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        </tbody>
+    </table>
+</div>
+
+%{--<div class="row">--}%
+    %{--<div class="col-sm-6">--}%
+        %{--<div class="dataTables_info" id="sample-table-2_info">Showing 1 to 10 of 23 entries</div>--}%
+    %{--</div>--}%
+    %{--<div class="col-sm-6">--}%
+        %{--<div class="dataTables_paginate paging_bootstrap">--}%
+            %{--<ul class="pagination">--}%
+                %{--<li class="prev disabled"><a href="#"><i class="icon-double-angle-left"></i></a></li>--}%
+                %{--<li class="active"><a href="#">1</a></li>--}%
+                %{--<li><a href="#">2</a></li>--}%
+                %{--<li><a href="#">3</a></li>--}%
+                %{--<li class="next"><a href="#"><i class="icon-double-angle-right"></i></a></li>--}%
+            %{--</ul>--}%
+        %{--</div>--}%
+    %{--</div>--}%
+%{--</div>--}%
+</div>
+</div>
+</div>
+</div>
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        var oTable1 = $('#sample-table-2').dataTable({
+
+            "bProcessing": false,
+            "bServerSide": true,
+            "sAjaxSource": "${g.createLink(controller: 'product',action: 'list')}",
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                $('td:eq(3)', nRow).html(getActionButtons(nRow, aData));
+                return nRow;
+            },
+            "aoColumns": [
+                null,
+                null,
+                null,
+                { "bSortable": false }
+            ] });
+
+        $('#createSavingsProductLink').click(function (e) {
+            var control = this;
+            var url = $(control).attr('href');
+            jQuery.ajax({
+                type: 'POST',
+                url: url,
+                success: function (data, textStatus) {
+                    $('#page-content').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+                }
+            });
+            e.preventDefault();
+        });
+        $('#sample-table-2').on('click', 'a.edit-product', function(e) {
+            var control = this;
+            var productId = $(control).attr('productId');
+            jQuery.ajax({
+                type: 'POST',
+                url: "${g.createLink(controller: 'product',action: 'edit')}?id="+productId,
+                success: function (data, textStatus) {
+                    $('#page-content').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+                }
+            });
+            e.preventDefault();
+        });
+
+        $('#sample-table-2').on('click', 'a.delete-product', function(e) {
+            var control = this;
+            var productId = $(control).attr('productId');
+            jQuery.ajax({
+                type: 'POST',
+                url: "${g.createLink(controller: 'product',action: 'delete')}?id="+productId,
+                success: function (data, textStatus) {
+                    $('#page-content').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+                }
+            });
+            e.preventDefault();
+        });
+    });
+    function getActionButtons(nRow, aData) {
+        var actionButtons = "";
+        actionButtons += '<sec:access controller="product" action="edit"><span class="col-xs-6"><a href="" productId="'+aData.DT_RowId+ '" class="edit-savings-product" title="Edit">';
+        actionButtons += '<span class="green glyphicon glyphicon-edit"></span>';
+        actionButtons += '</a></span></sec:access>';
+        actionButtons += '<sec:access controller="product" action="delete"><span class="col-xs-6"><a href="" productId="'+aData.DT_RowId+ '" class="delete-savings-product" title="Delete">';
+        actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
+        actionButtons += '</a></span></sec:access>';
+        return actionButtons;
+    }
+
+    $('#createSavingsProduct').click(function (e) {
+        var control = this;
+        var url = $(control).attr('href');
+        jQuery.ajax({
+            type: 'POST',
+            url: url,
+            success: function (data, textStatus) {
+                $('#page-content').html(data);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+            }
+        });
+        e.preventDefault();
+    });
+</script>
+
+</body>
+</html>

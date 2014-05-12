@@ -1,0 +1,214 @@
+package com.gsl.oros.core.banking.operation
+
+import com.gsl.oros.core.banking.settings.BankSetup
+import com.gsl.oros.core.banking.settings.Signature
+import grails.converters.JSON
+import org.springframework.web.multipart.MultipartHttpServletRequest
+import org.springframework.web.multipart.commons.CommonsMultipartFile
+
+class AccountOpenController {
+    def attachmentService
+
+    def index() {
+        int tabSelector = 1
+        render(view: '/coreBanking/settings/operation/accountOpen', model: [tabSelector: tabSelector, dateFormat: BankSetup.properties.bankDateFormat ? BankSetup.properties.bankDateFormat : "dd/mm/yyyy",
+                dateMask: "99/99/9999", currentDt: new Date().format("dd/MM/yyyy")])
+
+    }
+
+    def createAccount() {
+        render(template: '/coreBanking/settings/operation/createAccount')
+    }
+
+    def save() {
+        Signature signInstance = new Signature(params)
+
+        MultipartHttpServletRequest mpr = (MultipartHttpServletRequest) request;
+        CommonsMultipartFile file = (CommonsMultipartFile) mpr.getFile("imag")
+
+        String clientID = Integer.toString(15)
+        def originalFilename = file.originalFilename
+        long uniqueNumber = new Date().getTime()
+        def fileNameToSave = uniqueNumber + "_" + originalFilename
+
+
+
+        String fileName = file.getContentType()
+        String filePath = request.getSession().getServletContext().getRealPath("/");
+        String name = file.getOriginalFilename()
+        String type = file.getContentType().substring(6)
+        Long userId = 15
+
+        String filename = file.getOriginalFilename()
+        String urlLink = "D:/GSL/clientPhotos" + "/" + userId + "/" + fileNameToSave.substring(1, fileNameToSave.length() - 4)
+        def urlDir = "${resource(dir: 'images/userImages')}" + "/" + userId + "/"
+        //def urlDir = "D:/GSL/clientPhotos" + "/" + userId + "/"
+        def urlFile = fileNameToSave
+
+        signInstance.accountNo = 1000
+        signInstance.name = fileNameToSave.substring(1, fileNameToSave.length() - 4)
+        signInstance.nameExtension = name
+        signInstance.type = type
+        signInstance.urlLink = urlLink
+
+        try {
+            if (originalFilename.empty) {
+                render(contentType: 'text/json') {
+                    [success: true, message: 'Image Should Be Selected First', noImage: 1]
+                }
+            }
+            attachmentService.storeImage(file, fileNameToSave, clientID)
+            signInstance.save(failOnError: true)
+            flash.message = "Saved Successfully"
+            def clientImage = "/clientPhotos/" + clientID + "/" + fileNameToSave
+            def result = [success: true, imagePath: clientImage, message: flash.message]
+            render result as JSON
+
+
+        } catch (Exception e) {
+            flash.message = "Can not be Saved Successfully"
+        }
+
+/*        try {
+            if (name.empty) {
+                render(contentType: 'text/json') {
+                    [success: true, message: 'Image Should Be Selected First', noImage: 1]
+                }
+            }
+            signInstance.save(failOnError: true)
+            flash.message = "Saved successfully"
+            render(view: '/coreBanking/settings/operation/_attachmentInformation')
+            byte[] userImage = f.getBytes()
+            FileUtils.writeByteArrayToFile(new File(grailsApplication.config.images.location.toString() + File.separator + userId, fileNameToSave), userImage)
+            String fullPath = filePath + grailsApplication.config.images.location.substring(8) + fileNameToSave
+            def filesName = [success: true, imgPath: urlLink, urlDir: urlDir, urlFile: urlFile, message: flash.message]
+            render filesName as JSON
+        } catch (Exception e) {
+            flash.message = "Can not be Saved Successfully"
+        }*/
+    }
+
+    def saveAccount() {
+        println("the params are " + params)
+        def clientId = params.clientId
+        String clientName = "Client A (" + clientId + ")"
+
+        def accountType = params.accountTypeId
+        if (accountType == 1) {
+            accountType = "Individual A/C (" + accountType + ")"
+        } else {
+            accountType = "Joint A/C (" + accountType + ")"
+        }
+        //split the string
+        def joinClient = params.jointClients
+        String joinClnts = joinClient.toString();
+        String delimiter = ",";
+        String[] jointAccHolder;
+        jointAccHolder = joinClnts.split(delimiter);
+        List<String> jointAccHolderList = Arrays.asList(jointAccHolder);
+
+        String accountCategoryName
+        int accountCategory = Integer.parseInt(params.accountCategoryId)
+        if (accountCategory == 1) {
+            accountCategoryName = "Savings Ac"
+        } else {
+            accountCategoryName = "Current Ac"
+        }
+
+        def tabSelector = 1
+        render(view: '/coreBanking/settings/operation/accountOpen', model: [accountCategory: accountCategoryName, accountType: accountType, clientId: clientName, joinClient: jointAccHolderList, tabSelector: tabSelector])
+    }
+
+    def acInfoSave(AcInfoCommand acInfoCommand) {
+        if (request.method == 'POST') {
+            println("it is ok")
+            int tabSelector = 1
+            if (!acInfoCommand.hasErrors()) {
+                flash.message = "Add Successfully"
+                //redirect(controller: 'accountOpen', action: 'index')
+                render(view: '/coreBanking/settings/operation/accountOpen', model: [commandObj: acInfoCommand, tabSelector: tabSelector])
+            } else {
+                render(view: '/coreBanking/settings/operation/accountOpen', model: [commandObj: acInfoCommand, tabSelector: tabSelector])
+            }
+        }
+    }
+
+    def introducerInfoSave(IntroducerInfoCommand introducerInfoCommand) {
+        if (request.method == 'POST') {
+            int tabSelector = 2
+            if (!introducerInfoCommand.hasErrors()) {
+                flash.message = "Save Successfully"
+                render(view: '/coreBanking/settings/operation/accountOpen',
+                        model: [commandObj: introducerInfoCommand, tabSelector: tabSelector])
+
+            } else {
+                render(view: '/coreBanking/settings/operation/accountOpen', model: [commandObj: introducerInfoCommand, tabSelector: tabSelector])
+
+            }
+        }
+    }
+
+
+    def otherBankAccInfoSave(OtherBankAcInfoCommand otherBankAcInfoCommand) {
+        if (request.method == 'POST') {
+            int tabSelector = 3
+            if (!otherBankAcInfoCommand.hasErrors()) {
+                flash.message = "Save Successfully"
+                render(view: '/coreBanking/settings/operation/accountOpen', model: [commandObj: otherBankAcInfoCommand, tabSelector: tabSelector])
+            } else {
+                render(view: '/coreBanking/settings/operation/accountOpen', model: [commandObj: otherBankAcInfoCommand, tabSelector: tabSelector])
+            }
+        }
+    }
+}
+
+class AcInfoCommand {
+    String accountPurpose
+    String sourceFund
+    String acOpenedBy
+    String natureOfAccount
+    String titleOfAcc
+    static constraints = {
+        accountPurpose blank: false, nullable: false
+        sourceFund blank: false, nullable: false
+        acOpenedBy blank: false
+        natureOfAccount blank: false
+        titleOfAcc blank: false
+    }
+}
+
+class IntroducerInfoCommand {
+    String firstName
+    String address
+    Long accNo
+    String contactNo
+    static constraints = {
+        firstName blank: false, nullable: false
+        address blank: false, nullable: false
+        accNo blank: false
+        contactNo blank: false
+        contactNo blank: false, validator: { val, obj ->
+            println("the contact no is " + val)
+            if (val.length() < 11)
+                return 'accountOpen.introduceInfo.contactNo'
+        }
+    }
+}
+
+class OtherBankAcInfoCommand {
+    String titleAccount
+    String otherBankBranch
+    Long otherBankAcNo
+    String otherBankType
+    String otherBankSortCode
+    static constraints = {
+        titleAccount blank: false, nullable: false, validator: { val, obj ->
+            if (val.length() < 3)
+                return "accountOpen.OtherBankInfo.titleAccount"
+        }
+        otherBankBranch blank: false, nullable: false
+        otherBankAcNo blank: false
+        otherBankType blank: false
+        otherBankSortCode blank: false
+    }
+}

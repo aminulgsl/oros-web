@@ -1,0 +1,66 @@
+<div class='alert alert-success' id="signEmptyMessage">%{-- if error--}%
+
+</div>
+
+<div class='alert alert-success' id="signSelectedMessage">%{-- if success--}%
+
+</div>
+%{--<div class="table-responsive">
+    <table class="table">
+        <tr class="success">
+            <th>SI No</th>
+            <th>Name</th>
+            <th>Account No</th>
+            <th>Image</th>
+            <th>Signature</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <g:each in="${joinClient}" var='client'>
+            <tr>
+                <td>1</td>
+                <td>${client}</td>
+                <td>05218050256</td>
+                <td><img src="${resource(dir: 'images', file: 'grails_logo.png')}" alt="Grails"/></td>
+                <td>
+                    <form name="signUpload" id="signUpload" class="signUpload1" action="" method="POST"
+                          enctype="multipart/form-data">
+                        <input type="file" name="photo" id="imgId"
+                               style="width: 100px;display: inline;background: darkolivegreen"/>
+                        <input type="submit" value="Upload" id="upload" style="background: #696969"/><br/>
+
+                        <div id="signPreview" class="signPreview1">
+                            <span id="signatureShow"></span>
+                            <input type="button" value="Edit" id="editSignature" class="editSignature1"
+                                   style="background: darkolivegreen;width: 60px;height: 30px">
+                        </div>
+                    </form>
+                </td>
+
+            </tr>
+        </g:each>
+        <tr>
+
+        </tr>
+    </table>
+</div>--}%
+<div class="alert alert-block alert-success">
+    <div class='alert alert-success' id="signEmptyMessage"></div>%{-- if error--}%
+    <div class='alert alert-success' id="signSelectedMessage"></div>%{-- if success--}%
+    <div class="preview">
+        <img id="ImgPreview" src="#" class="preview" width="80" height="60"/>
+
+        <div>
+            <button type="button" id="removeImage" class="btn btn-success">Edit</button>
+        </div>
+    </div>
+
+    <form id="imgUpload" class="imgUpload1">
+        <span class="btn_upload">
+            <input type="file" multiple id="imag" name="imag" title=""/>
+            <input class="btn btn-sm" type="submit" value="Upload" id="uploadId"/>
+        </span>
+    </form>
+</div>
+
+<div id="signShow"></div>

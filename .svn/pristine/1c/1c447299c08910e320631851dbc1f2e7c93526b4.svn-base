@@ -1,0 +1,142 @@
+<html>
+<head>
+    <title>OrosCapital - FiscalYear List</title>
+</head>
+
+<body>
+<div class="row">
+    <div class="col-xs-12">
+        <g:if test='${flash.message}'>
+            <div class='alert alert-success '>
+                <i class="icon-bell green"><b>${flash.message}</b></i>
+            </div>
+        </g:if>
+    </div>
+    <sec:access controller="fiscalYear" action="create">
+        <div class="col-xs-12">
+            <span class="navbar-right">
+                <a href="${g.createLink(controller: 'fiscalYear', action: 'create')}" id="createFiscalYear"
+                   class="btn btn-success">
+                    <g:message code="coreBanking.accounting.fiscalYear.add.button" default="Add Fiscal Year"/>
+                    <span class="glyphicon"></span></a>
+            </span>
+        </div>
+    </sec:access>
+
+    <div class="col-xs-12">
+        <div class="table-header">
+            <g:message code="coreBanking.accounting.fiscalYear.list.title" default="FiscalYear List"/>
+        </div>
+
+        <div class="table-responsive">
+            <table id="sample-table-2" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th class="center">
+                        <span class="glyphicon glyphicon-list"></span>
+                        <g:message code="default.serial.label" default="Serial"/>
+                    </th>
+                    <th class="center">
+                        <g:message code="coreBanking.accounting.fiscalYear.beginDate.label"
+                                   default="Begin Date"/>
+                    </th>
+                    <th class="center">
+                        <g:message code="coreBanking.accounting.fiscalYear.endDate.label"
+                                   default="Ending Date"/>
+                    </th>
+                    <th class="center">
+                        <g:message code="coreBanking.accounting.fiscalYear.closed.label" default="Closed"/>
+                    </th>
+                    <th class="center">
+                        <span class="glyphicon glyphicon-tasks"></span>
+                        <g:message code="default.action.label" default="Action"/></th>
+                </tr>
+                </thead>
+
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var oTable1 = $('#sample-table-2').dataTable({
+            "sDom": "<'row'<'col-md-4'><'col-md-4'><'col-md-4'f>r>t<'row'<'col-md-4'l><'col-md-4'i><'col-md-4'p>>",
+            "bProcessing": false,
+            "bAutoWidth": true,
+            "bServerSide": true,
+            "sAjaxSource": "${g.createLink(controller: 'fiscalYear',action: 'list')}",
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                $('td:eq(4)', nRow).html(getActionButtons(nRow, aData));
+                return nRow;
+            },
+            "aoColumns": [
+                { "bSortable": false },
+                { "bSortable": false },
+                { "bSortable": false },
+                { "bSortable": false },
+                { "bSortable": false }
+
+            ]
+        });
+        $('#createFiscalYear').click(function (e) {
+            var control = this;
+            var url = $(control).attr('href');
+            jQuery.ajax({
+                type: 'POST',
+                url: url,
+                success: function (data, textStatus) {
+                    $('#page-content').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+                }
+            });
+            e.preventDefault();
+        });
+        $('#sample-table-2').on('click', 'a.edit-fiscalYear', function (e) {
+            var control = this;
+            var fiscalYearId = $(control).attr('fiscalYearId');
+            jQuery.ajax({
+                type: 'POST',
+                url: "${g.createLink(controller: 'fiscalYear',action: 'update')}?id=" + fiscalYearId,
+                success: function (data, textStatus) {
+                    $('#page-content').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                }
+            });
+            e.preventDefault();
+        });
+
+        $('#sample-table-2').on('click', 'a.delete-fiscalYear', function (e) {
+            var control = this;
+            var fiscalYearId = $(control).attr('fiscalYearId');
+            jQuery.ajax({
+                type: 'POST',
+                url: "${g.createLink(controller: 'fiscalYear',action: 'delete')}?id=" + fiscalYearId,
+                success: function (data, textStatus) {
+                    $('#page-content').html(data);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                    $('#'+updateDiv).html(data);
+                }
+            });
+            e.preventDefault();
+        });
+    });
+    function getActionButtons(nRow, aData) {
+        var actionButtons = "";
+        actionButtons += '<sec:access controller="fiscalYear" action="update"><span class="col-xs-6"><a href="" fiscalYearId="' + aData.DT_RowId + '" class="edit-fiscalYear" title="Edit">';
+        actionButtons += '<span class="green glyphicon glyphicon-edit"></span>';
+        actionButtons += '</a></span></sec:access>';
+        actionButtons += '<sec:access controller="fiscalYear" action="delete"><span class="col-xs-6"><a href="" fiscalYearId="' + aData.DT_RowId + '" class="delete-fiscalYear" title="Delete">';
+        actionButtons += '<span class="red glyphicon glyphicon-trash"></span>';
+        actionButtons += '</a></span></sec:access>';
+        return actionButtons;
+    }
+</script>
+</body>
+</html>

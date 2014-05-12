@@ -1,0 +1,34 @@
+package com.gsl.oros.core.banking.agent
+
+
+import com.gsl.oros.core.banking.settings.Address
+import com.gsl.oros.core.banking.attachments.Attachments
+import com.gsl.oros.core.banking.settings.Country
+import com.gsl.plugin.attachments.OrosAttachment
+
+class PersonalInfo {
+
+    String firstName
+    String middleName
+    String lastName
+    String gender
+    String maritalStatus
+    String nationalID
+    String profession
+    Country nationality
+    Country nationality2
+    Country countryofBirth
+    Boolean status=true
+
+    static hasMany = [contactAddress:Address, residentialAddress:Address,attachments:OrosAttachment,additionalDetail:AdditionalDetail,clientHelp:ClientHelp,thirdParty:ThirdParty]
+
+    static constraints = {
+        contactAddress nullable: true
+        residentialAddress nullable: true
+        middleName nullable: true
+        maritalStatus nullable: true
+        nationalID nullable: true
+        profession nullable: true
+        nationality2 nullable: true
+    }
+}

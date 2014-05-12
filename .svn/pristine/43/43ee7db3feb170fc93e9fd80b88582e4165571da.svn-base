@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
+<head>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <style>
+    .form-control, label, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+        font-size: 12px;
+    }
+    label {
+        max-width: 150px;
+    }
+    @media (max-width: 480px) {
+        .nav-tabs > li {
+            float: none;
+        }
+    }
+    .error {
+        border-style: solid;
+        border-width: 2px;
+        border-color: red;
+    }
+    .success {
+        background-color: green;
+    }
+
+    </style>
+    <title>OrosCapital - Account Open</title>
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+          %{--alert('${tabSelector}');--}%
+               $(".signPreview1").hide();
+               $('#signSelectedMessage').hide();
+               $('#signEmptyMessage').hide();
+               $(".signUpload1").submit(function(e){
+                    var formObj = $(this);
+                    var formURL = formObj.attr("save");
+                    //var formData = new FormData(document.forms.namedItem("signUpload"));
+                    var formData = new FormData(this);
+                    $.ajax({
+                        url:"${createLink(controller: 'accountOpen', action: 'save')}",
+                        type: 'POST',
+                        data:  formData,
+                        dataType:'json',
+                        mimeType:"multipart/form-data",
+                        contentType: false,
+                        cache: false,
+                        processData:false,
+                        success: function (data){
+                        $(".signPreview1").show();
+                        var dir=data.urlDir;
+                        var file=data.urlFile;
+
+                        formObj.find('span#signatureShow').html('<img src="'+ dir + '/' + file +'" width=80 height=80/>');
+
+                         var message=data.message
+                         var messageValue=data.noImage
+                         if(messageValue==1){
+                          $('#signSelectedMessage').hide();
+                          $('#signEmptyMessage').html('<i class="icon-bell green"></i> <b>'+ data.message+'</b>').show();
+                           }else{
+                           $('#signEmptyMessage').html(data.message).hide();
+                           $('#signSelectedMessage').html('<i class="icon-bell green"></i> <b>'+ data.message+'</b>').show();
+                           }
+                           }
+                          });
+                          e.preventDefault();
+                          e.unbind();
+                       });
+
+                      $('.editSignature1').click(function(){
+                      $(".signPreview1").hide();
+                      $("#imgId").val(null);
+                      $("#msg").hide();
+                      });
+
+          var dateF = "${dateFormat}"
+          var dateM =" ${dateMask}"
+
+
+          $("#dateOfOpen").datepicker({
+              format: dateF
+          }).on('changeDate', function (ev) {
+                      $(this).datepicker('hide');
+                  });
+
+          $("#dateOfOpen").inputmask(dateM);
+
+
+                    if('${tabSelector}'==1){
+                    $('#accountInfoListElement').addClass( "active" );
+                    $('#accountInformation').addClass( "active" );
+                    $('#accountInfoListElement').show();
+
+                    $('#introducerInfoListElement').removeClass( "active" );
+                    $('#otherBankAccountInfoListElement').removeClass( "active" );
+                    $('#attachmentId').removeClass( "active" );
+                    $('#basicInfo').removeClass( "active" );
+                    };
+
+                    if('${tabSelector}'==2){
+                    $('#introducerInfoListElement').addClass( "active" );
+                    $('#introducerInformation').addClass( "active" );
+                    $('#introducerInfoListElement').show();
+
+                    $('#accountInfoListElement').removeClass( "active" );
+                    $('#otherBankAccountInfoListElement').removeClass( "active" );
+                    $('#attachmentId').removeClass( "active" );
+                    $('#basicInfo').removeClass( "active" );
+                    };
+
+                    if('${tabSelector}'==3){
+                    $('#otherBankAccountInfoListElement').addClass( "active" );
+                    $('#otherBankAccountInfo').addClass( "active" );
+                    $('#otherBankAccountInfoListElement').show();
+
+                    $('#accountInfoListElement').removeClass( "active" );
+                    $('#introducerInfoListElement').removeClass( "active" );
+                    $('#attachmentId').removeClass( "active" );
+                    $('#basicInfo').removeClass( "active" );
+                    };
+
+                /*Account Info Form Submit*/
+               $("#accountInfoForm").submit(function (e){
+                  if(!$("#accountInfoForm").valid()) return false
+                  $.ajax({
+                  type: "POST",
+                  dataType:"html",
+                  url: "${createLink(controller: "accountOpen",action: "acInfoSave")}",
+                  data: $(this).serialize(),
+                  success: function (data) {
+                  $("#page-content").html(data);
+                  }
+                  });
+                  return false
+                  e.preventDefault();
+               });
+
+                /*Introducer Info Form Submit*/
+              $("#introducerInfoForm").submit(function (e){
+                  if(!$("#introducerInfoForm").valid()) return false
+                  $.ajax({
+                  type: "POST",
+                  dataType:"html",
+                  url: "${createLink(controller: "accountOpen",action: "introducerInfoSave")}",
+                  data: $(this).serialize(),
+                  success: function (data) {
+                  $("#page-content").html(data);
+                  }
+                  });
+                  return false
+                  e.preventDefault();
+                });
+
+              /*OtherBank Info Form Submit*/
+              $("#otherBankInfoForm").submit(function (e){
+                  if(!$("#otherBankInfoForm").valid()) return false
+                  $.ajax({
+                      type: "POST",
+                      dataType:"html",
+                      url: "${createLink(controller: "accountOpen",action: "otherBankAccInfoSave")}",
+                      data: $(this).serialize(),
+                      success: function (data) {
+                          $("#page-content").html(data);
+                      }
+                  });
+                  return false
+                  e.preventDefault();
+              });
+
+          /*add for signature upload*/
+          $('.preview').hide();
+          $("#imag").change(function () {
+              $('.preview').show();
+              var imgControlName = "#ImgPreview";
+              readURL(this, imgControlName);
+          });
+          function readURL(input, imgControlName) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                      $(imgControlName).attr('src', e.target.result);
+                  }
+                  reader.readAsDataURL(input.files[0]);
+              }
+          }
+          $("#removeImage").click(function (e) {
+              $('.preview').hide();
+          });
+          /*ajax form submit(image upload)*/
+          $("#imgUpload").submit(function (e) {
+              var formObj = $(this);
+              var formURL = formObj.attr("save");
+              //var formData = new FormData(document.forms.namedItem("signUpload"));
+              var formData = new FormData(this);
+              $.ajax({
+                  url: "${createLink(controller: 'accountOpen', action: 'save')}",
+                  type: 'POST',
+                  data: formData,
+                  dataType: 'json',
+                  mimeType: "multipart/form-data",
+                  contentType: false,
+                  cache: false,
+                  processData: false,
+                  success: function (data) {
+                      var message = data.message
+                      var messageValue = data.noImage
+                      if (messageValue == 1) {
+                          $('#signSelectedMessage').hide();
+                          $('#signEmptyMessage').html('<i class="icon-bell green"></i> <b>' + data.message + '</b>').show();
+                      } else {
+                          $('#signEmptyMessage').html(data.message).hide();
+                          $('#signSelectedMessage').html('<i class="icon-bell green"></i> <b>' + data.message + '</b>').show();
+                      }
+                  }
+              });
+              e.preventDefault();
+              e.unbind();
+          });
+          $("#uploadId").click(function (e) {
+              //$("#imag").val(null);
+              $('.preview').hide();
+          });
+
+          /*Jquery validation accountOpen form(account information)*/
+          $('#accountInfoForm').validate({
+              errorElement: 'div',
+              errorClass: 'help-block',
+              focusInvalid: false,
+              rules: {
+                  dateOfOpen:{
+                  required:true
+                  },
+                  accountPurpose: {
+                      required: true
+                  },
+                  sourceFund: {
+                      required: true
+                  },
+                  monthlyIncome: {
+                      digits:true,
+                      required: true
+
+                  },
+                  initialDeposit: {
+                      digits:true,
+                      required: true
+                  },
+                  residentialStatus: {
+                       required: true
+                  },
+                  acOpenedBy:{
+                   required:true
+                  },
+                  acceptance:{
+                   required:true
+                  }
+              } ,
+              messages: {
+                  dateOfOpen:{
+                      required:"Please select date."
+                  },
+                  accountPurpose: {
+                      required: "Please provide account purpose."
+                  },
+                  sourceFund: {
+                      required: "Please provide source of fund."
+                  },
+                  monthlyIncome: {
+                      required: "Please provide your monthly income."
+                  },
+                  initialDeposit: {
+                      required: "Please provide your initial deposit."
+                  },
+                  residentialStatus: {
+                      required: "Please mention your residential status."
+                  },
+                  acOpenedBy:{
+                      required:"Please mention the name of account opened by."
+                  },
+                  acceptance:{
+                    required:"Please select the acceptance terms and conditions."
+                  }
+              },
+              invalidHandler: function (event, validator) { //display error alert on form submit
+                  $('.alert-danger', $('#accountInfoForm')).show();
+              },
+
+              highlight: function (e) {
+                  $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+              },
+
+              success: function (e) {
+                  $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                  $(e).remove();
+              }
+          });
+
+          /*Jquery validation accountOpen form(introducer information)*/
+          $('#introducerInfoForm').validate({
+              errorElement: 'div',
+              errorClass: 'help-block',
+              focusInvalid: false,
+              rules: {
+                  firstName: {
+                      required: true
+                  },
+                  address: {
+                      required: true
+                   },
+                  accNo: {
+                      digits:true,
+                      required: true
+
+                  },
+                  contactNo: {
+                      digits:true,
+                      required: true
+                  },
+                  relAcNo: {
+                      digits:true,
+                      required: true
+                  }
+              } ,
+              messages: {
+                  firstName: {
+                      required: "Please provide your first name"
+                  },
+                  address: {
+                      required: "Please provide your address."
+                  },
+                  accNo: {
+                      required: "Please provide your account no."
+                  },
+                  contactNo: {
+                      required: "Please provide your contact no."
+                  },
+                  relAcNo: {
+                      required: "Please mention your relational account no."
+                  }
+              },
+              invalidHandler: function (event, validator) { //display error alert on form submit
+                  $('.alert-danger', $('#introducerInfoForm')).show();
+              },
+
+              highlight: function (e) {
+                  $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+              },
+
+              success: function (e) {
+                  $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                  $(e).remove();
+              }
+          });
+
+          /*Jquery validation accountOpen form(otherBank information)*/
+          $('#otherBankInfoForm').validate({
+              errorElement: 'div',
+              errorClass: 'help-block',
+              focusInvalid: false,
+              rules: {
+                  titleAccount: {
+                      required: true
+                  },
+                  otherBankAcNo: {
+                      digits:true,
+                      required: true
+                  },
+                  otherBankBranch: {
+
+                      required: true
+
+                  },
+                  otherBankType: {
+                      required: true
+                  },
+                  otherBankSortCode: {
+                      required: true
+                  }
+              } ,
+              messages: {
+                  titleAccount: {
+                      required: "Please provide Title Account."
+                  },
+                  otherBankAcNo: {
+                      required: "Please provide other bank Account No."
+                  },
+                  otherBankBranch: {
+                      required: "Please provide other bank branch."
+                  },
+                  otherBankType: {
+                      required: "Please provide bank type."
+                  },
+                  otherBankSortCode: {
+                      required: "Please provide other bank sort code."
+                  }
+              },
+              invalidHandler: function (event, validator) { //display error alert on form submit
+                  $('.alert-danger', $('#otherBankInfoForm')).show();
+              },
+
+              highlight: function (e) {
+                  $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+              },
+
+              success: function (e) {
+                  $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                  $(e).remove();
+              }
+          });
+
+      });
+    </script>
+</head>
+
+<body>
+
+<div class="row-fluid">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                        <span class="sr-only">Account Opening</span>
+                    </button>
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                    <ul id="myTab4" class="nav navbar-nav responsive padding-12 tab-color-blue background-blue">
+                        <li class="active" id="accountInfoListElement">
+
+                            <a href="#accountInformation" data-toggle="tab">Account Information</a>
+                        </li>
+                        <li class="" id="introducerInfoListElement">
+                            <a href="#introducerInfo" data-toggle="tab">Introducer Information</a>
+                        </li>
+
+                        <li class="" id="otherBankAccountInfoListElement">
+                            <a href="#otherBankAccountInfo" data-toggle="tab">Other Bank A/C Information</a>
+                        </li>
+
+                        <li class="" id="attachmentId">
+                            <a href="#attachmentInfo" data-toggle="tab">Attachment</a>
+                        </li>
+
+                        <li class="" id="basicInformationId">
+                            <a href="#basicInfo" data-toggle="tab">Basic Information</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="tab-content responsive">
+            <div class="tab-pane ${tabSelector == 1 ? 'active' : ''}" id="accountInformation">
+                <g:render template='/coreBanking/settings/operation/accountInformation'/>
+            </div>
+
+            <div class="tab-pane ${tabSelector == 2 ? 'active' : ''}" id="introducerInfo">
+                <g:render template='/coreBanking/settings/operation/introducerInformation'/>
+            </div>
+
+            <div class="tab-pane" id="attachmentInfo">
+                <g:render template='/coreBanking/settings/operation/attachmentInformation'/>
+            </div>
+
+            <div class="tab-pane ${tabSelector == 3 ? 'active' : ''}" id="otherBankAccountInfo">
+                <g:render template='/coreBanking/settings/operation/otherBankInformation'/>
+            </div>
+
+            <div class="tab-pane" id="basicInfo">
+                <g:render template='/coreBanking/settings/operation/basicInformation'/>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

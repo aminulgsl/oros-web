@@ -1,0 +1,24 @@
+package com.gsl.oros.core.banking
+
+import com.gsl.uma.saas.Feature
+
+class DashboardController {
+    def imageIndirectService
+    def index() {
+<<<<<<< .mine
+        /*OrosAttachment orosAttachment = new OrosAttachment()
+        orosAttachment.name = "finle"
+        orosAttachment.originalName = "finle.pdf"
+//        orosAttachment.link = "some_link.pdf"
+        orosAttachment.type = "some_link.pdf"
+        orosAttachment.size = 432
+
+        OrosAttachment saved =orosAttachment.save()
+        println("saved")
+        println(saved.link)
+        println(saved.extension)*/
+=======
+>>>>>>> .r733
+        render(view: 'index')
+    }
+}

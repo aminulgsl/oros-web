@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<html>
+<head>
+    %{--<meta name="layout" content="oros">--}%
+
+    <title>OrosCapital - Savings Product</title>
+
+
+
+    %{--<style>--}%
+    %{--@media (max-width: 480px) {--}%
+    %{--.nav-tabs > li {--}%
+        %{--float:none;--}%
+    %{--}--}%
+
+%{--}--}%
+
+
+    %{--</style>--}%
+</head>
+
+<body>
+
+<div class="page-header">
+    <h1><g:message code="coreBanking.saving.product.header" default="Savings Product"/> </h1>
+</div><!-- /.page-header -->
+
+<div class="row">
+    <div class="col-md-12">
+
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header" data-toggle="collapse" data-target="#navbar-collapse-1">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                            %{--<span class="sr-only">Toggle navigation</span>--}%
+
+                        </button>
+
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse " id="navbar-collapse-1">
+                        <ul id="myTab4" class="nav navbar-nav padding-12 tab-color-blue background-blue responsive">
+                            <li <g:if test="${template == 'mainParameters'}">class="active"</g:if>><a href="#mainParameters" data-toggle="tab" id="tabMainParameters">
+                                <g:message code="coreBanking.saving.product.tab.mainParameters" default="Main Parameters"/></a>
+                            </li>
+                            <li <g:if test="${template == 'transactions'}">class="active"</g:if>><a href="#transactions" data-toggle="tab" id="tabTransactions">
+                                <g:message code="coreBanking.saving.product.tab.transactions" default="Transactions"/></a>
+                            </li>
+                            <li <g:if test="${template == 'fees'}">class="active"</g:if>><a href="#fees" data-toggle="tab" id="tabFees">
+                                <g:message code="coreBanking.saving.product.tab.fees" default="Fees"/></a>
+                            </li>
+                            <li <g:if test="${template == 'overdraft'}">class="active"</g:if>><a href="#overdraft" data-toggle="tab" id="tabOverdraft">
+                                <g:message code="coreBanking.saving.product.tab.overdraft" default="Overdraft"/></a>
+                            </li>
+                            <li <g:if test="${template == 'termSetup'}">class="active"</g:if>><a href="#termSetup" data-toggle="tab" id="tabTermSetup">
+                                <g:message code="coreBanking.saving.product.tab.termSetup" default="Term Setup"/></a>
+                            </li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+              %{--<ul id="myTab4" class="nav nav-tabs padding-12 tab-color-blue background-blue responsive">--}%
+
+                  %{--<li class="active">--}%
+                      %{--<a href="#mainParameters" data-toggle="tab">Main Parameters</a>--}%
+                  %{--</li>--}%
+
+                  %{--<li class="">--}%
+                      %{--<a href="#transactions" data-toggle="tab">Transactions</a>--}%
+                  %{--</li>--}%
+                  %{--<li class="">--}%
+                      %{--<a href="#fees" data-toggle="tab">Fees</a>--}%
+                  %{--</li>--}%
+
+                  %{--<li>--}%
+                      %{--<a href="#overdraft" data-toggle="tab">Overdraft</a>--}%
+                  %{--</li>--}%
+
+                  %{--<li class="">--}%
+                      %{--<a href="#termSetup" data-toggle="tab">Term Setup</a>--}%
+                  %{--</li>--}%
+
+              %{--</ul>--}%
+
+
+                  <div class="tab-content responsive">
+
+                      <div class="tab-pane <g:if test="${template == 'mainParameters'}">active</g:if>" id="mainParameters">
+                          <g:render template="/coreBanking/settings/product/savings/mainParameters"/>
+                      </div>
+                      <div class="tab-pane <g:if test="${template == 'transactions'}">active</g:if>" id="transactions">
+                          <g:render template='/coreBanking/settings/product/savings/transactions'/>
+                      </div>
+
+                      <div class="tab-pane <g:if test="${template == 'fees'}">active</g:if>" id="fees">
+                          <g:render template='/coreBanking/settings/product/savings/fees'/>
+                      </div>
+
+                      <div class="tab-pane <g:if test="${template == 'overdraft'}">active</g:if>" id="overdraft">
+                          <g:render template='/coreBanking/settings/product/savings/overdraft'/>
+                      </div>
+                      <div class="tab-pane <g:if test="${template == 'termSetup'}">active</g:if>" id="termSetup">
+                          <g:render template='/coreBanking/settings/product/savings/termSetup'/>
+                      </div>
+
+                  </div>
+
+    </div>
+</div>
+<script type="text/javascript">
+
+
+var tabSelector='${template}';
+
+$(document).ready(function () {
+
+
+    if(tabSelector == "mainParameters"){
+
+        $('#mainParameters').addClass( "active" );
+        $('#tabMainParameters').addClass( "active" );
+        $('#mainParameters').show();
+
+        $('#tabTransactions').addClass( "disabled" );
+        $('#tabFees').addClass( "disabled" );
+        $('#tabOverdraft').addClass( "disabled" );
+        $('#tabTermSetup').addClass( "disabled" );
+
+        $("#tabTransactions").click(function(){
+            return false;
+        });
+
+        $("#tabFees").click(function(){
+            return false;
+        });
+
+        $("#tabOverdraft").click(function(){
+            return false;
+        });
+        $("#tabTermSetup").click(function(){
+            return false;
+        });
+    }
+    else if(tabSelector == "transactions"){
+        $('#transactions').addClass( "active" );
+        $('#tabTransactions').addClass( "active" );
+        $('#transactions').show();
+
+        $('#tabFees').removeClass( "active" );
+        $('#tabOverdraft').removeClass( "active" );
+        $('#tabTermSetup').removeClass( "active" );
+
+        $("#tabFees").click(function(){
+            return false;
+        });
+
+        $("#tabOverdraft").click(function(){
+            return false;
+        });
+        $("#tabTermSetup").click(function(){
+            return false;
+        });
+
+    }
+    else if(tabSelector == "fees"){
+        $('#fees').addClass( "active" );
+        $('#tabFees').addClass( "active" );
+        $('#fees').show();
+
+
+        $('#tabOverdraft').removeClass( "active" );
+        $('#tabTermSetup').removeClass( "active" );
+
+
+
+        $("#tabOverdraft").click(function(){
+            return false;
+        });
+        $("#tabTermSetup").click(function(){
+            return false;
+        });
+
+    }
+    else if(tabSelector == "overdraft"){
+        $('#overdraft').addClass( "active" );
+        $('#tabOverdraft').addClass( "active" );
+        $('#overdraft').show();
+
+        $('#tabTermSetup').removeClass( "active" );
+
+
+        $("#tabTermSetup").click(function(){
+            return false;
+        });
+
+    }
+    else if(tabSelector == "termSetup"){
+        $('#termSetup').addClass( "active" );
+        $('#tabTermSetup').addClass( "active" );
+        $('#termSetup').show();
+
+
+
+
+
+
+    }
+
+
+    $(function () {
+        $("#sol").tooltip();
+        $("#ind").tooltip();
+        $("#nonSol").tooltip();
+        $("#corp").tooltip();
+
+    });
+
+    //$('input:checkbox').removeAttr('checked');
+
+    $(function () {
+        $('#all').on('click', function () {
+            $(this).closest('fieldset').find(':checkbox').prop('checked', this.checked);
+        });
+        $('#checkboxGrp').find(':checkbox').on('click', function () {
+
+            $('#all').attr('checked', false);
+        });
+
+//        categoryName.on('click', function () {
+//            alert(categoryName);
+//
+//        }
+    });
+    $(".amount").css({"direction" : "rtl"});
+    $('input[name=initialAmountMin]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#initialAmountMin').autoNumeric('set', $('#initialAmountMin').val());
+
+
+    $('input[name=initialAmountMax]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#initialAmountMax').autoNumeric('set', $('#initialAmountMax').val());
+
+    $('input[name=balanceMin]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#balanceMin').autoNumeric('set', $('#balanceMin').val());
+
+    $('input[name=balanceMax]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#balanceMax').autoNumeric('set', $('#balanceMax').val());
+
+    %{--$('input[name=startAmountI]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#startAmount').autoNumeric('set', $('#startAmount').val());--}%
+
+
+    %{--$('input[name=endAmountI]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#endAmount').autoNumeric('set', $('#endAmount').val());--}%
+
+    %{--$('input[name=rateI]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#rate').autoNumeric('set', $('#rate').val());--}%
+
+    $('input[name=minCashTransaction]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minCashTransaction').autoNumeric('set', $('#minCashTransaction').val());
+
+    $('input[name=maxCashTransaction]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxCashTransaction').autoNumeric('set', $('#maxCashTransaction').val());
+
+    $('input[name=minCashWithdrw]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minCashWithdrw').autoNumeric('set', $('#minCashWithdrw').val());
+
+    $('input[name=maxCashWithdrw]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxCashWithdrw').autoNumeric('set', $('#maxCashWithdrw').val());
+
+    $('input[name=minCashTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minCashTransfer').autoNumeric('set', $('#minCashTransfer').val());
+
+    $('input[name=maxCashTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxCashTransfer').autoNumeric('set', $('#maxCashTransfer').val());
+
+    %{--$('input[name=cashStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cashStartAmount').autoNumeric('set', $('#cashStartAmount').val());--}%
+
+    %{--$('input[name=cashEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cashEndAmount').autoNumeric('set', $('#cashEndAmount').val());--}%
+
+    %{--$('input[name=cashRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cashRate').autoNumeric('set', $('#cashRate').val());--}%
+
+    %{--$('input[name=transferStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#transferStartAmount').autoNumeric('set', $('#transferStartAmount').val());--}%
+
+    %{--$('input[name=transferEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#transferEndAmount').autoNumeric('set', $('#transferEndAmount').val());--}%
+
+    %{--$('input[name=transferRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#transferRate').autoNumeric('set', $('#transferRate').val());--}%
+
+    %{--$('input[name=withdrwlStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#withdrwlStartAmount').autoNumeric('set', $('#withdrwlStartAmount').val());--}%
+
+    %{--$('input[name=withdrwlEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#withdrwlEndAmount').autoNumeric('set', $('#withdrwlEndAmount').val());--}%
+
+    %{--$('input[name=withdrwlRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#withdrwlRate').autoNumeric('set', $('#withdrwlRate').val());--}%
+
+    %{--$('input[name=chequeStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeStartAmount').autoNumeric('set', $('#chequeStartAmount').val());--}%
+
+    %{--$('input[name=chequeEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeEndAmount').autoNumeric('set', $('#chequeEndAmount').val());--}%
+
+    %{--$('input[name=chequeRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeRate').autoNumeric('set', $('#chequeRate').val());--}%
+
+    %{--$('input[name=chequeTransferStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeTransferStartAmount').autoNumeric('set', $('#chequeTransferStartAmount').val());--}%
+
+    %{--$('input[name=chequeTransferEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeTransferEndAmount').autoNumeric('set', $('#chequeTransferEndAmount').val());--}%
+
+    %{--$('input[name=chequeTransferRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeTransferRate').autoNumeric('set', $('#chequeTransferRate').val());--}%
+
+    %{--$('input[name=chequeWithdrwlStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeWithdrwlStartAmount').autoNumeric('set', $('#chequeWithdrwlStartAmount').val());--}%
+
+    %{--$('input[name=chequeWithdrwlEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeWithdrwlEndAmount').autoNumeric('set', $('#chequeWithdrwlEndAmount').val());--}%
+
+    %{--$('input[name=chequeWithdrwlRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#chequeWithdrwlRate').autoNumeric('set', $('#chequeWithdrwlRate').val());--}%
+
+    $('input[name=minChequeTransaction]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minChequeTransaction').autoNumeric('set', $('#minChequeTransaction').val());
+
+    $('input[name=maxChequeTransaction]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxChequeTransaction').autoNumeric('set', $('#maxChequeTransaction').val());
+
+    $('input[name=minChequeWithdrw]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minChequeWithdrw').autoNumeric('set', $('#minChequeWithdrw').val());
+
+    $('input[name=maxChequeWithdrw]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxChequeWithdrw').autoNumeric('set', $('#maxChequeWithdrw').val());
+
+    $('input[name=minChequeTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minChequeTransfer').autoNumeric('set', $('#minChequeTransfer').val());
+
+    $('input[name=maxChequeTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxChequeTransfer').autoNumeric('set', $('#maxChequeTransfer').val());
+
+    $('input[name=minCardTransaction]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minCardTransaction').autoNumeric('set', $('#minCardTransaction').val());
+
+    $('input[name=maxCardTransaction]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxCardTransaction').autoNumeric('set', $('#maxCardTransaction').val());
+
+    $('input[name=minCardWithdrw]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minCardWithdrw').autoNumeric('set', $('#minCardWithdrw').val());
+
+    $('input[name=maxCardWithdrw]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxCardWithdrw').autoNumeric('set', $('#maxCardWithdrw').val());
+
+    $('input[name=minCardTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minCardTransfer').autoNumeric('set', $('#minCardTransfer').val());
+
+    $('input[name=maxCardTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxCardTransfer').autoNumeric('set', $('#maxCardTransfer').val());
+
+    %{--$('input[name=cardStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardStartAmount').autoNumeric('set', $('#cardStartAmount').val());--}%
+
+    %{--$('input[name=cardEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardEndAmount').autoNumeric('set', $('#cardEndAmount').val());--}%
+
+    %{--$('input[name=cardRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardRate').autoNumeric('set', $('#cardRate').val());--}%
+
+    %{--$('input[name=cardTransferStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardTransferStartAmount').autoNumeric('set', $('#cardTransferStartAmount').val());--}%
+
+    %{--$('input[name=cardTransferEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardTransferEndAmount').autoNumeric('set', $('#cardTransferEndAmount').val());--}%
+
+    %{--$('input[name=cardTransferRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardTransferRate').autoNumeric('set', $('#cardTransferRate').val());--}%
+
+    %{--$('input[name=cardWithdrwlStartAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardWithdrwlStartAmount').autoNumeric('set', $('#cardWithdrwlStartAmount').val());--}%
+
+    %{--$('input[name=cardWithdrwlEndAmount]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardWithdrwlEndAmount').autoNumeric('set', $('#cardWithdrwlEndAmount').val());--}%
+
+    %{--$('input[name=cardWithdrwlRate]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#cardWithdrwlRate').autoNumeric('set', $('#cardWithdrwlRate').val());--}%
+
+    %{--$('input[name=entryMin]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#entryMin').autoNumeric('set', $('#entryMin').val());--}%
+
+    %{--$('input[name=entryMax]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#entryMax').autoNumeric('set', $('#entryMax').val());--}%
+
+    %{--$('input[name=entryValue]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#entryValue').autoNumeric('set', $('#entryValue').val());--}%
+
+    %{--$('input[name=entryMin]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#entryMin').autoNumeric('set', $('#entryMin').val());--}%
+
+    %{--$('input[name=entryMax]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#entryMax').autoNumeric('set', $('#entryMax').val());--}%
+
+    %{--$('input[name=entryValue]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#entryValue').autoNumeric('set', $('#entryValue').val());--}%
+
+    %{--$('input[name=reopenMin]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#reopenMin').autoNumeric('set', $('#reopenMin').val());--}%
+
+    %{--$('input[name=reopenMax]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#reopenMax').autoNumeric('set', $('#reopenMax').val());--}%
+
+    %{--$('input[name=reopenValue]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#reopenValue').autoNumeric('set', $('#reopenValue').val());--}%
+
+    %{--$('input[name=closeMin]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#closeMin').autoNumeric('set', $('#closeMin').val());--}%
+
+    %{--$('input[name=closeMax]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#closeMax').autoNumeric('set', $('#closeMax').val());--}%
+
+    %{--$('input[name=closeValue]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#closeValue').autoNumeric('set', $('#closeValue').val());--}%
+
+    %{--$('input[name=manageMin]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#manageMin').autoNumeric('set', $('#manageMin').val());--}%
+
+    %{--$('input[name=manageMax]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#manageMax').autoNumeric('set', $('#manageMax').val());--}%
+
+    %{--$('input[name=manageValue]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#manageValue').autoNumeric('set', $('#manageValue').val());--}%
+
+    %{--$('input[name=fixedMin]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#fixedMin').autoNumeric('set', $('#fixedMin').val());--}%
+
+    %{--$('input[name=fixedMax]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#fixedMax').autoNumeric('set', $('#fixedMax').val());--}%
+
+    %{--$('input[name=fixedValue]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#fixedValue').autoNumeric('set', $('#fixedValue').val());--}%
+
+    %{--$('input[name=agioMin]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#agioMin').autoNumeric('set', $('#agioMin').val());--}%
+
+    %{--$('input[name=agioMax]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#agioMax').autoNumeric('set', $('#agioMax').val());--}%
+
+    %{--$('input[name=agioValue]').autoNumeric("init", {mDec: ${decimalSep}});--}%
+    %{--$('#agioValue').autoNumeric('set', $('#agioValue').val());--}%
+
+    $('input[name=minDeposit]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minDeposit').autoNumeric('set', $('#minDeposit').val());
+
+    $('input[name=maxDeposit]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxDeposit').autoNumeric('set', $('#maxDeposit').val());
+
+    $('input[name=minWithdrawal]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minWithdrawal').autoNumeric('set', $('#minWithdrawal').val());
+
+    $('input[name=maxWithdrawal]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxWithdrawal').autoNumeric('set', $('#maxWithdrawal').val());
+
+    $('input[name=minTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#minTransfer').autoNumeric('set', $('#minTransfer').val());
+
+    $('input[name=maxTransfer]').autoNumeric("init", {mDec: ${decimalSep}});
+    $('#maxTransfer').autoNumeric('set', $('#maxTransfer').val());
+
+});
+
+
+
+</script>
+</body>
+</html>
