@@ -9,9 +9,9 @@ class RequestMap {
 	HttpMethod httpMethod
 //    Long moduleId = 0L        //ModuleId, FeatureId, FeventsId
 //    Long featureId = 0L        //ModuleId, FeatureId, FeventsId
-    Long eventId
-    Long childOf
-    boolean autoPermit = false
+//    Long eventId
+//    Long childOf
+//    boolean autoPermit = false
 //    String menuText
 //    String description
 
@@ -23,8 +23,8 @@ class RequestMap {
 		url blank: false, unique: true
 		configAttribute blank: false
 		httpMethod nullable: true
-        eventId nullable: true
-        childOf nullable: true
+//        eventId nullable: true
+//        childOf nullable: true
 //        description nullable: true
 	}
 }
