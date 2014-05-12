@@ -34,37 +34,37 @@
 </div><!-- #sidebar-shortcuts -->
 
 <ul class="nav nav-list">
-<g:each in="${session?.sessionMenu}" var="menuItem">
-    <sec:access controller='${menuItem.controllerName}' action='${menuItem.actionName}'>
-        <g:if test="${menuItem.hasSubMenu == true}">
-            <li>
-                <a href="#" class="dropdown-toggle">
-                    <i class="${menuItem.iconClassName}"></i>
-                    <span class="menu-text">${menuItem.menuText}</span>
-                    <b class="arrow icon-angle-down"></b>
-                </a>
-                <ul class="submenu">
-                    <g:each in="${menuItem?.subMenuItemList}" var="subMenuItem">
-                        <sec:access controller='${subMenuItem.controllerName}' action='${subMenuItem.actionName}'>
+    %{--<g:each in="${session?.sessionMenu}" var="menuItem">
+        <sec:access controller='${menuItem.controllerName}' action='${menuItem.actionName}'>
+            <g:if test="${menuItem.hasSubMenu == true}">
+                <li>
+                    <a href="#" class="dropdown-toggle">
+                        <i class="${menuItem.iconClassName}"></i>
+                        <span class="menu-text">${menuItem.menuText}</span>
+                        <b class="arrow icon-angle-down"></b>
+                    </a>
+                    <ul class="submenu">
+                        <g:each in="${menuItem?.subMenuItemList}" var="subMenuItem">
+                            <sec:access controller='${subMenuItem.controllerName}' action='${subMenuItem.actionName}'>
 
-                            <li>
-                                <a href="${createLink(controller: subMenuItem.controllerName, action: subMenuItem.actionName)}"
-                                   class="ajax-link" updatediv="page-content">
-                                    <i class="icon-double-angle-right"></i>${subMenuItem.menuText}</a>
-                            </li>
-                        </sec:access>
-                    </g:each>
-                </ul>
-            </li>
-        </g:if>
-        <g:else>
-            <li>
-                <a href="${createLink(controller: menuItem.controllerName, action: menuItem.actionName)}">
-                    <i class="${menuItem.iconClassName}"></i><span class="menu-text">${menuItem.menuText}</span></a>
-            </li>
-        </g:else>
-    </sec:access>
-</g:each>
+                                <li>
+                                    <a href="${createLink(controller: subMenuItem.controllerName, action: subMenuItem.actionName)}"
+                                       class="ajax-link" updatediv="page-content">
+                                        <i class="icon-double-angle-right"></i>${subMenuItem.menuText}</a>
+                                </li>
+                            </sec:access>
+                        </g:each>
+                    </ul>
+                </li>
+            </g:if>
+            <g:else>
+                <li>
+                    <a href="${createLink(controller: menuItem.controllerName, action: menuItem.actionName)}">
+                        <i class="${menuItem.iconClassName}"></i><span class="menu-text">${menuItem.menuText}</span></a>
+                </li>
+            </g:else>
+        </sec:access>
+    </g:each>--}%
 
 </ul><!-- /.nav-list -->
 
