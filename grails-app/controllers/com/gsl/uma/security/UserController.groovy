@@ -1,8 +1,6 @@
 package com.gsl.uma.security
 
-import com.gsl.uma.saas.ChildEvent
 import grails.converters.JSON
-import grails.plugin.springsecurity.userdetails.GrailsUser
 
 class UserController {
     def springSecurityService

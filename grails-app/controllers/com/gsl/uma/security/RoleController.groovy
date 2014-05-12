@@ -1,14 +1,6 @@
 package com.gsl.uma.security
 
-import com.gsl.uma.saas.AccessEvent
-import com.gsl.uma.saas.AccessFeature
-import com.gsl.uma.saas.AccessSubEvent
-import com.gsl.uma.saas.ChildEvent
-import com.gsl.uma.saas.Events
-import com.gsl.uma.saas.Feature
-import com.gsl.uma.saas.Module
 import grails.converters.JSON
-import org.apache.commons.lang.StringUtils
 
 class RoleController {
     def springSecurityService
@@ -100,79 +92,11 @@ class RoleController {
     }
 
     def roleRight(Long moduleId, Long roleId){
-        Role role = null
-        Module module = null
-        if (request.method == 'POST') {
-            if(params.roleId && params.moduleId){
-                def startTime = System.nanoTime()
-                role = Role.read(roleId)
-                module = Module.read(moduleId)
-                if (role !=null && module !=null && module.status ==true){
-                    List<AccessFeature> roleRightMapList = new ArrayList<AccessFeature>()
-                    AccessFeature aFeature
-                    AccessEvent aEvent
-                    RequestMap requestMap
-                    List<AccessEvent> aEventList
-                    List<AccessSubEvent> subEventList
-                    AccessSubEvent subEvent
-                    boolean hasAccess = false
-                    def featureList = Feature.findAllByModuleAndStatus(module,true)
-                    featureList.each {Feature feature ->
-                        if (feature.status){
-                            requestMap = RequestMap.findByUrl('/'+feature.controllerName+'/'+feature.actionName)
-                            if (requestMap){
-                                aFeature = new AccessFeature(feature.fmenuText,feature.description,requestMap.id)
-//                                aFeature.fmenuText = feature.fmenuText
-//                                aFeature.description = feature.description
-//                                aFeature.requestMapId = requestMap.id
-                                aFeature.id =feature.id
-                                hasAccess = requestMap.configAttribute.contains(role.authority)
-                                aFeature.hasAccess =hasAccess
-                                aEventList = new ArrayList<AccessEvent>()
-                                def eventList = Events.findAllByFeatureAndStatus(feature,true)
-                                eventList.each {Events events ->
-                                       requestMap = RequestMap.findByUrl('/'+events.controllerName+'/'+events.actionName)
-                                       if (requestMap){
-                                           aEvent = new AccessEvent(events.fmenuText,events.description,requestMap.id)
-//                                           aEvent.fmenuText = events.fmenuText
-//                                           aEvent.description = events.description
-//                                           aEvent.requestMapId = requestMap.id
-                                           aEvent.id=events.id
-                                           hasAccess = requestMap.configAttribute.contains(role.authority)
-                                           aEvent.hasAccess =hasAccess
-                                           subEventList = new ArrayList<AccessSubEvent>()
-                                           def childEventList = ChildEvent.findAllByEventsAndAutoPermitAndStatus(events,false,true)
-                                           childEventList.each {ChildEvent childEvent ->
-                                               requestMap = RequestMap.findByUrl('/'+childEvent.controllerName+'/'+childEvent.actionName)
-                                               if (requestMap){
-                                                   subEvent = new AccessSubEvent(childEvent.fmenuText,childEvent.description,requestMap.id)
-                                                   hasAccess = requestMap.configAttribute.contains(role.authority)
-                                                   subEvent.hasAccess =hasAccess
-                                                   subEventList.add(subEvent)
-                                               }
-                                           }
-                                           aEvent.subEvent =subEventList
-                                           aEventList.add(aEvent)
-                                       }
-                                }
-                              aFeature.accessEvent =aEventList
-                              roleRightMapList.add(aFeature)
-                            }
-                        }
-                    }
-                    def endTime = System.nanoTime()
-                    def diff = (endTime-startTime)/1000000000
-                    println("Total time taken for getting request mapping for role right access: ${diff} s")
-                    render (template: 'roleRightList', model: [module:module.menuText,authority:role?.authority,resultList:roleRightMapList])
-                    return
-                }
-            }
-        }
         render (view: 'roleRightForm')
     }
     def saveRoleRight(){
 
-        boolean available = false
+        /*boolean available = false
         if (request.method == 'POST') {
             def startTime = System.nanoTime()
             String accessMapping = params.accessMapping
@@ -220,7 +144,7 @@ class RoleController {
             return
         }
         String output = [available:false] as JSON
-        render output
+        render output*/
     }
 
 }
