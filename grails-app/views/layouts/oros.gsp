@@ -16,17 +16,12 @@
 
     <link href="${resource(dir: 'css/uncompressed', file: 'bootstrap.css')}" rel="stylesheet"/>
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'font-awesome.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'select2.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/jqGrid', file: 'ui.jqgrid.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/compressed', file: 'jquery-ui-1.10.3.full.min.css')}"/>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'select2.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css/jqGrid', file: 'ui.jqgrid.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css/compressed', file: 'jquery-ui-1.10.3.full.min.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'css/compressed', file: 'datepicker.css')}"/>
 
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'chosen.css')}"/>
-
-
-    <!--[if IE 7]>
-		  <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'font-awesome-ie7.css')}" />
-		<![endif]-->
 
     <!-- page specific plugin styles -->
 
@@ -53,11 +48,6 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 
-    <!--[if lt IE 9]>
-		<script src="${resource(dir: 'js/compressed', file: 'html5shiv.js')}"></script>
-		<script src="${resource(dir: 'js/compressed', file: 'respond.min.js')}"></script>
-
-		<![endif]-->
 
     <g:layoutHead/>
     <r:layoutResources/>
@@ -132,46 +122,43 @@
 
 
 <script src="${resource(dir: 'js/uncompressed', file: 'bootstrap.js')}"></script>
-<script src="${resource(dir: 'js/compressed', file: 'typeahead-bs2.min.js')}"></script>
+%{--<script src="${resource(dir: 'js/compressed', file: 'typeahead-bs2.min.js')}"></script>--}%
 
 <!-- page specific plugin scripts -->
 
 <!-- inline scripts related to this page -->
 
-<!--[if lte IE 8]>
-		  <script src="${resource(dir: 'js/uncompressed', file: 'excanvas.js')}"></script>
-<![endif]-->
 
 
 %{--<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>--}%
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery-ui-1.10.3.custom.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery.ui.touch-punch.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery-ui-1.10.3.custom.js')}"></script>--}%
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.ui.touch-punch.js')}"></script>--}%
 
 <script src="${resource(dir: 'js/uncompressed', file: 'chosen.jquery.js')}"></script>
 
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery.slimscroll.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery.easy-pie-chart.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.slimscroll.js')}"></script>--}%
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.easy-pie-chart.js')}"></script>--}%
 
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery.sparkline.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.pie.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.sparkline.js')}"></script>--}%
+%{--<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.js')}"></script>--}%
+%{--<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.pie.js')}"></script>--}%
 
-<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.resize.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.resize.js')}"></script>--}%
 
 <!-- ace scripts -->
 <script src="${resource(dir: 'js/uncompressed', file: 'fuelux.wizard.min.js')}"></script>
 <script src="${resource(dir: 'js/validate', file: 'jquery.validate.min.js')}"></script>
 <script src="${resource(dir: 'js/uncompressed', file: 'additional-methods.min.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'bootbox.min.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'select2.min.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'bootbox.min.js')}"></script>--}%
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'select2.min.js')}"></script>--}%
 
 
 
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery.multiselect.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery.multiselect.filter.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.multiselect.js')}"></script>--}%
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.multiselect.filter.js')}"></script>--}%
 %{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.maskedinput.min.js')}"></script>--}%
-<script src="${resource(dir: 'js/uncompressed', file: 'jquery.inputmask.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'autoNumeric.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.inputmask.js')}"></script>--}%
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'autoNumeric.js')}"></script>--}%
 <script src="${resource(dir: 'js/uncompressed', file: 'ace-elements.min.js')}"></script>
 <script src="${resource(dir: 'js/uncompressed', file: 'iosOverlay.js')}"></script>
 <script src="${resource(dir: 'js/uncompressed', file: 'spin.min.js')}"></script>
@@ -251,60 +238,7 @@
 
     });
 
-    function showSpinner(control) {
 
-        var opts = {
-            lines: 13, // The number of lines to draw
-            length: 11, // The length of each line
-            width: 5, // The line thickness
-            radius: 17, // The radius of the inner circle
-            corners: 1, // Corner roundness (0..1)
-            rotate: 0, // The rotation offset
-            color: '#FFF', // #rgb or #rrggbb
-            speed: 1, // Rounds per second
-            trail: 60, // Afterglow percentage
-            shadow: false, // Whether to render a shadow
-            hwaccel: false, // Whether to use hardware acceleration
-            className: 'spinner', // The CSS class to assign to the spinner
-            zIndex: 2e9, // The z-index (defaults to 2000000000)
-            top: 'auto', // Top position relative to parent in px
-            left: 'auto' // Left position relative to parent in px
-        };
-
-        var target = document.createElement("div");
-        var spinner = new Spinner(opts).spin(target);
-        var overlay = '';
-        if (control == true) {
-            overlay = iosOverlay({
-                text: "Loading...",
-                spinner: spinner
-            });
-        } else {
-            $("div.ui-ios-overlay").removeClass("ios-overlay-show");
-            $("div.ui-ios-overlay").addClass("ios-overlay-hide");
-        }
-    }
-    function clearForm(form) {
-
-        $(':input', form).each(function () {
-            var type = this.type;
-            var tag = this.tagName.toLowerCase(); // normalize case
-
-            // password inputs, and textareas
-            if (type == 'text' || type == 'password' || type == 'hidden' || tag == 'textarea' || type == 'email' || type == 'tel') {
-                this.value = "";
-            }
-
-            // checkboxes and radios need to have their checked state cleared
-            else if (type == 'checkbox' || type == 'radio')
-                this.checked = false;
-
-            // select elements need to have their 'selectedIndex' property set to -1
-            else if (tag == 'select') {
-                this.value = '';
-            }
-        });
-    }
 </script>
 </body>
 </html>

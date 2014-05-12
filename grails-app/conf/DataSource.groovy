@@ -15,7 +15,7 @@ environments {
     development {
         dataSource {
             dbCreate = "create-drop" // one of 'create-drop','update', 'validate', ''
-            url = "jdbc:mysql://localhost:3306/gslcbs"
+            url = "jdbc:mysql://localhost:3306/orosweb"
             password = "root"
             username = "root"
             logSql = true

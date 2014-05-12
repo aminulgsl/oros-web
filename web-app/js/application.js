@@ -1,49 +1,43 @@
-$.fn.refreshDropDown = function(data, options) {
-    try {
-        var ctrlDropDown = this;
-        ctrlDropDown.children().remove();
-        options = $.extend({
-            valueMember : 'id',
-            textMember : 'name',
-            addAllAttributes : false,
-            unselectedValue : '',
-            selectHints : '(Please Select one)'
-// defaultValue : ''
-        }, options);
+function showSpinner(control) {
+    var opts = {
+        lines: 13, // The number of lines to draw
+        length: 11, // The length of each line
+        width: 5, // The line thickness
+        radius: 17, // The radius of the inner circle
+        corners: 1, // Corner roundness (0..1)
+        rotate: 0, // The rotation offset
+        color: '#FFF', // #rgb or #rrggbb
+        speed: 1, // Rounds per second
+        trail: 60, // Afterglow percentage
+        shadow: false, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: 'spinner', // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: 'auto', // Top position relative to parent in px
+        left: 'auto' // Left position relative to parent in px
+    };
 
-// if (options.unselectedValue) {
-        $($('<option></option>')).val(options.unselectedValue).html(options.selectHints).appendTo(ctrlDropDown);
-// }
-
-        $(data).each(function (e) {
-            var opt = $($('<option></option>'));
-            $.each(this, function(k, v) {
-                if (k == options.textMember) opt.html(v);
-                else if (k == options.valueMember) opt.val(v);
-                else if (options.addAllAttributes) opt.attr(k, v);
-            });
-            opt.appendTo(ctrlDropDown);
+    var target = document.createElement("div");
+    var spinner = new Spinner(opts).spin(target);
+    var overlay = '';
+    if (control == true) {
+        overlay = iosOverlay({
+            text: "Loading...",
+            spinner: spinner
         });
-        // initial selection with default
-        if (options.defaultValue) {
-            ctrlDropDown.attr('value', options.defaultValue);
-        }
-    } catch (e) {
-
+    } else {
+        $("div.ui-ios-overlay").removeClass("ios-overlay-show");
+        $("div.ui-ios-overlay").addClass("ios-overlay-hide");
     }
-
-};
-
+}
 function clearForm(form) {
 
-    // iterate over all of the inputs for the form
-
-    $(':input', form).each(function() {
+    $(':input', form).each(function () {
         var type = this.type;
         var tag = this.tagName.toLowerCase(); // normalize case
 
         // password inputs, and textareas
-        if (type == 'text' || type == 'password' || type == 'hidden' || tag == 'textarea') {
+        if (type == 'text' || type == 'password' || type == 'hidden' || tag == 'textarea' || type == 'email' || type == 'tel') {
             this.value = "";
         }
 
@@ -53,9 +47,7 @@ function clearForm(form) {
 
         // select elements need to have their 'selectedIndex' property set to -1
         else if (tag == 'select') {
-            this.selectedIndex = -1;
             this.value = '';
         }
     });
-
 }
