@@ -1,5 +1,7 @@
 package com.gsl.oros.core.banking.settings.accounting
 
+import com.gsl.oros.core.banking.settings.ChartClass
+
 class ChartGroup {
 
     String name

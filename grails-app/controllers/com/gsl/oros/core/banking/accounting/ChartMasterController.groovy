@@ -1,6 +1,6 @@
 package com.gsl.oros.core.banking.accounting
 
-import com.gsl.oros.core.banking.settings.accounting.ChartClass
+import com.gsl.oros.core.banking.settings.ChartClass
 import com.gsl.oros.core.banking.settings.accounting.ChartGroup
 import com.gsl.oros.core.banking.settings.accounting.ChartMaster
 import com.gsl.oros.core.banking.settings.accounting.VatCategory

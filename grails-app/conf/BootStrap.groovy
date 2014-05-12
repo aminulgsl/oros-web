@@ -10,7 +10,7 @@ import com.gsl.oros.core.banking.settings.City
 import com.gsl.oros.core.banking.settings.Country
 import com.gsl.oros.core.banking.settings.Currencys
 import com.gsl.oros.core.banking.settings.State
-import com.gsl.oros.core.banking.settings.accounting.ChartClassType
+import com.gsl.oros.core.banking.settings.ChartClassType
 import com.gsl.oros.core.banking.settings.accounting.PaymentTerms
 import com.gsl.oros.core.banking.settings.accounting.VatCategory
 import com.gsl.uma.saas.ChildEvent

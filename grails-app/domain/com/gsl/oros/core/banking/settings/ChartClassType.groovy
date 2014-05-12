@@ -1,4 +1,6 @@
-package com.gsl.oros.core.banking.settings.accounting
+package com.gsl.oros.core.banking.settings
+
+import com.gsl.oros.core.banking.settings.ChartClass
 
 class ChartClassType {
 

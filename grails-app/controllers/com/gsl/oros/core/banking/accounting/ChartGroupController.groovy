@@ -3,7 +3,7 @@ package com.gsl.oros.core.banking.accounting
 import com.gsl.oros.core.banking.product.accounting.ChartGroupUtility
 
 // import chart Class
-import com.gsl.oros.core.banking.settings.accounting.ChartClass
+import com.gsl.oros.core.banking.settings.ChartClass
 
 // import chart group
 import com.gsl.oros.core.banking.settings.accounting.ChartGroup

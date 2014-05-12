@@ -1,8 +1,8 @@
 package com.gsl.oros.core.banking.accounting
 
 import com.gsl.oros.core.banking.product.accounting.ChartClassUtility
-import com.gsl.oros.core.banking.settings.accounting.ChartClass
-import com.gsl.oros.core.banking.settings.accounting.ChartClassType
+import com.gsl.oros.core.banking.settings.ChartClass
+import com.gsl.oros.core.banking.settings.ChartClassType
 import grails.converters.JSON
 
 
