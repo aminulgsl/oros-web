@@ -7,7 +7,7 @@
     }
     </style>
     <meta charset="utf-8"/>
-    <title>Dashboard - OrosCapital</title>
+    <title>Dashboard - OrosCapital web</title>
 
     <meta name="description" content="overview &amp; stats"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -16,39 +16,15 @@
 
     <link href="${resource(dir: 'css/uncompressed', file: 'bootstrap.css')}" rel="stylesheet"/>
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'font-awesome.css')}"/>
-    %{--<link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'select2.css')}"/>--}%
-    %{--<link rel="stylesheet" href="${resource(dir: 'css/jqGrid', file: 'ui.jqgrid.css')}"/>--}%
-    %{--<link rel="stylesheet" href="${resource(dir: 'css/compressed', file: 'jquery-ui-1.10.3.full.min.css')}"/>--}%
     <link rel="stylesheet" href="${resource(dir: 'css/compressed', file: 'datepicker.css')}"/>
 
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'chosen.css')}"/>
 
-    <!-- page specific plugin styles -->
-
-    <!-- fonts -->
-
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace-fonts.css')}"/>
-
-    <!-- ace styles -->
-
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace-rtl.css')}"/>
     <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace-skins.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'iosOverlay.css')}"/>
-
-    <!--[if lte IE 8]>
-		  <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace-ie.css')}" />
-		<![endif]-->
-
-    <!-- inline styles related to this page -->
-
-    <!-- ace settings handler -->
-
     <script src="${resource(dir: 'js/uncompressed', file: 'ace-extra.js')}"></script>
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-
-
     <g:layoutHead/>
     <r:layoutResources/>
 
@@ -89,31 +65,8 @@
         <i class="icon-double-angle-up icon-only bigger-110"></i>
     </a>
 </div><!-- /.main-container -->
-%{--<g:render template="/orosSpinner"/>--}%
-<!-- basic scripts -->
 
-<!--[if !IE]> -->
-
-<script type="text/javascript">
-    window.jQuery || document.write("<script src='${resource(dir: 'js/compressed',file: 'jquery-2.0.3.min.js')}'>" + "<" + "/script>");
-</script>
-
-<!-- <![endif]-->
-
-<!--[if IE]>
-<script type="text/javascript">
- window.jQuery || document.write("<script src='${resource(dir: 'js/compressed', file: 'jquery-1.10.2.min.js')}'>"+"<"+"/script>");
-</script>
-<![endif]-->
-
-%{--<script type="text/javascript">
-    if ("ontouchend" in document) document.write("<script src='${resource(dir: 'js/uncompressed',file: 'jquery.mobile.custom.js')}'>" + "<" + "/script>");
-</script>--}%
-
-
-%{--<script src="${resource(dir: 'js/jqGrid', file: 'jquery.jqGrid.min.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/jqGrid/i18n', file: 'grid.locale-en.js')}"></script>--}%
-
+<script src="${resource(dir: 'js/compressed', file: 'jquery-1.10.2.min.js')}"></script>
 %{--<script src="${resource(dir: 'js/datatable', file: 'jquery.dataTables.min.js')}"></script>--}%
 <script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
 <script src="${resource(dir: 'js/datatable', file: 'jquery.dataTables.bootstrap.js')}"></script>
@@ -160,12 +113,12 @@
 %{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.inputmask.js')}"></script>--}%
 %{--<script src="${resource(dir: 'js/uncompressed', file: 'autoNumeric.js')}"></script>--}%
 <script src="${resource(dir: 'js/uncompressed', file: 'ace-elements.min.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'iosOverlay.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'iosOverlay.js')}"></script>--}%
 <script src="${resource(dir: 'js/uncompressed', file: 'spin.min.js')}"></script>
 <script src="${resource(dir: 'js/uncompressed', file: 'ace.js')}"></script>
 
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'ace-elements.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'ace.js')}"></script>--}%
+<script src="${resource(dir: 'js/uncompressed', file: 'ace-elements.js')}"></script>
+<script src="${resource(dir: 'js/uncompressed', file: 'ace.js')}"></script>
 
 <!-- inline scripts related to this page -->
 
@@ -214,27 +167,6 @@
     };
 
     $(document).ready(function () {
-        $('a.ajax-link').click(function (e) {
-            e.preventDefault();
-            var control = this;
-            var url = $(control).attr('href');
-            var updateDiv = $(control).attr('updatediv');
-            jQuery.ajax({
-                type: 'POST',
-                url: url,
-                success: function (data, textStatus) {
-                    $('#' + updateDiv).html(data);
-                },
-                error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                    $('#'+updateDiv).html(data);
-                }
-            });
-
-            $('ul.nav').removeClass('active').removeClass('open');
-            $('ul.nav').find('*').removeClass('active').removeClass('open');
-            $(control).closest('li').addClass('active');
-
-        });
 
     });
 
