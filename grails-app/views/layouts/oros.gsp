@@ -14,17 +14,17 @@
 
     <!-- basic styles -->
 
-    <link href="${resource(dir: 'css/uncompressed', file: 'bootstrap.css')}" rel="stylesheet"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'font-awesome.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/compressed', file: 'datepicker.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'font-awesome.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'datepicker.css')}"/>
 
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'chosen.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'chosen.css')}"/>
 
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace-fonts.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace-rtl.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css/uncompressed', file: 'ace-skins.css')}"/>
-    <script src="${resource(dir: 'js/uncompressed', file: 'ace-extra.js')}"></script>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-fonts.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-rtl.css')}"/>
+    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-skins.css')}"/>
+    <script src="${resource(dir: 'js', file: 'ace-extra.js')}"></script>
     <g:layoutHead/>
     <r:layoutResources/>
 
@@ -66,26 +66,26 @@
     </a>
 </div><!-- /.main-container -->
 
-<script src="${resource(dir: 'js/compressed', file: 'jquery-1.10.2.min.js')}"></script>
-<script src="${resource(dir: 'js/datatable', file: 'jquery.dataTables.js')}"></script>
-<script src="${resource(dir: 'js/datatable', file: 'jquery.dataTables.bootstrap.js')}"></script>
+<script src="${resource(dir: 'js', file: 'jquery-1.10.2.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'jquery.dataTables.js')}"></script>
+<script src="${resource(dir: 'js', file: 'jquery.dataTables.bootstrap.js')}"></script>
 
-<script src="${resource(dir: 'js/date-time', file: 'bootstrap-datepicker.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'bootstrap-datepicker.min.js')}"></script>
 
 
-<script src="${resource(dir: 'js/uncompressed', file: 'bootstrap.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'chosen.jquery.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'fuelux.wizard.min.js')}"></script>
-<script src="${resource(dir: 'js/validate', file: 'jquery.validate.min.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'additional-methods.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
+<script src="${resource(dir: 'js', file: 'chosen.jquery.js')}"></script>
+%{--<script src="${resource(dir: 'js', file: 'fuelux.wizard.min.js')}"></script>--}%
+<script src="${resource(dir: 'js', file: 'jquery.validate.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'additional-methods.min.js')}"></script>
 
-<script src="${resource(dir: 'js/uncompressed', file: 'ace-elements.min.js')}"></script>
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'iosOverlay.js')}"></script>--}%
-<script src="${resource(dir: 'js/uncompressed', file: 'spin.min.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'ace.js')}"></script>
+<script src="${resource(dir: 'js', file: 'ace-elements.min.js')}"></script>
+%{--<script src="${resource(dir: 'js', file: 'iosOverlay.js')}"></script>--}%
+<script src="${resource(dir: 'js', file: 'spin.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'ace.js')}"></script>
 
-<script src="${resource(dir: 'js/uncompressed', file: 'ace-elements.js')}"></script>
-<script src="${resource(dir: 'js/uncompressed', file: 'ace.js')}"></script>
+<script src="${resource(dir: 'js', file: 'ace-elements.js')}"></script>
+%{--<script src="${resource(dir: 'js/uncompressed', file: 'ace.js')}"></script>--}%
 
 <!-- inline scripts related to this page -->
 
