@@ -67,51 +67,18 @@
 </div><!-- /.main-container -->
 
 <script src="${resource(dir: 'js/compressed', file: 'jquery-1.10.2.min.js')}"></script>
-%{--<script src="${resource(dir: 'js/datatable', file: 'jquery.dataTables.min.js')}"></script>--}%
-<script src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+<script src="${resource(dir: 'js/datatable', file: 'jquery.dataTables.js')}"></script>
 <script src="${resource(dir: 'js/datatable', file: 'jquery.dataTables.bootstrap.js')}"></script>
 
 <script src="${resource(dir: 'js/date-time', file: 'bootstrap-datepicker.min.js')}"></script>
 
 
 <script src="${resource(dir: 'js/uncompressed', file: 'bootstrap.js')}"></script>
-%{--<script src="${resource(dir: 'js/compressed', file: 'typeahead-bs2.min.js')}"></script>--}%
-
-<!-- page specific plugin scripts -->
-
-<!-- inline scripts related to this page -->
-
-
-
-%{--<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery-ui-1.10.3.custom.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.ui.touch-punch.js')}"></script>--}%
-
 <script src="${resource(dir: 'js/uncompressed', file: 'chosen.jquery.js')}"></script>
-
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.slimscroll.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.easy-pie-chart.js')}"></script>--}%
-
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.sparkline.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.pie.js')}"></script>--}%
-
-%{--<script src="${resource(dir: 'js/uncompressed/flot', file: 'jquery.flot.resize.js')}"></script>--}%
-
-<!-- ace scripts -->
 <script src="${resource(dir: 'js/uncompressed', file: 'fuelux.wizard.min.js')}"></script>
 <script src="${resource(dir: 'js/validate', file: 'jquery.validate.min.js')}"></script>
 <script src="${resource(dir: 'js/uncompressed', file: 'additional-methods.min.js')}"></script>
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'bootbox.min.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'select2.min.js')}"></script>--}%
 
-
-
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.multiselect.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.multiselect.filter.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.maskedinput.min.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'jquery.inputmask.js')}"></script>--}%
-%{--<script src="${resource(dir: 'js/uncompressed', file: 'autoNumeric.js')}"></script>--}%
 <script src="${resource(dir: 'js/uncompressed', file: 'ace-elements.min.js')}"></script>
 %{--<script src="${resource(dir: 'js/uncompressed', file: 'iosOverlay.js')}"></script>--}%
 <script src="${resource(dir: 'js/uncompressed', file: 'spin.min.js')}"></script>
