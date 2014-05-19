@@ -78,7 +78,7 @@
                                         </form>
                                     </div><!--/widget-main-->
 
-                                    %{--<div class="toolbar clearfix">
+                                    <div class="toolbar clearfix">
                                         <div>
                                             <a href="#"   class="forgot-password-link">
                                                 <i class="icon-arrow-left"></i>
@@ -91,7 +91,7 @@
                                                 <i class="icon-arrow-right"></i>
                                             </a>
                                         </div>
-                                    </div>--}%
+                                    </div>
                                 </div><!--/widget-body-->
                             </div><!--/login-box-->
                         </div><!--/login-box-->
