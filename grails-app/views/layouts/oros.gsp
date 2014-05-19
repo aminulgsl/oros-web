@@ -14,17 +14,17 @@
 
     <!-- basic styles -->
 
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'font-awesome.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'datepicker.css')}"/>
-
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'chosen.css')}"/>
-
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-fonts.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-rtl.css')}"/>
-    <link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-skins.css')}"/>
-    <script src="${resource(dir: 'js', file: 'ace-extra.js')}"></script>
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'bootstrap.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'font-awesome.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'datepicker.css')}"/>--}%
+%{----}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'chosen.css')}"/>--}%
+%{----}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-fonts.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ace.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-rtl.css')}"/>--}%
+    %{--<link rel="stylesheet" href="${resource(dir: 'css', file: 'ace-skins.css')}"/>--}%
+    %{--<script src="${resource(dir: 'js', file: 'ace-extra.js')}"></script>--}%
     <g:layoutHead/>
     <r:layoutResources/>
 
@@ -66,7 +66,7 @@
     </a>
 </div><!-- /.main-container -->
 
-<script src="${resource(dir: 'js', file: 'jquery-1.10.2.min.js')}"></script>
+%{--<script src="${resource(dir: 'js', file: 'jquery-1.10.2.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'jquery.dataTables.js')}"></script>
 <script src="${resource(dir: 'js', file: 'jquery.dataTables.bootstrap.js')}"></script>
 
@@ -75,16 +75,16 @@
 
 <script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
 <script src="${resource(dir: 'js', file: 'chosen.jquery.js')}"></script>
-%{--<script src="${resource(dir: 'js', file: 'fuelux.wizard.min.js')}"></script>--}%
+--}%%{--<script src="${resource(dir: 'js', file: 'fuelux.wizard.min.js')}"></script>--}%%{--
 <script src="${resource(dir: 'js', file: 'jquery.validate.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'additional-methods.min.js')}"></script>
 
 <script src="${resource(dir: 'js', file: 'ace-elements.min.js')}"></script>
-%{--<script src="${resource(dir: 'js', file: 'iosOverlay.js')}"></script>--}%
+--}%%{--<script src="${resource(dir: 'js', file: 'iosOverlay.js')}"></script>--}%%{--
 <script src="${resource(dir: 'js', file: 'spin.min.js')}"></script>
 <script src="${resource(dir: 'js', file: 'ace.js')}"></script>
 
-<script src="${resource(dir: 'js', file: 'ace-elements.js')}"></script>
+<script src="${resource(dir: 'js', file: 'ace-elements.js')}"></script>--}%
 %{--<script src="${resource(dir: 'js/uncompressed', file: 'ace.js')}"></script>--}%
 
 <!-- inline scripts related to this page -->
