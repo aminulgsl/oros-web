@@ -46,7 +46,7 @@
         %{--</script>--}%
 
         <script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
-        <script src="${resource(dir: 'js', file: 'jquery.validate.js')}"></script>
+        <script src="${resource(dir: 'js', file: 'jquery.validate.min.js')}"></script>
 
         <g:javascript library="application"/>
         <r:layoutResources/>

@@ -1,3 +1,4 @@
+<%@ page import="com.gsl.oros.core.banking.OpenAccountController" %>
 <div class="sidebar" id="sidebar">
     <script type="text/javascript">
         try {
@@ -37,7 +38,10 @@
     </div><!-- #sidebar-shortcuts -->
 
     <ul class="nav nav-list">
-
+    <li>
+        <a href="${createLink(controller: 'openAccount', action: 'index')}">
+            <i class="icon-double-angle-right"></i>Open Account</a>
+    </li>
     </ul><!-- /.nav-list -->
 
     <div class="sidebar-collapse" id="sidebar-collapse">
