@@ -2,7 +2,7 @@ modules = {
     application {
         resource url:'js/application.js'
     }
-    validation {
+    /*validation {
         resource url:'js/jquery.validate.min.js'
     }
     common {
@@ -32,5 +32,5 @@ modules = {
     dataTables {
         resource url:'js/jquery.dataTables.bootstrap.js'
         resource url:'js/jquery.dataTables.js'
-    }
+    }*/
 }
