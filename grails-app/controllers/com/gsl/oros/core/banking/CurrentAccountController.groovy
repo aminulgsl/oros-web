@@ -7,6 +7,7 @@ import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 
 class CurrentAccountController {
+    def imageIndirectService
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def index() {
@@ -520,7 +521,7 @@ class CurrentBankAccountCommand {
     String bankAccountName
 
     static constraints = {
-        importFrom Nominee
+        importFrom OtherBankAccount
         id nullable: true
     }
 }
@@ -531,7 +532,7 @@ class CurrentAttachmentsCommand{
     String caption
     String remarks
     static constraints = {
-        importFrom Nominee
+        importFrom OrosAttachment
         id nullable: true
         personalId nullable: false
         caption nullable: false

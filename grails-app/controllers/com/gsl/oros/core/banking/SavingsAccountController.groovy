@@ -159,7 +159,7 @@ class SavingsAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def saveOtherBankAccount(SavingsOtherBankAccountCommand otherBankAccountCommand){
+    def saveOtherBankAccount(SavingsBankAccountCommand otherBankAccountCommand){
         if (!request.method == 'POST') {
             flash.message = "This action is not allowed!"
             render (view: 'openingForm')
@@ -512,7 +512,7 @@ class SavingsNomineeCommand {
     }
 }
 
-class SavingsOtherBankAccountCommand {
+class SavingsBankAccountCommand {
     Long id
     Long personalId
     String bankName
@@ -521,7 +521,7 @@ class SavingsOtherBankAccountCommand {
     String bankAccountName
 
     static constraints = {
-        importFrom Nominee
+        importFrom OtherBankAccount
         id nullable: true
     }
 }
@@ -532,7 +532,7 @@ class SavingsAttachmentsCommand{
     String caption
     String remarks
     static constraints = {
-        importFrom Nominee
+        importFrom OrosAttachment
         id nullable: true
         personalId nullable: false
         caption nullable: false

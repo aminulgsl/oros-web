@@ -71,17 +71,17 @@
 
                         <td class="actions ">
                             <div class="btn-group">
-                                <sec:access controller="savingsAccount" action="downloadIdentification">
-                                    <a class="btn btn-sm identification-download-link" href="${g.createLink(controller: 'savingsAccount', action: 'downloadIdentification', params: [attachmentId: attachments?.id])}" id="${attachments.id}" personalId="${personalInfo?.id}" title="Download">
+                                <sec:access controller="currentAccount" action="downloadIdentification">
+                                    <a class="btn btn-sm identification-download-link" href="${g.createLink(controller: 'currentAccount', action: 'downloadIdentification', params: [attachmentId: attachments?.id])}" id="${attachments.id}" personalId="${personalInfo?.id}" title="Download">
                                         <i class="glyphicon glyphicon-download"></i>
                                     </a>
                                 </sec:access>
-                                <sec:access controller="savingsAccount" action="editIdentification">
+                                <sec:access controller="currentAccount" action="editIdentification">
                                     <a class="btn btn-sm identification-edit-link" href="" id="${attachments.id}" personalId="${personalInfo?.id}" title="Edit">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                 </sec:access>
-                                <sec:access controller="savingsAccount" action="deleteIdentification">
+                                <sec:access controller="currentAccount" action="deleteIdentification">
                                     <a class="btn btn-sm delete btn-danger identification-delete-link" onclick="return confirm('Are you sure delete Bank Account Information?')"
                                        href="" id="${attachments.id}" personalId="${personalInfo?.id}" title="Delete"><i class="glyphicon glyphicon-remove"></i>
                                     </a>
@@ -177,7 +177,7 @@
             }
             var formData = new FormData(this);
             $.ajax({
-                url: '${createLink(controller: 'savingsAccount', action: 'saveAttachment')}',
+                url: '${createLink(controller: 'currentAccount', action: 'saveAttachment')}',
                 type: 'post',
                 data: formData,
                 dataType: 'json',
@@ -194,7 +194,7 @@
                                 data.attachments.size,
                                 data.attachments.caption,
                                 data.attachments.remarks,
-                                "<div class='btn-group'><a class='btn btn-sm identification-download-link' href='${g.createLink(controller: 'savingsAccount', action: 'downloadIdentification')}?attachmentId="+data.attachments.id+"' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Download'><i class='glyphicon glyphicon-download'></i></a><a class='btn btn-sm identification-edit-link' href='' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Edit'><i class='glyphicon glyphicon-pencil'></i></a><a class='btn btn-sm delete btn-danger identification-delete-link' href='' id="+data.attachments.id+"  personalId="+data.personalInfo.id+" title='Delete'><i class='glyphicon glyphicon-remove'></i></a></div>"
+                                "<div class='btn-group'><a class='btn btn-sm identification-download-link' href='${g.createLink(controller: 'currentAccount', action: 'downloadIdentification')}?attachmentId="+data.attachments.id+"' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Download'><i class='glyphicon glyphicon-download'></i></a><a class='btn btn-sm identification-edit-link' href='' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Edit'><i class='glyphicon glyphicon-pencil'></i></a><a class='btn btn-sm delete btn-danger identification-delete-link' href='' id="+data.attachments.id+"  personalId="+data.personalInfo.id+" title='Delete'><i class='glyphicon glyphicon-remove'></i></a></div>"
                             ] ).draw();
 
                             $(':input','#identificationForm').not(':button, :hidden').val('');
@@ -212,7 +212,7 @@
                                 data.attachments.size,
                                 data.attachments.caption,
                                 data.attachments.remarks,
-                                "<div class='btn-group'><a class='btn btn-sm identification-download-link' href='${g.createLink(controller: 'savingsAccount', action: 'downloadIdentification')}?attachmentId="+data.attachments.id+"' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Download'><i class='glyphicon glyphicon-download'></i></a><a class='btn btn-sm identification-edit-link' href='' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Edit'><i class='glyphicon glyphicon-pencil'></i></a><a class='btn btn-sm delete btn-danger identification-delete-link' href='' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Delete'><i class='glyphicon glyphicon-remove'></i></a></div>"
+                                "<div class='btn-group'><a class='btn btn-sm identification-download-link' href='${g.createLink(controller: 'currentAccount', action: 'downloadIdentification')}?attachmentId="+data.attachments.id+"' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Download'><i class='glyphicon glyphicon-download'></i></a><a class='btn btn-sm identification-edit-link' href='' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Edit'><i class='glyphicon glyphicon-pencil'></i></a><a class='btn btn-sm delete btn-danger identification-delete-link' href='' id="+data.attachments.id+" personalId="+data.personalInfo.id+" title='Delete'><i class='glyphicon glyphicon-remove'></i></a></div>"
                             ], row );
 
                             $(':input,:hidden','#identificationForm').not('#personalId').val('');
@@ -250,7 +250,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'savingsAccount',action: 'deleteIdentification')}?id="+id+"&personalId="+personalId,
+                url: "${g.createLink(controller: 'currentAccount',action: 'deleteIdentification')}?id="+id+"&personalId="+personalId,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         var success = '<div class="alert alert-success">';
@@ -283,7 +283,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'savingsAccount',action: 'editIdentification')}?id="+id+"&row="+row,
+                url: "${g.createLink(controller: 'currentAccount',action: 'editIdentification')}?id="+id+"&row="+row,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         $('#documentDiv').html('<label for="document" class="col-sm-3">Change Document?</label><div class="col-sm-9">'+data.attachments.originalName+'<input type="file" class="col-xs-10 col-sm-12 no-padding-left" placeholder="Document" id="document" name="document"></div>');
