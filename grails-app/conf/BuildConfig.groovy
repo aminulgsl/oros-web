@@ -6,7 +6,7 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/oros.war"
-grails.plugin.location.'oros-attachment-plugin' = "/inplace/oros-attachment-plugin"
+grails.plugin.location.'oros-attachment-plugin' = "../plugins/oros-attachment-plugin"
 
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
