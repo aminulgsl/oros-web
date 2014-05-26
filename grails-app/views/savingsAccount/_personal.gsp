@@ -4,6 +4,18 @@
     <script src="${resource(dir: 'js', file: 'jquery-1.10.2.min.js')}"></script>
     <script src="${resource(dir: 'js', file: 'jquery.validate.min.js')}"></script>
     <script src="${resource(dir: 'js', file: 'jquery.dataTables.js')}"></script>
+
+    <script src="${resource(dir: 'js', file: 'ace-extra.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'jquery.dataTables.bootstrap.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'bootstrap-datepicker.min.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'bootstrap.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'chosen.jquery.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'additional-methods.min.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'ace-elements.min.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'spin.min.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'ace.js')}"></script>
+    <script src="${resource(dir: 'js', file: 'ace-elements.js')}"></script>
+
     <style>
     select, label, textarea, input[type="text"], input[type="password"],
     input[type="datetime"], input[type="datetime-local"], input[type="date"],
@@ -194,11 +206,13 @@
                                 $('#personalForm #id').val(data.personalInfo.id);
                                 $('#nomineeForm #personalId').val(data.personalInfo.id);
                                 $('#bankAccountForm #personalId').val(data.personalInfo.id);
+                                $('#identificationForm #personalId').val(data.personalInfo.id);
                                 $('#personalSubmitButton').html('<i class="icon-ok bigger-110"></i>Update');
                                 $('ul#savingsAccountFormListTab li').removeClass('disabled');
                                 $('ul#savingsAccountFormListTab li a').attr('data-toggle','tab');
                                 $('li#nomineeTab a').attr('href','#nomineeContent');
                                 $('li#bankAccountTab a').attr('href','#bankAccountContent');
+                                $('li#attachmentsTab a').attr('href','#attachmentContent');
                                 var success = '<div class="alert alert-success">';
                                 success += '<i class="icon-bell green"> <b>'+ data.message +'</b> </i> <a class="close" data-dismiss="alert">×</a>';
                                 success += '</div>';

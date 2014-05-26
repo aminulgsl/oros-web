@@ -93,6 +93,9 @@
             <div class="tab-pane" id="bankAccountContent">
                 <g:render template='bankAccounts'/>
             </div>
+            <div class="tab-pane" id="attachmentContent">
+                <g:render template='attachments'/>
+            </div>
         </div>
     </div>
 </div>

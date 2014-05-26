@@ -1,5 +1,7 @@
 package com.gsl.oros.core.banking
 
+import com.gsl.plugin.attachments.OrosAttachment
+
 class PersonalInfo {
     String fatherName
     String motherName
@@ -12,7 +14,7 @@ class PersonalInfo {
     String phoneNo
     String profession
 
-    static hasMany = [nominee:Nominee,otherBankAccount:OtherBankAccount]
+    static hasMany = [nominee:Nominee,otherBankAccount:OtherBankAccount,attachments:OrosAttachment]
 
     static constraints = {
         fatherName nullable: false

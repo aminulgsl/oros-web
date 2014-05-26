@@ -1,12 +1,13 @@
 package com.gsl.oros.core.banking
 
-import com.gsl.cbs.contraints.enums.GenderType
-import com.gsl.cbs.contraints.enums.MaritialStatus
-import com.gsl.uma.security.User
+import com.gsl.plugin.attachments.AttachStatus
+import com.gsl.plugin.attachments.OrosAttachment
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
+import org.springframework.web.multipart.MultipartFile
 
 class SavingsAccountController {
+    def imageIndirectService
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def index() {
@@ -19,7 +20,7 @@ class SavingsAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def savePersonalInfo(PersonalInfoCommand personalInfoCommand) {
+    def savePersonalInfo(SavingsPersonalInfoCommand personalInfoCommand) {
         if (!request.method == 'POST') {
             flash.message = "This action is not allowed!"
             redirect(action: 'openingForm')
@@ -67,7 +68,7 @@ class SavingsAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def saveNominee(NomineeCommand nomineeCommand){
+    def saveNominee(SavingsNomineeCommand nomineeCommand){
         if (!request.method == 'POST') {
             flash.message = "This action is not allowed!"
             render (view: 'openingForm')
@@ -158,7 +159,7 @@ class SavingsAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def saveOtherBankAccount(OtherBankAccountCommand otherBankAccountCommand){
+    def saveOtherBankAccount(SavingsOtherBankAccountCommand otherBankAccountCommand){
         if (!request.method == 'POST') {
             flash.message = "This action is not allowed!"
             render (view: 'openingForm')
@@ -247,9 +248,229 @@ class SavingsAccountController {
         String output = result as JSON
         render output
     }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def saveAttachment(SavingsAttachmentsCommand attachmentsCommand){
+        ArrayList<String> extList = new ArrayList<String>();
+        extList.add(".jpg");
+        extList.add(".jpeg");
+        extList.add(".gif");
+        extList.add(".png");
+        extList.add(".bmp");
+        extList.add(".pdf");
+//        String [] allowedAttachmentList = ['']
+
+        String type
+        Long size
+        String fileName
+        String originalFileName
+        if (!request.method == 'POST') {
+            flash.message = "This action not allowed"
+            render (view: 'clientList')
+            return
+        }
+        if(!params.personalId){
+            def result = [isError:true, message:"You are not found!"]
+            render result as JSON
+            return
+        }
+        if (attachmentsCommand.hasErrors()) {
+            def result = [isError:true, message:"Identification document has any problem!!"]
+            render result as JSON
+            return
+        }
+
+        PersonalInfo personalInfo =  PersonalInfo.get(attachmentsCommand.personalId)
+        if(!personalInfo){
+            def result = [isError:true, message:"You are not found!"]
+            render result as JSON
+            return
+        }
+        String fileDir = personalInfo.id.toString()
+        fileName = request.getFileNames()[0]
+        MultipartFile uploadedFile = request.getFile(fileName)
+        type = uploadedFile.contentType
+        size = uploadedFile.size
+        originalFileName = uploadedFile.originalFilename
+
+        OrosAttachment orosAttachment
+        if(attachmentsCommand.id){
+            def row = params.row
+            orosAttachment = personalInfo.attachments.find{it.id == attachmentsCommand.id}
+            if(!orosAttachment){
+                def result = [isError:true, message:"Identification document not found!"]
+                render result as JSON
+                return
+            }
+            if (uploadedFile.empty){
+                orosAttachment.properties['name','description','caption','remarks'] = [name:fileName,description: attachmentsCommand.caption,caption: attachmentsCommand.caption,remarks: attachmentsCommand.remarks]
+            }else {
+                orosAttachment.properties['name', 'description', 'originalName', 'type', 'size', 'caption', 'remarks'] = [
+                        name         : fileName,
+                        description  : attachmentsCommand.caption,
+                        originalName : originalFileName,
+                        type         : type,
+                        fileDir      : fileDir,
+                        size         : size,
+                        caption      : attachmentsCommand.caption,
+                        remarks      : attachmentsCommand.remarks]
+                int a = originalFileName.lastIndexOf(".")
+                String extName = originalFileName.substring(a)
+                if(!(extList.contains(extName)))
+                {
+                    def result = [isError:true, message:"Invalid file type!"]
+                    render result as JSON
+                    return
+                }
+                if(size>=900000){
+                    def result = [isError:true, message:"File is greater than 900 KB!"]
+                    render result as JSON
+                    return
+                }
+            }
+            if(!orosAttachment.validate()){
+                def result = [isError:true, message:"Identification document data have some validation problem!"]
+                render result as JSON
+                return
+            }
+            OrosAttachment updatedAttachment = orosAttachment.save()
+            if(!updatedAttachment){
+                // unable to upload file
+                def result = [isError:true, message:"Identification document not updated successfully!"]
+                render result as JSON
+                return
+            }
+            File savedFile = imageIndirectService.storeFile(uploadedFile,orosAttachment.link,fileDir)
+            if(!savedFile){
+                // unable to upload file
+                def result = [isError:true, message:"Identification document not updated successfully!"]
+                render result as JSON
+                return
+            }
+            def result = [isError:false, message:"Identification document update successfully!",
+                    update:true, personalInfo:personalInfo, attachments: updatedAttachment, row: row]
+            render result as JSON
+        }
+        else{
+            if (uploadedFile.empty) {
+                def result = [isError:true, message:"Identification document not found!"]
+                render result as JSON
+                return
+            }
+            orosAttachment = new OrosAttachment(
+                    name: fileName,
+                    description: attachmentsCommand.caption,
+                    originalName: originalFileName,
+                    type: type,
+                    fileDir: fileDir,
+                    size: size,
+                    caption: attachmentsCommand.caption,
+                    remarks: attachmentsCommand.remarks
+            )
+            if(!orosAttachment.validate()){
+                def result = [isError:true, message:"Identification document data have some validation problem!"]
+                render result as JSON
+                return
+            }
+            int a = originalFileName.lastIndexOf(".")
+            String extName = originalFileName.substring(a)
+            if(!(extList.contains(extName)))
+            {
+                def result = [isError:true, message:"Invalid file type!"]
+                render result as JSON
+                return
+            }
+            if(size>=900000){
+                def result = [isError:true, message:"File is greater than 900 KB!"]
+                render result as JSON
+                return
+            }
+            OrosAttachment savedAttachment = orosAttachment.save(flush: true)
+            if(!savedAttachment){
+                def result = [isError:true, message:"Identification document not added successfully!"]
+                render result as JSON
+                return
+            }
+            personalInfo.getAttachments().add(savedAttachment)
+            PersonalInfo savedPersonalInfo = personalInfo.save()
+            if(!savedPersonalInfo){
+                def result = [isError:true, message:"Identification document not saved successfully!"]
+                render result as JSON
+                return
+            }
+            File savedFile = imageIndirectService.storeFile(uploadedFile,orosAttachment.link,fileDir)
+            if(!savedFile){
+                // unable to upload file
+                def result = [isError:true, message:"Identification document not saved successfully!"]
+                render result as JSON
+                return
+            }
+            def result = [isError:false, message:"Identification document added successfully!",
+                    add:true, personalInfo:savedPersonalInfo, attachments: savedAttachment]
+            render result as JSON
+        }
+    }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def downloadIdentification(Long attachmentId){
+        OrosAttachment orosAttachment = OrosAttachment.read(attachmentId)
+        if(!orosAttachment){
+            def result = [isError:true, message:"Identification document not found !"]
+            render result as JSON
+            return
+        }
+        String filePath = imageIndirectService.fullDirPath(orosAttachment.fileDir)
+        def files = new File(filePath,orosAttachment.link) //Full path of a file
+        if (files.exists()) {
+            response.setContentType("application/octet-stream")
+            response.setHeader("Content-disposition", "attachment;filename=${orosAttachment.originalName.replaceAll(' ','_')}") //Please filename must be add with its extension .jpg,.png,.pdf,.doc otherwise it cant detect the file
+            response.outputStream << files.bytes
+        }else {
+            return
+        }
+    }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def editIdentification(Long id, Long row){
+        OrosAttachment orosAttachment = OrosAttachment.findById(id)
+        if(!orosAttachment){
+            def result = [isError:true, message:"Identification document not found !"]
+            render result as JSON
+            return
+        }
+        def result = [isError:false, attachments: orosAttachment, row:row]
+        render result as JSON
+    }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def deleteIdentification(Long id, Long personalId){
+        PersonalInfo personalInfo = PersonalInfo.get(personalId)
+        if(!personalInfo){
+            def result = [isError:true, message:"You are not found!"]
+            render result as JSON
+            return
+        }
+        OrosAttachment orosAttachment = OrosAttachment.get(id)
+        if (!orosAttachment) {
+            def result = [isError:true, message:"Identification document not found!"]
+            render result as JSON
+            return
+        }
+        orosAttachment.status = AttachStatus.DELETED
+        PersonalInfo savedPersonalInfo = personalInfo.save()
+        if(!savedPersonalInfo){
+            def result = [isError:true, message:"Identification document not deleted!"]
+            render result as JSON
+            return
+        }
+        savedPersonalInfo.attachments?.removeAll {it.status== AttachStatus.DELETED}
+        def result = [isError:false, message:"Identification document deleted successfully!"]
+        String output = result as JSON
+        render output
+    }
 }
 
-class PersonalInfoCommand {
+class SavingsPersonalInfoCommand {
     Long id
     String fatherName
     String motherName
@@ -268,7 +489,7 @@ class PersonalInfoCommand {
     }
 }
 
-class NomineeCommand {
+class SavingsNomineeCommand {
     Long id
     Long personalId
     String firstName
@@ -291,7 +512,7 @@ class NomineeCommand {
     }
 }
 
-class OtherBankAccountCommand {
+class SavingsOtherBankAccountCommand {
     Long id
     Long personalId
     String bankName
@@ -302,6 +523,20 @@ class OtherBankAccountCommand {
     static constraints = {
         importFrom Nominee
         id nullable: true
+    }
+}
+
+class SavingsAttachmentsCommand{
+    Long id
+    Long personalId
+    String caption
+    String remarks
+    static constraints = {
+        importFrom Nominee
+        id nullable: true
+        personalId nullable: false
+        caption nullable: false
+        remarks nullable: false
     }
 }
 

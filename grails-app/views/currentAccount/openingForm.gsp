@@ -76,10 +76,9 @@
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul id="currentAccountFormListTab" class="nav navbar-nav padding-12 tab-color-blue background-blue">
                     <li id="personalTab" class="active"><a href="#personalContent" data-toggle="tab">Personal Info</a></li>
-                    %{--<li id="nomineeTab" class="disabled"><a>Nominee Info</a></li>--}%
-                    %{--<li id="bankAccountTab" class="disabled"><a>Other Bank Account Info</a></li>--}%
-                    <li id="nomineeTab"><a href="#nomineeContent" data-toggle="tab">Nominee Info</a></li>
-                    <li id="bankAccountTab"><a href="#bankAccountContent" data-toggle="tab">Other Bank Account Info</a></li>
+                    <li id="nomineeTab" class="disabled"><a>Nominee Info</a></li>
+                    <li id="bankAccountTab" class="disabled"><a>Other Bank Account Info</a></li>
+                    <li id="attachmentsTab" class="disabled"><a>Attachments</a></li>
                 </ul>
             </div>
         </nav>
@@ -93,6 +92,9 @@
             </div>
             <div class="tab-pane" id="bankAccountContent">
                 <g:render template='bankAccounts'/>
+            </div>
+            <div class="tab-pane" id="attachmentContent">
+                <g:render template='attachments'/>
             </div>
         </div>
     </div>
