@@ -115,11 +115,11 @@
     });
     $(document)
             .ajaxStart(function () {
-                showSpinner(true);
+//                showSpinner(true);
             })
             .ajaxStop(function () {
 //                $loading.hide();
-                showSpinner(false);
+//                showSpinner(false);
             });
     bootstrap_alert = function() {};
     bootstrap_alert.warning = function(message) {
