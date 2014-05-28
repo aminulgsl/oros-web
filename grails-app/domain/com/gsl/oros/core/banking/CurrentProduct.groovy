@@ -1,9 +1,9 @@
 package com.gsl.oros.core.banking
 
-class Product {
+class CurrentProduct {
+
     String productName
     String productCode
-//    Long currencyId
     Double initialAmountMin
     Double initialAmountMax
     Double balanceMin
@@ -12,7 +12,6 @@ class Product {
     static constraints = {
         productName nullable: false;
         productCode nullable: false;
-//        currencyId nullable: false;
         initialAmountMin nullable: false;
         initialAmountMax nullable: false;
         balanceMin nullable: false;

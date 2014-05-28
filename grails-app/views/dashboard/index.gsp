@@ -9,13 +9,38 @@
 <body>
 
 <div class="page-header">
-    <h1>
-        Dashboard
-        <small>
-            <i class="icon-double-angle-right"></i>
-            Chart &amp; graph
-        </small>
-    </h1>
+    %{--<h1>--}%
+        %{--Dashboard--}%
+        %{--<small>--}%
+            %{--<i class="icon-double-angle-right"></i>--}%
+            %{--Chart &amp; graph--}%
+        %{--</small>--}%
+    %{--</h1>--}%
+    <div class="row">
+        <div class="col-sm-7"></div>
+        <div class="col-sm-5">
+            <div class="widget-box">
+                <div class="widget-header widget-header-flat widget-header-small">
+                    <h5 class="widget-title">
+                        <i class="ace-icon fa fa-signal"></i>
+                        My Request
+                    </h5>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <ul>
+                            <g:each in="${user?.accOpenRequest}" var='accOpenRequest'>
+                                %{--<li>User: ${accOpenRequest.user.username}</li>--}%
+                                %{--<li>Product: ${accOpenRequest.product}</li>--}%
+                                <li>Status: ${accOpenRequest.status}</li>
+                                %{--<li><a href="${createLink(controller: 'savingsAccount', action: 'product', params: [productId:savingsProducts.id])}">${savingsProducts.productName}</a></li>--}%
+                            </g:each>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div><!-- /.page-header -->
 
 <div class="row">

@@ -11,6 +11,11 @@ class CurrentAccountController {
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def index() {
+        render(view: 'products')
+    }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def product() {
         render(view: 'currentAccountInfo')
     }
 
@@ -250,7 +255,7 @@ class CurrentAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def saveAttachment(SavingsAttachmentsCommand attachmentsCommand){
+    def saveAttachment(CurrentAttachmentsCommand attachmentsCommand){
         ArrayList<String> extList = new ArrayList<String>();
         extList.add(".jpg");
         extList.add(".jpeg");
@@ -509,6 +514,7 @@ class CurrentNomineeCommand {
     static constraints = {
         importFrom Nominee
         id nullable: true
+        personalId nullable: false
     }
 }
 
@@ -523,6 +529,7 @@ class CurrentBankAccountCommand {
     static constraints = {
         importFrom OtherBankAccount
         id nullable: true
+        personalId nullable: false
     }
 }
 

@@ -65,11 +65,12 @@
         url="[action: 'savePersonalInfo', controller: 'savingsAccount']" onSubmit="return false;">
 
     <g:hiddenField name="id" id="id" value="${personalInfo?.id}"/>
+    <g:hiddenField name="productId" id="productId" value="${productId}"/>
 
     <div class="form-group ${hasErrors(bean:personalInfo,field:'name','has-error')}">
         <label for="name">Name*</label>
         <input id="name" name="name" type="text" placeholder="Enter Your Name"
-               value="<sec:loggedInUserInfo field="username"/>" disabled>
+               value="${user?.username}" disabled>
     </div>
     <div class="form-group ${hasErrors(bean:personalInfo,field:'fatherName','has-error')}">
         <label for="fatherName">Father's Name*</label>
@@ -118,7 +119,7 @@
     <div class="form-group ${hasErrors(bean:personalInfo,field:'email','has-error')}">
         <label for="email">Email*</label>
         <input id="email" name="email" type="email" placeholder="Enter Email Address"
-               value="${personalInfo?.email}">
+               value="${personalInfo?.email?personalInfo?.email:user?.email}">
     </div>
     <div class="form-group ${hasErrors(bean:personalInfo,field:'phoneNo','has-error')}">
         <label for="phoneNo">Phone No.*</label>

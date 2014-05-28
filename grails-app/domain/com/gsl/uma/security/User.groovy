@@ -1,5 +1,7 @@
 package com.gsl.uma.security
 
+import com.gsl.oros.core.banking.AccOpenRequest
+
 class User {
 
 	transient springSecurityService
@@ -12,6 +14,8 @@ class User {
 	boolean accountLocked
 	boolean passwordExpired
     boolean status = true
+
+    static hasMany = [accOpenRequest:AccOpenRequest]
 
 	static transients = ['springSecurityService']
 

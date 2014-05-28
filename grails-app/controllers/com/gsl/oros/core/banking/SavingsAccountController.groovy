@@ -1,22 +1,32 @@
 package com.gsl.oros.core.banking
 
+import com.gsl.cbs.contraints.enums.RequestStatus
 import com.gsl.plugin.attachments.AttachStatus
 import com.gsl.plugin.attachments.OrosAttachment
+import com.gsl.uma.security.User
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 
 class SavingsAccountController {
     def imageIndirectService
+    def springSecurityService
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def index() {
-        render(view: 'savingsAccountInfo')
+        render(view: 'products', model: [savingsProductList:SavingsProduct.list()])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def openingForm() {
-        render(view: 'openingForm')
+    def product(Long productId) {
+        render(view: 'savingsAccountInfo', model: [productId:productId])
+    }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def create(Long productId) {
+        Long userId = springSecurityService.principal.id
+        User loggedUser = User.read(userId)
+        render(view: 'openingForm', model: [user:loggedUser, productId:productId])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
@@ -26,6 +36,9 @@ class SavingsAccountController {
             redirect(action: 'openingForm')
         }
         else {
+            Long userId = springSecurityService.principal.id
+            User loggedUser = User.read(userId)
+            println(params)
             if (personalInfoCommand.hasErrors()) {
                 def result = [isError:true, message:"Personal Info data has any problem!!"]
                 render result as JSON
@@ -34,6 +47,7 @@ class SavingsAccountController {
             if(personalInfoCommand.id){ // update
                 PersonalInfo personalInfo = PersonalInfo.get(personalInfoCommand.id)
                 personalInfo.properties = personalInfoCommand.properties
+                personalInfo.name = loggedUser.username
                 if(!personalInfo.validate()){
                     def result = [isError:true, message:"Personal info data have some validation problem!"]
                     render result as JSON
@@ -50,6 +64,7 @@ class SavingsAccountController {
             }
             else { // add
                 PersonalInfo personalInfo = new PersonalInfo(personalInfoCommand.properties)
+                personalInfo.name = loggedUser.username
                 if(!personalInfo.validate()){
                     def result = [isError:true, message:"Personal Info not validated successfully!"]
                     render result as JSON
@@ -61,6 +76,11 @@ class SavingsAccountController {
                     render result as JSON
                     return
                 }
+                AccOpenRequest accOpenRequest = new AccOpenRequest(product: personalInfoCommand.productId, user: loggedUser.id, personalInfo: savedPersonalInfo.id, status: RequestStatus.DRAFT, requestDate: new Date())
+                AccOpenRequest savedAccOpenRequest = accOpenRequest.save(flush: true)
+                loggedUser.addToAccOpenRequest(savedAccOpenRequest)
+                loggedUser.save(flush: true)
+
                 def result = [isError:false, add:true, message:"Personal Info Added successfully!", personalInfo: savedPersonalInfo]
                 render result as JSON
             }
@@ -472,6 +492,8 @@ class SavingsAccountController {
 
 class SavingsPersonalInfoCommand {
     Long id
+    Long productId
+    String name
     String fatherName
     String motherName
     String gender
@@ -480,12 +502,15 @@ class SavingsPersonalInfoCommand {
     String permanentAddress
     String nationality
     String nationalId
+    String email
     String phoneNo
     String profession
 
     static constraints = {
         importFrom PersonalInfo
         id nullable: true
+        productId nullable: false
+        name nullable: true
     }
 }
 

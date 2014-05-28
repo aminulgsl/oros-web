@@ -4,7 +4,9 @@ package com.gsl.cbs.contraints.enums
  * Created by Nusrat Jahan Bhuiyan on 5/21/14.
  */
 public enum RequestStatus {
-    REQUESTED("Requested"),
+    DRAFT("Draft"),
+    SUBMITTED("Submitted"),
+    PROCESSING("Processing"),
     PENDING("Pending"),
     APPROVED("Deleted"),
     REJECTED("Deleted")

@@ -39,6 +39,10 @@
 
     <ul class="nav nav-list">
     <li>
+        <a href="${createLink(controller: 'dashboard', action: 'index')}">
+            <i class="icon-double-angle-right"></i>Home</a>
+    </li>
+    <li>
         <a href="${createLink(controller: 'openAccount', action: 'index')}">
             <i class="icon-double-angle-right"></i>Open Account</a>
     </li>
