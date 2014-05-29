@@ -87,7 +87,7 @@
         </div>
         <div class="col-sm-12">
             <span class="input-group-btn align-right">
-                <a href="${createLink(controller: 'currentAccount', action: 'openingForm')}">
+                <a href="${createLink(controller: 'currentAccount', action: 'apply', params: [productId:productId])}">
                     <button class="btn btn-sm btn-info no-radius" type="button">
                         <i class="glyphicon glyphicon-hand-right"></i>
                         Next

@@ -1,36 +1,45 @@
 package com.gsl.oros.core.banking
 
+import com.gsl.cbs.contraints.enums.RequestStatus
 import com.gsl.plugin.attachments.AttachStatus
 import com.gsl.plugin.attachments.OrosAttachment
+import com.gsl.uma.security.User
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 
 class CurrentAccountController {
     def imageIndirectService
+    def springSecurityService
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def index() {
-        render(view: 'products')
+        render(view: 'products', model: [currentProductList:CurrentProduct.list()])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def product() {
-        render(view: 'currentAccountInfo')
+        render(view: 'currentAccountInfo', model: [productId:params.productId])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def openingForm() {
-        render(view: 'openingForm')
+    def apply() {
+        Long userId = springSecurityService.principal.id
+        User loggedUser = User.read(userId)
+        PersonalInfo personalInfo = PersonalInfo.read(params.personalId)
+        render(view: 'openingForm', model: [user:loggedUser, productId:params.productId, personalInfo:personalInfo])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def savePersonalInfo(CurrentPersonalCommand personalInfoCommand) {
         if (!request.method == 'POST') {
             flash.message = "This action is not allowed!"
-            redirect(action: 'openingForm')
+            redirect(action: 'apply')
         }
         else {
+            Long userId = springSecurityService.principal.id
+            User loggedUser = User.read(userId)
+            CurrentProduct currentProduct = CurrentProduct.read(personalInfoCommand.productId)
             if (personalInfoCommand.hasErrors()) {
                 def result = [isError:true, message:"Personal Info data has any problem!!"]
                 render result as JSON
@@ -39,6 +48,7 @@ class CurrentAccountController {
             if(personalInfoCommand.id){ // update
                 PersonalInfo personalInfo = PersonalInfo.get(personalInfoCommand.id)
                 personalInfo.properties = personalInfoCommand.properties
+                personalInfo.name = loggedUser.username
                 if(!personalInfo.validate()){
                     def result = [isError:true, message:"Personal info data have some validation problem!"]
                     render result as JSON
@@ -55,6 +65,7 @@ class CurrentAccountController {
             }
             else { // add
                 PersonalInfo personalInfo = new PersonalInfo(personalInfoCommand.properties)
+                personalInfo.name = loggedUser.username
                 if(!personalInfo.validate()){
                     def result = [isError:true, message:"Personal Info not validated successfully!"]
                     render result as JSON
@@ -66,6 +77,13 @@ class CurrentAccountController {
                     render result as JSON
                     return
                 }
+                AccOpenRequest accOpenRequest = new AccOpenRequest(user: loggedUser.id, personalInfo: savedPersonalInfo.id, currentProduct: currentProduct.id, status: RequestStatus.DRAFT, requestDate: new Date())
+                AccOpenRequest savedAccOpenRequest = accOpenRequest.save(flush: true)
+                loggedUser.addToAccOpenRequest(savedAccOpenRequest)
+                loggedUser.save(flush: true)
+                currentProduct.addToAccOpenRequest(savedAccOpenRequest)
+                currentProduct.save(flush: true)
+
                 def result = [isError:false, add:true, message:"Personal Info Added successfully!", personalInfo: savedPersonalInfo]
                 render result as JSON
             }
@@ -477,6 +495,8 @@ class CurrentAccountController {
 
 class CurrentPersonalCommand {
     Long id
+    Long productId
+    String name
     String fatherName
     String motherName
     String gender
@@ -485,12 +505,15 @@ class CurrentPersonalCommand {
     String permanentAddress
     String nationality
     String nationalId
+    String email
     String phoneNo
     String profession
 
     static constraints = {
         importFrom PersonalInfo
         id nullable: true
+        productId nullable: false
+        name nullable: true
     }
 }
 

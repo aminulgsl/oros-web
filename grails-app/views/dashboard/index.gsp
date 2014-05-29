@@ -1,3 +1,4 @@
+<%@ page import="com.gsl.cbs.contraints.enums.RequestStatus" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,14 +29,32 @@
                 </div>
                 <div class="widget-body">
                     <div class="widget-main">
-                        <ul>
-                            <g:each in="${user?.accOpenRequest}" var='accOpenRequest'>
-                                %{--<li>User: ${accOpenRequest.user.username}</li>--}%
-                                %{--<li>Product: ${accOpenRequest.product}</li>--}%
-                                <li>Status: ${accOpenRequest.status}</li>
-                                %{--<li><a href="${createLink(controller: 'savingsAccount', action: 'product', params: [productId:savingsProducts.id])}">${savingsProducts.productName}</a></li>--}%
-                            </g:each>
-                        </ul>
+                        <g:each in="${user?.accOpenRequest}" var='accOpenRequest'>
+                            <g:if test="${accOpenRequest.savingsProduct!=null}">
+                            Product: ${accOpenRequest.savingsProduct.productName}
+                            <ul>
+                                <g:if test="${accOpenRequest.status == RequestStatus.DRAFT}">
+                                    <li>Status: <a href="${createLink(controller: 'savingsAccount', action: 'apply', params: [productId:accOpenRequest.savingsProduct.id, personalId:accOpenRequest.personalInfo.id])}">${accOpenRequest.status}</a></li>
+                                </g:if>
+                                <g:else>
+                                    <li>Status: ${accOpenRequest.status}</li>
+                                </g:else>
+                                <li>Requested date: ${accOpenRequest.requestDate}</li>
+                            </ul>
+                            </g:if>
+                            <g:elseif test="${accOpenRequest.currentProduct!=null}">
+                                Product: ${accOpenRequest.currentProduct.productName}
+                                <ul>
+                                    <g:if test="${accOpenRequest.status == RequestStatus.DRAFT}">
+                                        <li>Status: <a href="${createLink(controller: 'currentAccount', action: 'apply', params: [productId:accOpenRequest.currentProduct.id, personalId:accOpenRequest.personalInfo.id])}">${accOpenRequest.status}</a></li>
+                                    </g:if>
+                                    <g:else>
+                                        <li>Status: ${accOpenRequest.status}</li>
+                                    </g:else>
+                                    <li>Requested date: ${accOpenRequest.requestDate}</li>
+                                </ul>
+                            </g:elseif>
+                        </g:each>
                     </div>
                 </div>
             </div>

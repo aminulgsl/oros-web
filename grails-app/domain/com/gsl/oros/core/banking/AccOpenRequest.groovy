@@ -4,17 +4,19 @@ import com.gsl.cbs.contraints.enums.RequestStatus
 import com.gsl.uma.security.User
 
 class AccOpenRequest {
-    Long product
     User user
-    Long personalInfo
+    PersonalInfo personalInfo
+    SavingsProduct savingsProduct
+    CurrentProduct currentProduct
     RequestStatus status
     Date requestDate
     Date approvedDate
 
     static constraints = {
-        product nullable: false
         user nullable: false
         personalInfo nullable: false
+        savingsProduct nullable: true
+        currentProduct nullable: true
         status nullable: false
         requestDate nullable: false
         approvedDate nullable: true

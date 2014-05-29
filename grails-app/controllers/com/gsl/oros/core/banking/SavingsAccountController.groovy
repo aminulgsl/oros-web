@@ -18,29 +18,30 @@ class SavingsAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def product(Long productId) {
-        render(view: 'savingsAccountInfo', model: [productId:productId])
+    def product() {
+        render(view: 'savingsAccountInfo', model: [productId:params.productId])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def create(Long productId) {
+    def apply() {
         Long userId = springSecurityService.principal.id
         User loggedUser = User.read(userId)
-        render(view: 'openingForm', model: [user:loggedUser, productId:productId])
+        PersonalInfo personalInfo = PersonalInfo.read(params.personalId)
+        render(view: 'openingForm', model: [user:loggedUser, productId:params.productId, personalInfo:personalInfo])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def savePersonalInfo(SavingsPersonalInfoCommand personalInfoCommand) {
         if (!request.method == 'POST') {
             flash.message = "This action is not allowed!"
-            redirect(action: 'openingForm')
+            redirect(action: 'apply')
         }
         else {
             Long userId = springSecurityService.principal.id
             User loggedUser = User.read(userId)
-            println(params)
+            SavingsProduct savingsProduct = SavingsProduct.read(personalInfoCommand.productId)
             if (personalInfoCommand.hasErrors()) {
-                def result = [isError:true, message:"Personal Info data has any problem!!"]
+                def result = [isError:true, message:"Personal Info data has any problem!"]
                 render result as JSON
                 return
             }
@@ -76,10 +77,12 @@ class SavingsAccountController {
                     render result as JSON
                     return
                 }
-                AccOpenRequest accOpenRequest = new AccOpenRequest(product: personalInfoCommand.productId, user: loggedUser.id, personalInfo: savedPersonalInfo.id, status: RequestStatus.DRAFT, requestDate: new Date())
+                AccOpenRequest accOpenRequest = new AccOpenRequest(user: loggedUser.id, personalInfo: savedPersonalInfo.id, savingsProduct: savingsProduct.id, status: RequestStatus.DRAFT, requestDate: new Date())
                 AccOpenRequest savedAccOpenRequest = accOpenRequest.save(flush: true)
                 loggedUser.addToAccOpenRequest(savedAccOpenRequest)
                 loggedUser.save(flush: true)
+                savingsProduct.addToAccOpenRequest(savedAccOpenRequest)
+                savingsProduct.save(flush: true)
 
                 def result = [isError:false, add:true, message:"Personal Info Added successfully!", personalInfo: savedPersonalInfo]
                 render result as JSON
@@ -534,6 +537,7 @@ class SavingsNomineeCommand {
     static constraints = {
         importFrom Nominee
         id nullable: true
+        personalId nullable: false
     }
 }
 
@@ -548,6 +552,7 @@ class SavingsBankAccountCommand {
     static constraints = {
         importFrom OtherBankAccount
         id nullable: true
+        personalId nullable: false
     }
 }
 

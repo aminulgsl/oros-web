@@ -9,6 +9,8 @@ class CurrentProduct {
     Double balanceMin
     Double balanceMax
 
+    static hasMany = [accOpenRequest:AccOpenRequest]
+
     static constraints = {
         productName nullable: false;
         productCode nullable: false;
