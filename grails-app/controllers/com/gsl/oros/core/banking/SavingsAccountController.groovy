@@ -79,6 +79,7 @@ class SavingsAccountController {
                 }
                 AccOpenRequest accOpenRequest = new AccOpenRequest(user: loggedUser.id, personalInfo: savedPersonalInfo.id, savingsProduct: savingsProduct.id, status: RequestStatus.DRAFT, requestDate: new Date())
                 AccOpenRequest savedAccOpenRequest = accOpenRequest.save(flush: true)
+                savedPersonalInfo.accOpenRequest = savedAccOpenRequest
                 loggedUser.addToAccOpenRequest(savedAccOpenRequest)
                 loggedUser.save(flush: true)
                 savingsProduct.addToAccOpenRequest(savedAccOpenRequest)
@@ -135,7 +136,11 @@ class SavingsAccountController {
                     return
                 }
                 personalInfo.addToNominee(savedNominee)
+                if ((personalInfo.otherBankAccount[0]!=null)&&(personalInfo.attachments[0]!=null)){
+                    personalInfo.accOpenRequest.status = RequestStatus.SUBMITTED
+                }
                 PersonalInfo savedPersonalInfo = personalInfo.save(flash:true)
+
                 def result = [isError:false, add:true, message:"Nominee Info Added successfully!", nominee: savedNominee, personalInfo:savedPersonalInfo]
                 render result as JSON
             }
@@ -176,6 +181,9 @@ class SavingsAccountController {
             return
         }
         savedPersonalInfo.nominee?.removeAll {it.status== false}
+        if ((savedPersonalInfo.nominee[0]==null)){
+            savedPersonalInfo.accOpenRequest.status = RequestStatus.DRAFT
+        }
         def result = [isError:false, message:"Nominee info deleted successfully!"]
         String output = result as JSON
         render output
@@ -226,6 +234,9 @@ class SavingsAccountController {
                     return
                 }
                 personalInfo.addToOtherBankAccount(savedOtherBankAccount)
+                if ((personalInfo.nominee[0]!=null)&&(personalInfo.attachments[0]!=null)){
+                    personalInfo.accOpenRequest.status = RequestStatus.SUBMITTED
+                }
                 PersonalInfo savedPersonalInfo = personalInfo.save(flash:true)
                 def result = [isError:false, add:true, message:"Other bank account Info Added successfully!", otherBankAccount: savedOtherBankAccount, personalInfo:savedPersonalInfo]
                 render result as JSON
@@ -266,7 +277,10 @@ class SavingsAccountController {
             render result as JSON
             return
         }
-        savedPersonalInfo.nominee?.removeAll {it.status== false}
+        savedPersonalInfo.otherBankAccount?.removeAll {it.status== false}
+        if ((savedPersonalInfo.otherBankAccount[0]==null)){
+            savedPersonalInfo.accOpenRequest.status = RequestStatus.DRAFT
+        }
         def result = [isError:false, message:"Other bank account info deleted successfully!"]
         String output = result as JSON
         render output
@@ -415,6 +429,9 @@ class SavingsAccountController {
                 return
             }
             personalInfo.getAttachments().add(savedAttachment)
+            if ((personalInfo.nominee[0]!=null)&&(personalInfo.otherBankAccount[0]!=null)){
+                personalInfo.accOpenRequest.status = RequestStatus.SUBMITTED
+            }
             PersonalInfo savedPersonalInfo = personalInfo.save()
             if(!savedPersonalInfo){
                 def result = [isError:true, message:"Identification document not saved successfully!"]
@@ -487,6 +504,9 @@ class SavingsAccountController {
             return
         }
         savedPersonalInfo.attachments?.removeAll {it.status== AttachStatus.DELETED}
+        if ((savedPersonalInfo.attachments[0]==null)){
+            savedPersonalInfo.accOpenRequest.status = RequestStatus.DRAFT
+        }
         def result = [isError:false, message:"Identification document deleted successfully!"]
         String output = result as JSON
         render output

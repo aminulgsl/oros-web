@@ -117,12 +117,12 @@
 
                         <td class="actions ">
                             <div class="btn-group">
-                                <sec:access controller="savingsAccount" action="editNominee">
+                                <sec:access controller="currentAccount" action="editNominee">
                                     <a class="btn btn-sm nominee-edit-link" href="" id="${nominee.id}" personalId="${personalInfo?.id}" title="Edit">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                 </sec:access>
-                                <sec:access controller="savingsAccount" action="deleteNominee">
+                                <sec:access controller="currentAccount" action="deleteNominee">
                                     <a class="btn btn-sm delete btn-danger nominee-delete-link" onclick="return confirm('Are you sure delete Nominee Information?')"
                                        href="" id="${nominee.id}" personalId="${personalInfo?.id}" title="Delete"><i class="glyphicon glyphicon-remove "></i>
                                     </a>
@@ -212,7 +212,7 @@
             },
             submitHandler: function (form) {
                 $.ajax({
-                    url: "${createLink(controller: 'savingsAccount', action: 'saveNominee')}",
+                    url: "${createLink(controller: 'currentAccount', action: 'saveNominee')}",
                     type: 'post',
                     dataType: 'json',
                     data: $("#nomineeForm").serialize(),
@@ -280,7 +280,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'savingsAccount',action: 'deleteNominee')}?id="+id+"&personalId="+personalId,
+                url: "${g.createLink(controller: 'currentAccount',action: 'deleteNominee')}?id="+id+"&personalId="+personalId,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         var success = '<div class="alert alert-success">';
@@ -313,7 +313,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'savingsAccount',action: 'editNominee')}?id="+id+"&row="+row,
+                url: "${g.createLink(controller: 'currentAccount',action: 'editNominee')}?id="+id+"&row="+row,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         $('#nomineeForm #id').val(data.nominee.id);

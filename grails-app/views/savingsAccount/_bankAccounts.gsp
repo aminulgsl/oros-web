@@ -59,14 +59,14 @@
                         <td id="attAccountNo">${bankAccount.bankAccountNo}</td>
                         <td id="attAccountName">${bankAccount.bankAccountName}</td>
 
-                        <td class="actions ">
+                        <td class="actions">
                             <div class="btn-group">
-                                <sec:access controller="savingsAccount" action="editBankAccount">
+                                <sec:access controller="savingsAccount" action="editOtherBankAccount">
                                     <a class="btn btn-sm bankAccount-edit-link" href="" id="${bankAccount.id}" personalId="${personalInfo?.id}" title="Edit">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                 </sec:access>
-                                <sec:access controller="savingsAccount" action="deleteBankAccount">
+                                <sec:access controller="savingsAccount" action="deleteOtherBankAccount">
                                     <a class="btn btn-sm delete btn-danger bankAccount-delete-link" onclick="return confirm('Are you sure delete Bank Account Information?')"
                                        href="" id="${bankAccount.id}" personalId="${personalInfo?.id}" title="Delete"><i class="glyphicon glyphicon-remove"></i>
                                     </a>

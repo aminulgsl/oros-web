@@ -15,6 +15,7 @@ class PersonalInfo {
     String email
     String phoneNo
     String profession
+    AccOpenRequest accOpenRequest
 
     static hasMany = [nominee:Nominee,otherBankAccount:OtherBankAccount,attachments:OrosAttachment]
 
@@ -31,6 +32,7 @@ class PersonalInfo {
         email nullable: false
         phoneNo nullable: false
         profession nullable: true
+        accOpenRequest nullable: true
 
     }
 }
