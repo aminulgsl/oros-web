@@ -18,7 +18,7 @@ class CurrentAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def product() {
+    def info() {
         render(view: 'currentAccountInfo', model: [productId:params.productId])
     }
 

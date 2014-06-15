@@ -27,7 +27,7 @@ class SavingsAccountController {
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
-    def product() {
+    def info() {
         render(view: 'savingsAccountInfo', model: [productId:params.productId])
     }
 

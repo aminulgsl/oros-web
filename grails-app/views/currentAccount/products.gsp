@@ -34,7 +34,7 @@
                 <div class="widget-main">
                     <ul>
                         <g:each in="${currentProductList}" var='currentProducts'>
-                            <li><a href="${createLink(controller: 'currentAccount', action: 'product', params: [productId:currentProducts.id])}">${currentProducts.productName}</a></li>
+                            <li><a href="${createLink(controller: 'currentAccount', action: 'info', params: [productId:currentProducts.id])}">${currentProducts.productName}</a></li>
                         </g:each>
                     </ul>
                 </div>
