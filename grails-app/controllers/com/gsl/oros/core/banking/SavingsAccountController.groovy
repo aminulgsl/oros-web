@@ -1,6 +1,7 @@
 package com.gsl.oros.core.banking
 
 import com.gsl.cbs.contraints.enums.RequestStatus
+import com.gsl.cbs.exceptions.CoreBankingException
 import com.gsl.plugin.attachments.AttachStatus
 import com.gsl.plugin.attachments.OrosAttachment
 import com.gsl.uma.security.User
@@ -9,12 +10,20 @@ import grails.plugin.springsecurity.annotation.Secured
 import org.springframework.web.multipart.MultipartFile
 
 class SavingsAccountController {
+    def apiService
     def imageIndirectService
     def springSecurityService
 
     @Secured(['ROLE_SUPER_ADMIN'])
     def index() {
-        render(view: 'products', model: [savingsProductList:SavingsProduct.list()])
+        def savingsProductList = null
+        try{
+            savingsProductList = apiService.savingsProductList()
+        }catch (CoreBankingException ex){
+            ex.printStackTrace()
+        }
+        println(savingsProductList)
+        render(view: 'products', model: [savingsProductList:savingsProductList])
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])

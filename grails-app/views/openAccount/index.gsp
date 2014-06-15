@@ -33,8 +33,11 @@
                 <div class="widget-body">
                     <div class="widget-main">
                         <ul>
-                            <li><a href="${createLink(controller: 'savingsAccount', action: 'index')}">Savings Account</a></li>
-                            <li><a href="${createLink(controller: 'currentAccount', action: 'index')}">Current Account</a></li>
+                            <g:each in="${accountTypeList}" var="resp">
+                                <li><a href="${createLink(controller: 'openAccount', action: 'create', params: [accountType:resp.name])}">${resp.name}</a></li>
+                            </g:each>
+                            %{--<li><a href="${createLink(controller: 'savingsAccount', action: 'index')}">Savings Account</a></li>--}%
+                            %{--<li><a href="${createLink(controller: 'currentAccount', action: 'index')}">Current Account</a></li>--}%
                         </ul>
                     </div>
                 </div>

@@ -7,6 +7,7 @@ grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/oros.war"
 grails.plugin.location.'oros-attachment-plugin' = "../plugins/oros-attachment-plugin"
+grails.server.port.http = 8090
 
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
@@ -56,6 +57,10 @@ grails.project.dependency.resolution = {
 //        build 'com.lowagie:itext:2.1.7'
         // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
         compile 'org.apache.commons:commons-lang3:3.1'
+        compile 'org.codehaus.groovy.modules.http-builder:http-builder:0.7'
+
+
+
     }
 
     plugins {
@@ -89,5 +94,12 @@ grails.project.dependency.resolution = {
         compile ":spring-security-core:2.0-RC2"
 //        runtime ":mail:1.0.1"
 //        compile ":rendering:0.4.4"
+        /*compile ":spring-security-rest:1.4.0.M2", {
+            excludes: 'spring-security-core'
+        }*/
+        build(":release:3.0.1",
+                ":rest-client-builder:2.0.1") {
+            export = false
+        }
     }
 }

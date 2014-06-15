@@ -133,9 +133,35 @@
     };
 
     $(document).ready(function () {
-
+        menuActive();
     });
+    function menuActive() {
+        var topMenu = $("#sidebar ul.nav");
+        var singleMenuItems = ["home", "openaccount"]; // need to provided by programmer manually
 
+        topMenu.find("li").removeClass("open").removeClass("active"); // remove previous active link
+
+        var loc = document.URL;
+        loc = loc.replace(/.*?:\/\//g, "");  // remove "htpp://"
+        loc = loc.replace("localhost/", ""); // remove "localhost/"
+        loc = loc.replace("oros-web/", ""); // remove
+        loc = loc.split('/');     // split by "/"
+        var controllerName = loc[1];
+        //var actionName = loc[2];
+        if (controllerName) {
+            topMenu.find("li a").each(function () {
+
+                var menuLinkName = $(this).attr('data-linkTo');
+                if(menuLinkName==controllerName) {
+                    $(this).parent("li").addClass("active");
+                    $(this).closest('ul').parent("li").addClass("open").addClass("active");
+                }
+            });
+        }else{
+            $('#sidebar ul.nav li').first().addClass('active');
+        }
+
+    }
 
 </script>
 </body>

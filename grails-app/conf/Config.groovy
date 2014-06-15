@@ -87,11 +87,15 @@ grails.hibernate.cache.queries = false
 
 environments {
     development {
+        grails.serverURL = "http://localhost:8090/oros-web"
+        grails.orosURL = "http://localhost:8080/gslcbs"
         grails.logging.jul.usebridge = true
         //images.location = "web-app/images/userImages/"
         imageindirect.basePath = System.getProperty("user.home") + File.separator + "gslcbs" + File.separator + "attachments"
     }
     production {
+        grails.serverURL = "http://localhost:8090/oros-web"
+        grails.orosURL = "http://localhost:8080/gslcbs"
         grails.logging.jul.usebridge = false
         imageindirect.basePath = System.getProperty("user.home") + File.separator + "gslcbs" + File.separator + "attachments"
 
@@ -123,7 +127,6 @@ log4j = {
 grails.plugin.springsecurity.userLookup.userDomainClassName = 'com.gsl.uma.security.User'
 grails.plugin.springsecurity.userLookup.authorityJoinClassName = 'com.gsl.uma.security.UserRole'
 grails.plugin.springsecurity.authority.className = 'com.gsl.uma.security.Role'
-grails.plugin.springsecurity.requestMap.className = 'com.gsl.uma.security.RequestMap'
 //grails.plugin.springsecurity.securityConfigType = 'Requestmap'
 grails.plugin.springsecurity.controllerAnnotations.staticRules = [
 //	'/':                              ['permitAll'],
@@ -142,4 +145,14 @@ grails.plugin.springsecurity.fii.rejectPublicInvocations = false
 //grails.plugin.springsecurity.successHandler.defaultTargetUrl = '/login/loginSuccess'
 grails.plugin.springsecurity.successHandler.alwaysUseDefault = true
 grails.plugin.springsecurity.logout.postOnly = false
+
+/*
+grails.plugin.springsecurity.filterChain.chainMap = [
+        '/api*/
+/**': 'JOINED_FILTERS,-exceptionTranslationFilter,-authenticationProcessingFilter,-securityContextPersistenceFilter',  // Stateless chain
+        '*/
+/**': 'JOINED_FILTERS,-restTokenValidationFilter,-restExceptionTranslationFilter'                                          // Traditional chain
+]
+
+*/
 

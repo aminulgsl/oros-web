@@ -5,6 +5,7 @@ package com.gsl.cbs.webservice
  */
 class ServiceResult {
     int statusCode
+    int count
     String shortMessage
     List results
     String traceId
