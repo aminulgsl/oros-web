@@ -34,13 +34,7 @@
                     <div class="widget-main">
                         <ul>
                             <g:each in="${accountTypeList}" var="resp">
-                            %{--<li><a href="${createLink(controller: 'openAccount', action: 'products', params: [accountType:resp.name])}">${resp.name}</a></li>--}%
-                                <g:if test="${resp.name=='SAVINGS'}">
-                                    <li><a href="${createLink(controller: 'savingsAccount', action: 'index', params: [accountType:resp.name])}">${resp.name}</a></li>
-                                </g:if>
-                                <g:elseif test="${resp.name=='CURRENT'}">
-                                <li><a href="${createLink(controller: 'currentAccount', action: 'index', params: [accountType:resp.name])}">${resp.name}</a></li>
-                                </g:elseif>
+                            <li><a href="${createLink(controller: 'openAccount', action: 'products', params: [accountType:resp.name])}">${resp.name}</a></li>
                             </g:each>
                         </ul>
                     </div>

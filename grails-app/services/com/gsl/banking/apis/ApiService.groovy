@@ -17,6 +17,7 @@ class ApiService {
     private HTTPBuilder  httpBuilder
     private static final Integer SUCCESS_STATUS_CODES = 200
     private static final String ACCOUNT_QUERY_API ='/api/accountTypeList'
+    private static final String PRODUCT_QUERY_API ='/api/productList'
     private static final String SAVINGS_PRODUCT_QUERY_API ='/api/savingsProductList'
 
 //    @PostConstruct
@@ -30,6 +31,20 @@ class ApiService {
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
         def results = submitCoreBankRequest(serverUrl+ACCOUNT_QUERY_API,queryParams)
+        if(results){
+            try{
+                return results;
+            }catch (Exception ex){
+                throw new CoreBankingException("Unable to construct coordinate: ${ex.message}")
+            }
+        }
+        return results
+    }
+    def productList(Map optionalArgs = [:]) throws CoreBankingException{
+        println(optionalArgs.accountType)
+        String serverUrl=grailsApplication.config.grails.orosURL.toString()
+        Map queryParams = optionalArgs.clone()
+        def results = submitCoreBankRequest(serverUrl+PRODUCT_QUERY_API+queryParams,null)
         if(results){
             try{
                 return results;

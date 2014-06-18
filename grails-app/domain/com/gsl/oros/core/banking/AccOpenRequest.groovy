@@ -6,8 +6,11 @@ import com.gsl.uma.security.User
 class AccOpenRequest {
     User user
     PersonalInfo personalInfo
-    SavingsProduct savingsProduct
-    CurrentProduct currentProduct
+    String accountType
+    Long productId
+    String productName
+//    SavingsProduct savingsProduct
+//    CurrentProduct currentProduct
     RequestStatus status
     Date requestDate
     Date approvedDate
@@ -15,8 +18,11 @@ class AccOpenRequest {
     static constraints = {
         user nullable: false
         personalInfo nullable: false
-        savingsProduct nullable: true
-        currentProduct nullable: true
+        accountType nullable: false
+        productId nullable: false
+        productName nullable: false
+//        savingsProduct nullable: true
+//        currentProduct nullable: true
         status nullable: false
         requestDate nullable: false
         approvedDate nullable: true
