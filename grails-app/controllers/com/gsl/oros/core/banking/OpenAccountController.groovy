@@ -28,17 +28,32 @@ class OpenAccountController {
         }catch (CoreBankingException ex){
             ex.printStackTrace()
         }
-        println(productList)
-        render(view: 'products', model: [productList:productList, accountType:params.accountType])
-//        if(params.accountType == 'SAVINGS'){
-//            def savingsProductList = null
-//            try{
-//                savingsProductList = apiService.savingsProductList()
-//            }catch (CoreBankingException ex){
-//                ex.printStackTrace()
-//            }
-//            println(savingsProductList)
-//            render(view: 'products', model: [productList:savingsProductList, accountType:params.accountType])
-//        }
+        render(view: 'products', model: [productList:productList, accountType:accountType])
+    }
+
+    @Secured(['ROLE_SUPER_ADMIN'])
+    def productInfo() {
+        def fixedFeeList = null
+        def entryFeeList = null
+        def closedFeeList = null
+        def agioFeeList = null
+        def reopenFeeList = null
+        String accountType = params.accountType
+        String productId = params.productId
+        Map queryParams = new LinkedHashMap()
+        queryParams.put('accountType',accountType)
+        queryParams.put('productId',productId)
+        try{
+            fixedFeeList = apiService.fixedFeeList(queryParams)
+            entryFeeList = apiService.entryFeeList(queryParams)
+            closedFeeList = apiService.closedFeeList(queryParams)
+            agioFeeList = apiService.agioFeeList(queryParams)
+            reopenFeeList = apiService.reopenFeeList(queryParams)
+        }catch (CoreBankingException ex){
+            ex.printStackTrace()
+        }
+        render(view: '/savingsAccount/savingsAccountInfo', model: [accountType:accountType, productId:productId,
+                fixedFeeList:fixedFeeList, entryFeeList:entryFeeList, closedFeeList:closedFeeList, agioFeeList:agioFeeList,
+                reopenFeeList:reopenFeeList])
     }
 }

@@ -39,33 +39,67 @@
                                 <th>Amount of Charges & Commission</th>
                             </tr>
                             <tr>
-                                <td>Account Maintenance Fee(Service Charges)</td>
+                                %{--<td>Account Maintenance Fee(Service Charges)</td>--}%
+                                <td>Fixed Fee</td>
                                 <td>
                                     <ul>
-                                        <li>No A/C maintenance charge on Savings
-                                    A/C having half-yearly average balance
-                                    upto Tk. 5,000/- or less.</li>
+                                        <g:each in="${fixedFeeList}" var='fixedFee'>
+                                            <li>For minimum ${fixedFee.min} and maximum ${fixedFee.max} the fixed fee is ${fixedFee.value}</li>
+                                        </g:each>
+                                        %{--<li>No A/C maintenance charge on Savings--}%
+                                    %{--A/C having half-yearly average balance--}%
+                                    %{--upto Tk. 5,000/- or less.</li>--}%
 
-                                        <li>Tk.100 on a half-yearly basis from Savings
-                                A/C having half-yearly average balance of
-                                more than Tk.5000 upto Tk. 25,000/-</li>
+                                        %{--<li>Tk.100 on a half-yearly basis from Savings--}%
+                                %{--A/C having half-yearly average balance of--}%
+                                %{--more than Tk.5000 upto Tk. 25,000/-</li>--}%
 
-                                        <li>Tk.300 on a half-yearly basis from Savings
-                                A/C having half-yearly average balance of
-                                more than Tk. 25,000/-</li>
+                                        %{--<li>Tk.300 on a half-yearly basis from Savings--}%
+                                %{--A/C having half-yearly average balance of--}%
+                                %{--more than Tk. 25,000/-</li>--}%
+                                    </ul>
+                                </td>
+                            </tr>
+                            %{--<tr>--}%
+                                %{--<td>Incidental charges</td>--}%
+                                %{--<td>--}%
+                                    %{--Nil--}%
+                                %{--</td>--}%
+                            %{--</tr>--}%
+                            %{--<tr>--}%
+                                %{--<td>Closing charges</td>--}%
+                                %{--<td>--}%
+                                    %{--Tk. 200/---}%
+                                %{--</td>--}%
+                            %{--</tr>--}%
+                            <tr>
+                                <td>Entry Fee</td>
+                                <td>
+                                    <ul>
+                                        <g:each in="${entryFeeList}" var='entryFee'>
+                                            <li>For minimum ${entryFee.min} and maximum ${entryFee.max} the fixed fee is ${entryFee.value}</li>
+                                        </g:each>
                                     </ul>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Incidental charges</td>
+                                <td>Closing Fee</td>
                                 <td>
-                                    Nil
+                                    <ul>
+                                        <g:each in="${closedFeeList}" var='closedFee'>
+                                            <li>For minimum ${closedFee.min} and maximum ${closedFee.max} the fixed fee is ${closedFee.value}</li>
+                                        </g:each>
+                                    </ul>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Closing charges</td>
+                                <td>Reopen Fee</td>
                                 <td>
-                                    Tk. 200/-
+                                    <ul>
+                                        <g:each in="${reopenFeeList}" var='reopenFee'>
+                                            <li>For minimum ${reopenFee.min} and maximum ${reopenFee.max} the fixed fee is ${reopenFee.value}</li>
+                                        </g:each>
+                                    </ul>
                                 </td>
                             </tr>
                         </tbody>
