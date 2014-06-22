@@ -32,7 +32,7 @@
             </div>
             <div class="widget-body">
                 <div class="widget-main">
-                    <table class="table-bordered">
+                    <table class="table-bordered" style="width:100%">
                         <tbody>
                             <tr>
                                 <th>Nature of Charges</th>
@@ -98,6 +98,36 @@
                                     <ul>
                                         <g:each in="${reopenFeeList}" var='reopenFee'>
                                             <li>For minimum ${reopenFee.min} and maximum ${reopenFee.max} the fixed fee is ${reopenFee.value}</li>
+                                        </g:each>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Agio Fee</td>
+                                <td>
+                                    <ul>
+                                        <g:each in="${agioFeeList}" var='agioFee'>
+                                            <li>For minimum ${agioFee.min} and maximum ${agioFee.max} the fixed fee is ${agioFee.value}</li>
+                                        </g:each>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Management Fee</td>
+                                <td>
+                                    <ul>
+                                        <g:each in="${managementFeeList}" var='managementFee'>
+                                            <li>For minimum ${managementFee.min} and maximum ${managementFee.max} the fixed fee is ${managementFee.value}</li>
+                                        </g:each>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Overdraft Fee</td>
+                                <td>
+                                    <ul>
+                                        <g:each in="${overdraftFeeList}" var='overdraftFee'>
+                                            <li>For minimum ${overdraftFee.min} and maximum ${overdraftFee.max} the fixed fee is ${overdraftFee.value}</li>
                                         </g:each>
                                     </ul>
                                 </td>

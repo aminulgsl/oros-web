@@ -36,8 +36,10 @@ class OpenAccountController {
         def fixedFeeList = null
         def entryFeeList = null
         def closedFeeList = null
-        def agioFeeList = null
         def reopenFeeList = null
+        def agioFeeList = null
+        def managementFeeList = null
+        def overdraftFeeList = null
         String accountType = params.accountType
         String productId = params.productId
         Map queryParams = new LinkedHashMap()
@@ -47,13 +49,16 @@ class OpenAccountController {
             fixedFeeList = apiService.fixedFeeList(queryParams)
             entryFeeList = apiService.entryFeeList(queryParams)
             closedFeeList = apiService.closedFeeList(queryParams)
-            agioFeeList = apiService.agioFeeList(queryParams)
             reopenFeeList = apiService.reopenFeeList(queryParams)
+            agioFeeList = apiService.agioFeeList(queryParams)
+            managementFeeList = apiService.managementFeeList(queryParams)
+            overdraftFeeList = apiService.overdraftFeeList(queryParams)
         }catch (CoreBankingException ex){
             ex.printStackTrace()
         }
         render(view: '/savingsAccount/savingsAccountInfo', model: [accountType:accountType, productId:productId,
-                fixedFeeList:fixedFeeList, entryFeeList:entryFeeList, closedFeeList:closedFeeList, agioFeeList:agioFeeList,
-                reopenFeeList:reopenFeeList])
+                fixedFeeList:fixedFeeList, entryFeeList:entryFeeList, closedFeeList:closedFeeList,
+                reopenFeeList:reopenFeeList, agioFeeList:agioFeeList, managementFeeList:managementFeeList,
+                overdraftFeeList:overdraftFeeList])
     }
 }

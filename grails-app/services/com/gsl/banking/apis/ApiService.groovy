@@ -17,12 +17,15 @@ class ApiService {
     private HTTPBuilder  httpBuilder
     private static final Integer SUCCESS_STATUS_CODES = 200
     private static final String ACCOUNT_QUERY_API ='/api/accountTypeList'
-    private static final String PRODUCT_QUERY_API ='/api/productList'
+    private static final String PRODUCT_LIST_QUERY_API ='/api/productList'
     private static final String FIXED_FEE_QUERY_API ='/api/fixedFeeList'
     private static final String ENTRY_FEE_QUERY_API ='/api/entryFeeList'
     private static final String CLOSED_FEE_QUERY_API ='/api/closedFeeList'
-    private static final String AGIO_FEE_QUERY_API ='/api/agioFeeList'
     private static final String REOPEN_FEE_QUERY_API ='/api/reopenFeeList'
+    private static final String AGIO_FEE_QUERY_API ='/api/agioFeeList'
+    private static final String MANAGEMENT_FEE_QUERY_API ='/api/managementFeeList'
+    private static final String OVERDRAFT_FEE_QUERY_API ='/api/overdraftFeeList'
+    private static final String PRODUCT_INFO_QUERY_API ='/api/productInfo'
 
 //    @PostConstruct
 //    private void initializeBuilder() {
@@ -47,7 +50,7 @@ class ApiService {
     def productList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
-        def results = submitCoreBankRequest(serverUrl+PRODUCT_QUERY_API+'?accountType='+optionalArgs.accountType,queryParams)
+        def results = submitCoreBankRequest(serverUrl+PRODUCT_LIST_QUERY_API+'?accountType='+optionalArgs.accountType,queryParams)
         if(results){
             try{
                 return results;
@@ -96,6 +99,19 @@ class ApiService {
         }
         return results
     }
+    def reopenFeeList(Map optionalArgs = [:]) throws CoreBankingException{
+        String serverUrl=grailsApplication.config.grails.orosURL.toString()
+        Map queryParams = optionalArgs.clone()
+        def results = submitCoreBankRequest(serverUrl+REOPEN_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
+        if(results){
+            try{
+                return results;
+            }catch (Exception ex){
+                throw new CoreBankingException("Unable to construct coordinate: ${ex.message}")
+            }
+        }
+        return results
+    }
     def agioFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
@@ -109,10 +125,36 @@ class ApiService {
         }
         return results
     }
-    def reopenFeeList(Map optionalArgs = [:]) throws CoreBankingException{
+    def managementFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
-        def results = submitCoreBankRequest(serverUrl+REOPEN_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
+        def results = submitCoreBankRequest(serverUrl+MANAGEMENT_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
+        if(results){
+            try{
+                return results;
+            }catch (Exception ex){
+                throw new CoreBankingException("Unable to construct coordinate: ${ex.message}")
+            }
+        }
+        return results
+    }
+    def overdraftFeeList(Map optionalArgs = [:]) throws CoreBankingException{
+        String serverUrl=grailsApplication.config.grails.orosURL.toString()
+        Map queryParams = optionalArgs.clone()
+        def results = submitCoreBankRequest(serverUrl+OVERDRAFT_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
+        if(results){
+            try{
+                return results;
+            }catch (Exception ex){
+                throw new CoreBankingException("Unable to construct coordinate: ${ex.message}")
+            }
+        }
+        return results
+    }
+    def productInfo(Map optionalArgs = [:]) throws CoreBankingException{
+        String serverUrl=grailsApplication.config.grails.orosURL.toString()
+        Map queryParams = optionalArgs.clone()
+        def results = submitCoreBankRequest(serverUrl+PRODUCT_INFO_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
                 return results;

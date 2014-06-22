@@ -110,7 +110,7 @@
                 <g:each in="${personalInfo?.nominee}" var="nominee" status="i">
 
                     <tr>
-                        <td id="attName">${nominee.firstName}</td>
+                        <td id="attName">${nominee.firstName} ${nominee.middleName} ${nominee.lastName}</td>
                         <td id="attPresent">${nominee.presentAddress}</td>
                         <td id="attPermanent">${nominee.permanentAddress}</td>
                         <td id="attNational">${nominee.nationalId}</td>

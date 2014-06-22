@@ -66,6 +66,7 @@
 
     <g:hiddenField name="id" id="id" value="${personalInfo?.id}"/>
     <g:hiddenField name="productId" id="productId" value="${productId}"/>
+    <g:hiddenField name="accountType" id="accountType" value="${accountType}"/>
 
     <div class="form-group ${hasErrors(bean:personalInfo,field:'name','has-error')}">
         <label for="name">Name*</label>

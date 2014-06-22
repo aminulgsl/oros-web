@@ -50,6 +50,7 @@ class SavingsAccountController {
         else {
             Long userId = springSecurityService.principal.id
             User loggedUser = User.read(userId)
+
             if (personalInfoCommand.hasErrors()) {
                 def result = [isError:true, message:"Personal Info data has any problem!"]
                 render result as JSON
