@@ -15,6 +15,7 @@
     <script src="${resource(dir: 'js', file: 'spin.min.js')}"></script>
     <script src="${resource(dir: 'js', file: 'ace.js')}"></script>
     <script src="${resource(dir: 'js', file: 'ace-elements.js')}"></script>
+
     <style>
     select, label, textarea, input[type="text"], input[type="password"],
     input[type="datetime"], input[type="datetime-local"], input[type="date"],
@@ -61,10 +62,12 @@
 </g:hasErrors>
 
 <g:form name="personalForm" id="personalForm" method="post" role="form" class="form-inline"
-        url="[action: 'savePersonalInfo', controller: 'savingsAccount']" onSubmit="return false;">
+        url="[controller: 'openAccount', action: 'savePersonalInfo']" onSubmit="return false;">
 
     <g:hiddenField name="id" id="id" value="${personalInfo?.id}"/>
+    <g:hiddenField name="accountType" id="accountType" value="${accountType}"/>
     <g:hiddenField name="productId" id="productId" value="${productId}"/>
+    <g:hiddenField name="productName" id="productId" value="${productName}"/>
 
     <div class="form-group ${hasErrors(bean:personalInfo,field:'name','has-error')}">
         <label for="name">Name*</label>
@@ -196,7 +199,7 @@
             },
             submitHandler: function (form) {
                 $.ajax({
-                    url: "${createLink(controller: 'currentAccount', action: 'savePersonalInfo')}",
+                    url: "${createLink(controller: 'openAccount', action: 'savePersonalInfo')}",
                     type: 'post',
                     dataType: 'json',
                     data: $("#personalForm").serialize(),
@@ -208,8 +211,8 @@
                                 $('#bankAccountForm #personalId').val(data.personalInfo.id);
                                 $('#identificationForm #personalId').val(data.personalInfo.id);
                                 $('#personalSubmitButton').html('<i class="icon-ok bigger-110"></i>Update');
-                                $('ul#currentAccountFormListTab li').removeClass('disabled');
-                                $('ul#currentAccountFormListTab li a').attr('data-toggle','tab');
+                                $('ul#savingsAccountFormListTab li').removeClass('disabled');
+                                $('ul#savingsAccountFormListTab li a').attr('data-toggle','tab');
                                 $('li#nomineeTab a').attr('href','#nomineeContent');
                                 $('li#bankAccountTab a').attr('href','#bankAccountContent');
                                 $('li#attachmentsTab a').attr('href','#attachmentContent');

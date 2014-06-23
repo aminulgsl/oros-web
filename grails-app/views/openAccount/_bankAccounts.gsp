@@ -1,5 +1,5 @@
 <g:form id="bankAccountForm" name="bankAccountForm" method="post" role="form" class="form-inline"
-         onSubmit="return false;">
+        url="[controller: 'openAccount', action: 'saveOtherBankAccount']" onSubmit="return false;">
 
     <g:hiddenField name="id" id="id" value="${otherBankAccount?.id}"/>
     <g:hiddenField name="personalId" id="personalId" value="${personalInfo?.id}"/>
@@ -61,12 +61,12 @@
 
                         <td class="actions">
                             <div class="btn-group">
-                                <sec:access controller="savingsAccount" action="editOtherBankAccount">
+                                <sec:access controller="openAccount" action="editOtherBankAccount">
                                     <a class="btn btn-sm bankAccount-edit-link" href="" id="${bankAccount.id}" personalId="${personalInfo?.id}" title="Edit">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                 </sec:access>
-                                <sec:access controller="savingsAccount" action="deleteOtherBankAccount">
+                                <sec:access controller="openAccount" action="deleteOtherBankAccount">
                                     <a class="btn btn-sm delete btn-danger bankAccount-delete-link" onclick="return confirm('Are you sure delete Bank Account Information?')"
                                        href="" id="${bankAccount.id}" personalId="${personalInfo?.id}" title="Delete"><i class="glyphicon glyphicon-remove"></i>
                                     </a>
@@ -130,7 +130,7 @@
             },
             submitHandler: function (form) {
                 $.ajax({
-                    url: "${createLink(controller: 'savingsAccount', action: 'saveOtherBankAccount')}",
+                    url: "${createLink(controller: 'openAccount', action: 'saveOtherBankAccount')}",
                     type: 'post',
                     dataType: 'json',
                     data: $("#bankAccountForm").serialize(),
@@ -198,7 +198,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'savingsAccount',action: 'deleteOtherBankAccount')}?id="+id+"&personalId="+personalId,
+                url: "${g.createLink(controller: 'openAccount',action: 'deleteOtherBankAccount')}?id="+id+"&personalId="+personalId,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         var success = '<div class="alert alert-success">';
@@ -231,7 +231,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'savingsAccount',action: 'editOtherBankAccount')}?id="+id+"&row="+row,
+                url: "${g.createLink(controller: 'openAccount',action: 'editOtherBankAccount')}?id="+id+"&row="+row,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         $('#bankAccountForm #id').val(data.otherBankAccount.id);

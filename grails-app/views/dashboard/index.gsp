@@ -31,11 +31,10 @@
                     <div class="widget-main">
                         <g:if test="${user?.accOpenRequest}">
                             <g:each in="${user?.accOpenRequest}" var='accOpenRequest'>
-                                %{--<g:if test="${accOpenRequest.savingsProduct!=null}">--}%
                                 Product: ${accOpenRequest.productName}
                                 <ul>
                                     <g:if test="${accOpenRequest.status == RequestStatus.DRAFT}">
-                                        <li>Status: <a href="${createLink(controller: 'savingsAccount', action: 'apply', params: [accountType:accOpenRequest.accountType, productId:accOpenRequest.productId, personalId:accOpenRequest.personalInfo.id])}">${accOpenRequest.status}</a></li>
+                                        <li>Status: <a href="${createLink(controller: 'openAccount', action: 'apply', params: [accountType:accOpenRequest.accountType, productId:accOpenRequest.productId, productName:accOpenRequest.productName, personalId:accOpenRequest.personalInfo.id])}">${accOpenRequest.status}</a></li>
                                             Please provide<br/>
                                             <g:if test="${accOpenRequest.personalInfo.nominee[0]==null}">-- nominee info<br/></g:if>
                                             <g:if test="${accOpenRequest.personalInfo.otherBankAccount[0]==null}">-- other bank account info<br/></g:if>
@@ -46,23 +45,6 @@
                                     </g:else>
                                     <li>Requested date: ${accOpenRequest.requestDate}</li>
                                 </ul>
-                                %{--</g:if>--}%
-                                %{--<g:elseif test="${accOpenRequest.currentProduct!=null}">--}%
-                                    %{--Product: ${accOpenRequest.currentProduct.productName}--}%
-                                    %{--<ul>--}%
-                                        %{--<g:if test="${accOpenRequest.status == RequestStatus.DRAFT}">--}%
-                                            %{--<li>Status: <a href="${createLink(controller: 'currentAccount', action: 'apply', params: [productId:accOpenRequest.currentProduct.id, personalId:accOpenRequest.personalInfo.id])}">${accOpenRequest.status}</a></li>--}%
-                                                %{--Please provide<br/>--}%
-                                                %{--<g:if test="${accOpenRequest.personalInfo.nominee[0]==null}">-- nominee info<br/></g:if>--}%
-                                                %{--<g:if test="${accOpenRequest.personalInfo.otherBankAccount[0]==null}">-- other bank account info<br/></g:if>--}%
-                                                %{--<g:if test="${accOpenRequest.personalInfo.attachments[0]==null}">-- attachments</g:if>--}%
-                                        %{--</g:if>--}%
-                                        %{--<g:else>--}%
-                                            %{--<li>Status: ${accOpenRequest.status}</li>--}%
-                                        %{--</g:else>--}%
-                                        %{--<li>Requested date: ${accOpenRequest.requestDate}</li>--}%
-                                    %{--</ul>--}%
-                                %{--</g:elseif>--}%
                             </g:each>
                         </g:if>
                         <g:else>

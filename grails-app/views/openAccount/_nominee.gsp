@@ -9,7 +9,8 @@
     </div>
 </g:hasErrors>
 
-<g:form name="nomineeForm" id="nomineeForm" method="post" role="form" class="form-inline" onSubmit="return false;">
+<g:form name="nomineeForm" id="nomineeForm" method="post" role="form" class="form-inline"
+        url="[controller: 'openAccount', action: 'saveNominee']" onSubmit="return false;">
 
     <g:hiddenField name="id" id="id" value="${nominee?.id}"/>
     <g:hiddenField name="personalId" id="personalId" value="${personalInfo?.id}"/>
@@ -110,19 +111,19 @@
                 <g:each in="${personalInfo?.nominee}" var="nominee" status="i">
 
                     <tr>
-                        <td id="attName">${nominee.firstName}</td>
+                        <td id="attName">${nominee.firstName} ${nominee.middleName} ${nominee.lastName}</td>
                         <td id="attPresent">${nominee.presentAddress}</td>
                         <td id="attPermanent">${nominee.permanentAddress}</td>
                         <td id="attNational">${nominee.nationalId}</td>
 
                         <td class="actions ">
                             <div class="btn-group">
-                                <sec:access controller="currentAccount" action="editNominee">
+                                <sec:access controller="openAccount" action="editNominee">
                                     <a class="btn btn-sm nominee-edit-link" href="" id="${nominee.id}" personalId="${personalInfo?.id}" title="Edit">
                                         <i class="glyphicon glyphicon-pencil"></i>
                                     </a>
                                 </sec:access>
-                                <sec:access controller="currentAccount" action="deleteNominee">
+                                <sec:access controller="openAccount" action="deleteNominee">
                                     <a class="btn btn-sm delete btn-danger nominee-delete-link" onclick="return confirm('Are you sure delete Nominee Information?')"
                                        href="" id="${nominee.id}" personalId="${personalInfo?.id}" title="Delete"><i class="glyphicon glyphicon-remove "></i>
                                     </a>
@@ -212,7 +213,7 @@
             },
             submitHandler: function (form) {
                 $.ajax({
-                    url: "${createLink(controller: 'currentAccount', action: 'saveNominee')}",
+                    url: "${createLink(controller: 'openAccount', action: 'saveNominee')}",
                     type: 'post',
                     dataType: 'json',
                     data: $("#nomineeForm").serialize(),
@@ -280,7 +281,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'currentAccount',action: 'deleteNominee')}?id="+id+"&personalId="+personalId,
+                url: "${g.createLink(controller: 'openAccount',action: 'deleteNominee')}?id="+id+"&personalId="+personalId,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         var success = '<div class="alert alert-success">';
@@ -313,7 +314,7 @@
             jQuery.ajax({
                 type: 'POST',
                 dataType: 'json',
-                url: "${g.createLink(controller: 'currentAccount',action: 'editNominee')}?id="+id+"&row="+row,
+                url: "${g.createLink(controller: 'openAccount',action: 'editNominee')}?id="+id+"&row="+row,
                 success: function (data, textStatus) {
                     if(data.isError == false){
                         $('#nomineeForm #id').val(data.nominee.id);
@@ -347,3 +348,4 @@
         });
     });
 </script>
+

@@ -50,7 +50,7 @@
 
 <div class="page-header">
     <h1>
-        Savings Account Opening Form
+        ${accountType} Account Opening Form - ${productName}
     </h1>
 </div><!-- /.page-header -->
 
@@ -76,9 +76,6 @@
             <div class="collapse navbar-collapse" id="navbar-collapse-1">
                 <ul id="savingsAccountFormListTab" class="nav navbar-nav padding-12 tab-color-blue background-blue">
                     <li id="personalTab" class="active"><a href="#personalContent" data-toggle="tab">Personal Info</a></li>
-                    %{--<li id="nomineeTab"><a href="#nomineeContent" data-toggle="tab">Nominee Info</a></li>--}%
-                    %{--<li id="bankAccountTab"><a href="#bankAccountContent" data-toggle="tab">Other Bank Account Info</a></li>--}%
-                    %{--<li id="attachmentsTab"><a href="#attachmentContent" data-toggle="tab">Attachments</a></li>--}%
                     <li id="nomineeTab" class="disabled"><a>Nominee Info</a></li>
                     <li id="bankAccountTab" class="disabled"><a>Other Bank Account Info</a></li>
                     <li id="attachmentsTab" class="disabled"><a>Attachments</a></li>

@@ -9,8 +9,6 @@ class AccOpenRequest {
     String accountType
     Long productId
     String productName
-//    SavingsProduct savingsProduct
-//    CurrentProduct currentProduct
     RequestStatus status
     Date requestDate
     Date approvedDate
@@ -21,8 +19,6 @@ class AccOpenRequest {
         accountType nullable: false
         productId nullable: false
         productName nullable: false
-//        savingsProduct nullable: true
-//        currentProduct nullable: true
         status nullable: false
         requestDate nullable: false
         approvedDate nullable: true
