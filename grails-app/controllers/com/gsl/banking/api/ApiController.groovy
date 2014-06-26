@@ -10,7 +10,6 @@ import grails.rest.RestfulController
 
 @Secured(['permitAll'])
 class ApiController extends RestfulController {
-    def apiService
     static allowedMethods = [accOpen: "GET"]
     static responseFormats = ['json']
 
