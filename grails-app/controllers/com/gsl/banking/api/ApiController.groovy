@@ -3,6 +3,7 @@ package com.gsl.banking.api
 import com.gsl.cbs.contraints.enums.RequestStatus
 import com.gsl.cbs.webservice.ServiceResult
 import com.gsl.oros.core.banking.AccOpenRequest
+import com.gsl.oros.core.banking.PersonalInfo
 import grails.converters.JSON
 import grails.plugin.springsecurity.annotation.Secured
 import grails.plugins.rest.client.RestBuilder
@@ -25,5 +26,22 @@ class ApiController extends RestfulController {
             respond(accOpenRequestResult)
         }
         respond(accOpenRequest)
+    }
+
+    def personalInfo() {
+        ServiceResult personalInfoResult = new ServiceResult()
+        if(!params.personalId){
+            render status:404
+        }
+        def personalInfo = PersonalInfo.findAllById(params.personalId)
+        if(personalInfo == null) {
+            personalInfoResult.count=0
+            personalInfoResult.shortMessage="No account found"
+            personalInfoResult.statusCode=200
+            personalInfoResult.traceId="1254"
+            personalInfoResult.results=null
+            respond(personalInfoResult)
+        }
+        respond(personalInfo)
     }
 }
