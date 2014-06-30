@@ -43,7 +43,7 @@
                                     <g:else>
                                         <li>Status: ${accOpenRequest.status}</li>
                                     </g:else>
-                                    <li>Requested date: ${accOpenRequest.requestDate}</li>
+                                    <li>Requested date: ${accOpenRequest.requestDate.format("dd/MM/yyyy")}</li>
                                 </ul>
                             </g:each>
                         </g:if>
