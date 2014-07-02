@@ -33,7 +33,7 @@ class ApiController extends RestfulController {
         if(!params.personalId){
             render status:404
         }
-        def personalInfo = PersonalInfo.findAllById(params.personalId)
+        def personalInfo = PersonalInfo.findById(params.personalId)
         if(personalInfo == null) {
             personalInfoResult.count=0
             personalInfoResult.shortMessage="No account found"

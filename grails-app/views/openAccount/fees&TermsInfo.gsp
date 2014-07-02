@@ -53,7 +53,7 @@
                                 <td>
                                     <ul>
                                         <g:each in="${entryFeeList}" var='entryFee'>
-                                            <li>For minimum ${entryFee.min} and maximum ${entryFee.max} the fixed fee is ${entryFee.value}</li>
+                                            <li>For minimum ${entryFee.min} and maximum ${entryFee.max} the entry fee is ${entryFee.value}</li>
                                         </g:each>
                                     </ul>
                                 </td>
@@ -63,7 +63,7 @@
                                 <td>
                                     <ul>
                                         <g:each in="${closedFeeList}" var='closedFee'>
-                                            <li>For minimum ${closedFee.min} and maximum ${closedFee.max} the fixed fee is ${closedFee.value}</li>
+                                            <li>For minimum ${closedFee.min} and maximum ${closedFee.max} the closed fee is ${closedFee.value}</li>
                                         </g:each>
                                     </ul>
                                 </td>
@@ -73,7 +73,7 @@
                                 <td>
                                     <ul>
                                         <g:each in="${reopenFeeList}" var='reopenFee'>
-                                            <li>For minimum ${reopenFee.min} and maximum ${reopenFee.max} the fixed fee is ${reopenFee.value}</li>
+                                            <li>For minimum ${reopenFee.min} and maximum ${reopenFee.max} the reopen fee is ${reopenFee.value}</li>
                                         </g:each>
                                     </ul>
                                 </td>
@@ -83,7 +83,7 @@
                                 <td>
                                     <ul>
                                         <g:each in="${agioFeeList}" var='agioFee'>
-                                            <li>For minimum ${agioFee.min} and maximum ${agioFee.max} the fixed fee is ${agioFee.value}</li>
+                                            <li>For minimum ${agioFee.min} and maximum ${agioFee.max} the agio fee is ${agioFee.value}</li>
                                         </g:each>
                                     </ul>
                                 </td>
@@ -93,7 +93,7 @@
                                 <td>
                                     <ul>
                                         <g:each in="${managementFeeList}" var='managementFee'>
-                                            <li>For minimum ${managementFee.min} and maximum ${managementFee.max} the fixed fee is ${managementFee.value}</li>
+                                            <li>For minimum ${managementFee.min} and maximum ${managementFee.max} the management fee is ${managementFee.value}</li>
                                         </g:each>
                                     </ul>
                                 </td>
@@ -103,7 +103,7 @@
                                 <td>
                                     <ul>
                                         <g:each in="${overdraftFeeList}" var='overdraftFee'>
-                                            <li>For minimum ${overdraftFee.min} and maximum ${overdraftFee.max} the fixed fee is ${overdraftFee.value}</li>
+                                            <li>For minimum ${overdraftFee.min} and maximum ${overdraftFee.max} the overdraft fee is ${overdraftFee.value}</li>
                                         </g:each>
                                     </ul>
                                 </td>
