@@ -27,8 +27,14 @@ class ApiController extends RestfulController {
             accOpenRequestResult.traceId="1254"
             accOpenRequestResult.results=null
             respond(accOpenRequestResult)
+            return
         }
-        respond(accOpenRequest)
+        List accOpenRequestList =new ArrayList()
+        accOpenRequest.each {AccOpenRequest accOpen ->
+            accOpenRequestList.add([id:accOpen.id,personalId:accOpen.personalInfo.id, accountType:accOpen.accountType,productName:accOpen.accountType, requestDate:accOpen.requestDate.format('dd/MM/yyyy')])
+        }
+        def returnObj = [accOpenRequestList:accOpenRequestList]
+        respond(returnObj)
     }
 
     def personalInfo() {
