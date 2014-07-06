@@ -31,7 +31,7 @@ class ApiController extends RestfulController {
         }
         List accOpenRequestList =new ArrayList()
         accOpenRequest.each {AccOpenRequest accOpen ->
-            accOpenRequestList.add([id:accOpen.id,personalId:accOpen.personalInfo.id, accountType:accOpen.accountType,productName:accOpen.accountType, requestDate:accOpen.requestDate.format('dd/MM/yyyy')])
+            accOpenRequestList.add([id:accOpen.id,personalId:accOpen.personalInfo.id, accountType:accOpen.accountType,productName:accOpen.productName, requestDate:accOpen.requestDate.format('dd/MM/yyyy')])
         }
         def returnObj = [accOpenRequestList:accOpenRequestList]
         respond(returnObj)
