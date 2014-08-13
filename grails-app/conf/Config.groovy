@@ -88,14 +88,14 @@ grails.hibernate.cache.queries = false
 environments {
     development {
         grails.serverURL = "http://localhost:8090/oros-web"
-        grails.orosURL = "http://localhost:8080/gslcbs"
+        grails.orosURL = "http://localhost:8080/GrailsProject"
         grails.logging.jul.usebridge = true
         //images.location = "web-app/images/userImages/"
         imageindirect.basePath = System.getProperty("user.home") + File.separator + "gslcbs" + File.separator + "attachments"
     }
     production {
         grails.serverURL = "http://localhost:8090/oros-web"
-        grails.orosURL = "http://localhost:8080/gslcbs"
+        grails.orosURL = "http://localhost:8080/GrailsProject"
         grails.logging.jul.usebridge = false
         imageindirect.basePath = System.getProperty("user.home") + File.separator + "gslcbs" + File.separator + "attachments"
 
