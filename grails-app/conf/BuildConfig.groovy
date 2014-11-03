@@ -10,6 +10,7 @@ grails.plugin.location.'oros-attachment-plugin' = "/plugins/oros-attachment-plug
 /*grails.plugin.location.'oros-attachment-plugin' = "/inplace/oros-attachment-plugin"*/
 grails.server.port.http = 8090
 
+
 grails.project.fork = [
     // configure settings for compilation JVM, note that if you alter the Groovy version forked compilation is required
     //  compile: [maxMemory: 256, minMemory: 64, debug: false, maxPerm: 256, daemon:true],
