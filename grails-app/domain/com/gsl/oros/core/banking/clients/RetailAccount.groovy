@@ -23,7 +23,7 @@ class RetailAccount {
             retailOtherBank : RetailOtherBank,
             retailNominee   : RetailNominee,
             retailSignature : RetailSignatures,
-            retailAttachment: RetailAttachment,
+            retailAttachment: RetailAttachment
     ]
 
     static constraints = {
