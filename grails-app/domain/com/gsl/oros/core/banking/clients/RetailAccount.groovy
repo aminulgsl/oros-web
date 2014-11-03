@@ -1,5 +1,4 @@
 package com.gsl.oros.core.banking.clients
-
 //import com.gsl.cbs.contraints.enums.StatusType
 //import com.gsl.oros.core.banking.accountHolder.AccountHolder
 import com.gsl.plugin.attachments.RetailAttachment
