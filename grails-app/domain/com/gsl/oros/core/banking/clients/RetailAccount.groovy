@@ -5,6 +5,7 @@ import com.gsl.plugin.attachments.RetailAttachment
 import com.gsl.plugin.attachments.RetailSignatures
 
 
+
 class RetailAccount {
 
     String title
