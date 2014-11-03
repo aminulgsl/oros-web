@@ -6,7 +6,8 @@ grails.project.work.dir = "target/work"
 grails.project.target.level = 1.6
 grails.project.source.level = 1.6
 grails.project.war.file = "target/oros.war"
-grails.plugin.location.'oros-attachment-plugin' = "../plugins/oros-attachment-plugin"
+grails.plugin.location.'oros-attachment-plugin' = "/plugins/oros-attachment-plugin"
+/*grails.plugin.location.'oros-attachment-plugin' = "/inplace/oros-attachment-plugin"*/
 grails.server.port.http = 8090
 
 grails.project.fork = [
