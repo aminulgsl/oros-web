@@ -16,6 +16,9 @@ class ApiService {
     GrailsApplication grailsApplication
     private HTTPBuilder  httpBuilder
     private static final Integer SUCCESS_STATUS_CODES = 200
+    private static final String USER_NAME ='OW'
+    private static final Integer API_KEY = 20
+    private static final Integer SECURITY_KEY = 1234
     private static final String ACCOUNT_QUERY_API ='/api/accountTypeList'
     private static final String PRODUCT_LIST_QUERY_API ='/api/productList'
     private static final String FIXED_FEE_QUERY_API ='/api/fixedFeeList'
@@ -37,6 +40,9 @@ class ApiService {
     def accountTypeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+ACCOUNT_QUERY_API,queryParams)
         if(results){
             try{
@@ -50,6 +56,9 @@ class ApiService {
     def productList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+PRODUCT_LIST_QUERY_API+'?accountType='+optionalArgs.accountType,queryParams)
         if(results){
             try{
@@ -63,6 +72,9 @@ class ApiService {
     def fixedFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+FIXED_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -76,6 +88,9 @@ class ApiService {
     def entryFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+ENTRY_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -89,6 +104,9 @@ class ApiService {
     def closedFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+CLOSED_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -102,6 +120,9 @@ class ApiService {
     def reopenFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+REOPEN_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -115,6 +136,9 @@ class ApiService {
     def agioFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+AGIO_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -128,6 +152,9 @@ class ApiService {
     def managementFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+MANAGEMENT_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -141,6 +168,9 @@ class ApiService {
     def overdraftFeeList(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+OVERDRAFT_FEE_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -154,6 +184,9 @@ class ApiService {
     def productInfo(Map optionalArgs = [:]) throws CoreBankingException{
         String serverUrl=grailsApplication.config.grails.orosURL.toString()
         Map queryParams = optionalArgs.clone()
+        queryParams.put('un',USER_NAME)
+        queryParams.put('ak',API_KEY)
+        queryParams.put('sk',SECURITY_KEY)
         def results = submitCoreBankRequest(serverUrl+PRODUCT_INFO_QUERY_API+'?accountType='+optionalArgs.accountType+'&productId='+optionalArgs.productId,queryParams)
         if(results){
             try{
@@ -166,19 +199,28 @@ class ApiService {
     }
 
     private submitCoreBankRequest(String pathUrl, Map queryParams) throws CoreBankingException {
+        def secured = securityStatus(queryParams)
+        if (secured){
+            new HTTPBuilder(pathUrl).request(GET,JSON) { req ->
+                response.success = { resp, json ->
+                    println "response status: ${resp.statusLine}"
+                    println 'request was successful'
+                    println(resp.status)
+                    return json
+                }
 
-        new HTTPBuilder(pathUrl).request(GET,JSON) { req ->
-            response.success = { resp, json ->
-                println "response status: ${resp.statusLine}"
-                println 'request was successful'
-                println(resp.status)
-                return json
-            }
-
-            response.failure = { resp ->
-                println 'request failed'
-                println(resp.status)
+                response.failure = { resp ->
+                    println 'request failed'
+                    println(resp.status)
+                }
             }
         }
+    }
+
+    private securityStatus(Map queryParams) {
+        if ((queryParams.un == 'OW') && (queryParams.ak == 20) && (queryParams.sk == 1234)) {
+            return true
+        }
+        else return false
     }
 }
