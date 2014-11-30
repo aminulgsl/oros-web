@@ -16,6 +16,7 @@ class BootStrap {
     }
 
 
+
     void createUserWithRole() {
         def superAdmin = Role.findByAuthority('ROLE_SUPER_ADMIN') ?: new Role(authority: 'ROLE_SUPER_ADMIN').save(failOnError: true)
         User supAdminUser = User.findByUsername('admin')
