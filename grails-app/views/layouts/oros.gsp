@@ -67,6 +67,7 @@
 </div><!-- /.main-container -->
 
 <script src="${resource(dir: 'js', file: 'jquery-1.10.2.min.js')}"></script>
+<script src="${resource(dir: 'js', file: 'jquery.validate.js')}"></script>
 <script src="${resource(dir: 'js', file: 'jquery.dataTables.js')}"></script>
 <script src="${resource(dir: 'js', file: 'jquery.dataTables.bootstrap.js')}"></script>
 

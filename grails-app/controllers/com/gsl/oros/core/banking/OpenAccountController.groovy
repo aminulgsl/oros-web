@@ -75,7 +75,14 @@ class OpenAccountController {
         Long userId = springSecurityService.principal.id
         User loggedUser = User.read(userId)
         PersonalInfo personalInfo = PersonalInfo.read(params.personalId)
-        render(view: 'openingForm', model: [user:loggedUser, accountType:params.accountType, productId:params.productId, productName:params.productName, personalInfo:personalInfo])
+        if(params.accountType == "SAVINGS"){
+
+            render(view: 'openingForm', model: [user:loggedUser, accountType:params.accountType, productId:params.productId, productName:params.productName, personalInfo:personalInfo])
+        }
+        else if(params.accountType == "RETAIL"){
+            render(view: '/openAccount/retailClient/create', model: [user:loggedUser, accountType:params.accountType, productId:params.productId, productName:params.productName, personalInfo:personalInfo])
+        }
+
     }
 
     @Secured(['ROLE_SUPER_ADMIN'])
